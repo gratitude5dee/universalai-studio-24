@@ -1,4 +1,4 @@
-<lov-code>
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import DashboardLayout from "@/layouts/dashboard-layout";
@@ -297,7 +297,7 @@ const CreateAgent = () => {
               
               <div className="space-y-3">
                 <div className="flex items-center">
-                  <input type="checkbox" id="trigger-schedule" className="mr-2" checked />
+                  <input type="checkbox" id="trigger-schedule" className="mr-2" defaultChecked />
                   <label htmlFor="trigger-schedule" className="text-sm">Schedule-based</label>
                 </div>
                 
@@ -541,7 +541,7 @@ const CreateAgent = () => {
               
               <div className="space-y-3">
                 <div className="flex items-center">
-                  <input type="checkbox" id="dest-nft" className="mr-2" checked />
+                  <input type="checkbox" id="dest-nft" className="mr-2" defaultChecked />
                   <label htmlFor="dest-nft" className="text-sm">NFT Marketplace</label>
                 </div>
                 
@@ -560,13 +560,13 @@ const CreateAgent = () => {
                 </div>
                 
                 <div className="flex items-center">
-                  <input type="checkbox" id="dest-social" className="mr-2" checked />
+                  <input type="checkbox" id="dest-social" className="mr-2" defaultChecked />
                   <label htmlFor="dest-social" className="text-sm">Social Media</label>
                 </div>
                 
                 <div className="ml-6 mb-4 grid grid-cols-2 gap-2">
                   <div className="flex items-center">
-                    <input type="checkbox" id="social-twitter" className="mr-2" checked />
+                    <input type="checkbox" id="social-twitter" className="mr-2" defaultChecked />
                     <label htmlFor="social-twitter" className="text-sm">Twitter</label>
                   </div>
                   <div className="flex items-center">
@@ -600,4 +600,301 @@ const CreateAgent = () => {
                 </div>
                 
                 <div 
-                  className={`p-3 rounded-lg border text-center cursor-pointer transition-all ${outputFormat === 'audio' ? 'border-blue-500 bg-blue
+                  className={`p-3 rounded-lg border text-center cursor-pointer transition-all ${outputFormat === 'audio' ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-200'}`}
+                  onClick={() => setOutputFormat('audio')}
+                >
+                  <Music className="h-5 w-5 mx-auto mb-1 text-blue-500" />
+                  <span className="text-sm">Audio</span>
+                </div>
+                
+                <div 
+                  className={`p-3 rounded-lg border text-center cursor-pointer transition-all ${outputFormat === 'text' ? 'border-green-500 bg-green-50' : 'border-gray-200 hover:border-green-200'}`}
+                  onClick={() => setOutputFormat('text')}
+                >
+                  <FileText className="h-5 w-5 mx-auto mb-1 text-green-500" />
+                  <span className="text-sm">Text</span>
+                </div>
+                
+                <div 
+                  className={`p-3 rounded-lg border text-center cursor-pointer transition-all ${outputFormat === 'multi' ? 'border-amber-500 bg-amber-50' : 'border-gray-200 hover:border-amber-200'}`}
+                  onClick={() => setOutputFormat('multi')}
+                >
+                  <Layers className="h-5 w-5 mx-auto mb-1 text-amber-500" />
+                  <span className="text-sm">Multi</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-white p-6 rounded-xl border border-gray-200">
+              <h3 className="font-medium mb-3">Personalization Options</h3>
+              
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="style-options" className="text-sm">Style Profile</Label>
+                  <Select defaultValue="modern">
+                    <SelectTrigger id="style-options" className="mt-1">
+                      <SelectValue placeholder="Select style" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="modern">Modern Minimalist</SelectItem>
+                      <SelectItem value="abstract">Abstract Expressionist</SelectItem>
+                      <SelectItem value="retro">Retro Futurism</SelectItem>
+                      <SelectItem value="cyberpunk">Cyberpunk</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div>
+                  <Label htmlFor="content-filter" className="text-sm">Content Filter</Label>
+                  <Select defaultValue="moderate">
+                    <SelectTrigger id="content-filter" className="mt-1">
+                      <SelectValue placeholder="Select filter level" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="strict">Strict</SelectItem>
+                      <SelectItem value="moderate">Moderate</SelectItem>
+                      <SelectItem value="minimal">Minimal</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex items-center bg-blue-50 p-4 rounded-lg">
+              <Sparkles className="h-5 w-5 text-blue-500 mr-2" />
+              <p className="text-sm text-blue-700">
+                <strong>AI Assistant:</strong> For optimal reach, I recommend publishing to both NFT marketplaces and social media. This creates multiple revenue streams and maximizes visibility.
+              </p>
+            </div>
+          </div>
+        );
+
+      case 6:
+        return (
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <h2 className="text-2xl font-bold">Economic Parameters</h2>
+              <p className="text-muted-foreground">Define financial aspects of your agent's outputs</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-xl border border-gray-200">
+              <h3 className="font-medium mb-3">Pricing Strategy</h3>
+              
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="pricing-model" className="text-sm">Pricing Model</Label>
+                  <Select defaultValue="dynamic">
+                    <SelectTrigger id="pricing-model" className="mt-1">
+                      <SelectValue placeholder="Select pricing model" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="fixed">Fixed Price</SelectItem>
+                      <SelectItem value="tiered">Tiered Pricing</SelectItem>
+                      <SelectItem value="dynamic">Dynamic Pricing</SelectItem>
+                      <SelectItem value="auction">Auction-Based</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="base-price" className="text-sm">Base Price (ETH)</Label>
+                    <Input id="base-price" type="number" step="0.01" defaultValue="0.1" className="mt-1" />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="fee-percentage" className="text-sm">Platform Fee (%)</Label>
+                    <Input 
+                      id="fee-percentage" 
+                      type="number" 
+                      min="1" 
+                      max="20" 
+                      value={feePercentage} 
+                      onChange={(e) => setFeePercentage(e.target.value)}
+                      className="mt-1" 
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-white p-6 rounded-xl border border-gray-200">
+              <h3 className="font-medium mb-3">Royalty Configuration</h3>
+              
+              <div className="space-y-4">
+                <div>
+                  <div className="flex justify-between">
+                    <Label htmlFor="royalty-percentage" className="text-sm">Royalty Percentage</Label>
+                    <span className="text-xs text-gray-500">10%</span>
+                  </div>
+                  <input type="range" min="0" max="20" step="1" defaultValue="10" id="royalty-percentage" className="w-full mt-1" />
+                </div>
+                
+                <div>
+                  <Label htmlFor="split-address" className="text-sm">Collaborator Address (Optional)</Label>
+                  <Input id="split-address" placeholder="0x..." className="mt-1 font-mono text-sm" />
+                </div>
+                
+                <div>
+                  <div className="flex justify-between">
+                    <Label htmlFor="split-percentage" className="text-sm">Collaborator Split</Label>
+                    <span className="text-xs text-gray-500">20%</span>
+                  </div>
+                  <input type="range" min="0" max="100" step="5" defaultValue="20" id="split-percentage" className="w-full mt-1" />
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
+              <h3 className="font-medium mb-3">Agent Flow Preview</h3>
+              
+              <div className="relative h-48 border border-dashed border-gray-300 rounded-lg p-4 overflow-hidden">
+                <div className="absolute inset-0 bg-white bg-opacity-70 flex items-center justify-center">
+                  <div className="text-center">
+                    <svg className="w-12 h-12 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+                    </svg>
+                    <p className="mt-2 text-sm text-gray-500">Visual flow preview will appear here</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex items-center bg-blue-50 p-4 rounded-lg">
+              <Sparkles className="h-5 w-5 text-blue-500 mr-2" />
+              <p className="text-sm text-blue-700">
+                <strong>AI Assistant:</strong> A 10% royalty is industry standard. Consider dynamic pricing for {agentPurpose === 'art' ? 'art' : agentPurpose === 'music' ? 'music' : 'written content'} to adapt to market demand.
+              </p>
+            </div>
+          </div>
+        );
+        
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <DashboardLayout>
+      <div className="flex flex-col h-full">
+        <div className="container mx-auto py-6 px-4 md:px-6 flex-1">
+          <div className="flex flex-col h-full">
+            <div className="mb-6">
+              <h1 className="text-2xl md:text-3xl font-bold">Create AI Agent</h1>
+              <p className="text-muted-foreground mt-1">Configure and deploy your creative AI agent</p>
+            </div>
+
+            <div className="flex flex-col lg:flex-row gap-6 h-full">
+              <Tabs defaultValue="wizard" className="flex-1">
+                <TabsList className="grid w-full grid-cols-2 mb-6">
+                  <TabsTrigger value="wizard">
+                    <Settings className="w-4 h-4 mr-2" />
+                    Step-by-Step Wizard
+                  </TabsTrigger>
+                  <TabsTrigger value="form">
+                    <Bot className="w-4 h-4 mr-2" />
+                    Detailed Form
+                  </TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="wizard" className="flex-1 space-y-6">
+                  <div className="bg-white rounded-xl border p-6">
+                    <div className="flex justify-between items-center mb-6">
+                      <h2 className="text-xl font-semibold">AI Agent Wizard</h2>
+                      <div className="text-sm font-medium">Step {wizardStep} of 6</div>
+                    </div>
+                    
+                    <div className="mb-6">
+                      <div className="h-2 bg-gray-100 rounded-full">
+                        <div 
+                          className="h-2 bg-purple-500 rounded-full transition-all" 
+                          style={{ width: `${(wizardStep / 6) * 100}%` }}
+                        ></div>
+                      </div>
+                      <div className="flex justify-between mt-2">
+                        <span className="text-xs">Purpose</span>
+                        <span className="text-xs">Economics</span>
+                      </div>
+                    </div>
+                    
+                    {renderWizardStep()}
+                    
+                    <div className="flex justify-between mt-8">
+                      <Button
+                        variant="outline"
+                        onClick={handlePrevWizardStep}
+                        disabled={wizardStep === 1}
+                      >
+                        Back
+                      </Button>
+                      
+                      <Button
+                        onClick={handleNextWizardStep}
+                        disabled={wizardStep === 6}
+                      >
+                        {wizardStep === 6 ? 'Create Agent' : 'Continue'}
+                        {wizardStep !== 6 && <ArrowRight className="w-4 h-4 ml-2" />}
+                      </Button>
+                    </div>
+                  </div>
+                </TabsContent>
+                
+                <TabsContent value="form" className="flex-1">
+                  {currentStep === 'form' && (
+                    <div className="grid md:grid-cols-[280px_1fr] gap-6 h-full">
+                      <div className="bg-white rounded-xl border p-4 h-fit sticky top-4">
+                        <TableOfContents activeSection={activeSection} />
+                      </div>
+                      
+                      <div className="bg-white rounded-xl border p-6 max-h-[75vh] overflow-auto" onScroll={handleScroll}>
+                        <BasicInfoSection />
+                        <BioSection />
+                        <LoreSection />
+                        <KnowledgeSection />
+                        <MessageExamplesSection />
+                        <PostExamplesSection />
+                        <StyleSection />
+                        <TopicsAndAdjectives />
+                      </div>
+                    </div>
+                  )}
+                  
+                  {currentStep === 'secrets' && (
+                    <div className="bg-white rounded-xl border p-6">
+                      <SecretsSection />
+                    </div>
+                  )}
+                  
+                  {currentStep === 'confirmation' && (
+                    <div className="bg-white rounded-xl border p-6">
+                      <AgentConfirmation />
+                    </div>
+                  )}
+                  
+                  <div className="flex justify-between mt-6">
+                    <Button
+                      variant="outline"
+                      onClick={handleGoBack}
+                      disabled={currentStep === 'form'}
+                    >
+                      Back
+                    </Button>
+                    
+                    <Button
+                      onClick={handleContinue}
+                      disabled={currentStep === 'confirmation'}
+                    >
+                      {currentStep === 'form' ? 'Next: Configuration' : currentStep === 'secrets' ? 'Next: Confirmation' : 'Create Agent'}
+                    </Button>
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </div>
+          </div>
+        </div>
+      </div>
+    </DashboardLayout>
+  );
+};
+
+export default CreateAgent;
