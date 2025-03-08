@@ -147,7 +147,9 @@ const CrystalBall = () => {
                   selectedForecast?.id === forecast.id ? 'ring-2 ring-offset-2' : ''
                 }`}
                 style={{ 
-                  ...(selectedForecast?.id === forecast.id ? { ringColor: forecast.color } : {})
+                  ...(selectedForecast?.id === forecast.id ? { 
+                    boxShadow: `0 0 0 2px ${forecast.color}`
+                  } : {})
                 }}
                 whileHover={{ y: -3 }}
                 onClick={() => handleForecastClick(forecast)}
