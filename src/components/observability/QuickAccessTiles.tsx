@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { 
   Image, 
   Code, 
-  Book, 
+  Shield, 
   Gem, 
   Wand2, 
   Globe, 
@@ -32,7 +32,7 @@ export const QuickAccessTiles = () => {
     { id: "4", title: "Projects", icon: Users, path: "/projects", color: "#10B981" },
     { id: "5", title: "Bridge", icon: Wand2, path: "/bridge", color: "#EC4899" },
     { id: "6", title: "Marketplace", icon: Globe, path: "/marketplace-launch", color: "#6366F1" },
-    { id: "7", title: "Rights", icon: Book, path: "/rights", color: "#8B5CF6" },
+    { id: "7", title: "IP Portal", icon: Shield, path: "/rights", color: "#9b87f5" },
     { id: "8", title: "Treasury", icon: Wallet, path: "/treasury", color: "#F97316" },
   ];
 

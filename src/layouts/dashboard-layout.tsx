@@ -1,7 +1,7 @@
 
 import React, { ReactNode, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { LayoutDashboard, Image as ImageIcon, BarChart3, Settings, LogOut, Gem, Book, Globe, ChevronLeft, ChevronRight, Wallet, Users, Wand2, Eye } from "lucide-react";
+import { LayoutDashboard, Image as ImageIcon, BarChart3, Settings, LogOut, Gem, Book, Globe, ChevronLeft, ChevronRight, Wallet, Users, Wand2, Eye, Shield } from "lucide-react";
 import { motion } from "framer-motion";
 import Header from "@/components/ui/header";
 import Ambient from "@/components/ui/ambient";
@@ -43,9 +43,9 @@ const DashboardLayout = ({
     path: "/collection",
     icon: Gem
   }, {
-    name: "Rights Journey",
+    name: "IP Portal",
     path: "/rights",
-    icon: Book
+    icon: Shield
   }, {
     name: "Marketplace Launch",
     path: "/marketplace-launch",
