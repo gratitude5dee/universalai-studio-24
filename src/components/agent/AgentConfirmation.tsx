@@ -1,6 +1,7 @@
-
-import React from "react";
+import React, { useState } from "react";
 import { ChevronLeft } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
+import confetti from "canvas-confetti";
 
 interface AgentConfirmationProps {
   name: string;
@@ -15,6 +16,31 @@ const AgentConfirmation: React.FC<AgentConfirmationProps> = ({
   clients = ["X (Twitter)"],
   onGoBack
 }) => {
+  const [isDeploying, setIsDeploying] = useState(false);
+
+  const handleDeploy = () => {
+    setIsDeploying(true);
+    
+    // Simulate deployment process
+    setTimeout(() => {
+      setIsDeploying(false);
+      
+      // Show success toast
+      toast({
+        title: "Agent Deployed Successfully!",
+        description: `${name} is now live and ready to go.`,
+        variant: "default",
+      });
+      
+      // Trigger confetti
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }, 1500);
+  };
+
   return (
     <div className="py-6">
       <button 
@@ -78,8 +104,12 @@ const AgentConfirmation: React.FC<AgentConfirmationProps> = ({
         </div>
       </div>
 
-      <button className="w-full bg-yellow-400 hover:bg-yellow-500 text-black py-3 rounded-md font-medium">
-        Deploy agent
+      <button 
+        onClick={handleDeploy}
+        disabled={isDeploying}
+        className="w-full bg-yellow-400 hover:bg-yellow-500 text-black py-3 rounded-md font-medium disabled:opacity-70 disabled:cursor-not-allowed"
+      >
+        {isDeploying ? "Deploying..." : "Deploy agent"}
       </button>
     </div>
   );
