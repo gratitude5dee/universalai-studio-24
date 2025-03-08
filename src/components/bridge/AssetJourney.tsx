@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, FileSparkles, Sparkles, Truck, CheckCircle2 } from "lucide-react";
+import { ArrowRight, FileText, Sparkles, Truck, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const AssetJourney = () => {
@@ -11,7 +11,7 @@ export const AssetJourney = () => {
   const steps = [
     { 
       title: "Select Digital Asset", 
-      icon: FileSparkles,
+      icon: FileText,
       description: "Choose your digital creation to manifest in the physical realm"
     },
     { 
