@@ -3,7 +3,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { DollarSign, TrendingUp, PartyPopper } from "lucide-react";
 import { 
-  Chart, 
+  LineChart, 
   Line, 
   XAxis, 
   YAxis, 
@@ -40,7 +40,7 @@ const RevenueJourney = () => {
     <div className="space-y-4">
       <div className="relative h-[180px] mb-2">
         <ResponsiveContainer width="100%" height="100%">
-          <Chart data={revenueData} margin={{ top: 5, right: 20, left: -20, bottom: 5 }}>
+          <LineChart data={revenueData} margin={{ top: 5, right: 20, left: -20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#E8DCCA" vertical={false} />
             <XAxis 
               dataKey="month" 
@@ -84,7 +84,7 @@ const RevenueJourney = () => {
                 strokeDasharray="4 4" 
               />
             ))}
-          </Chart>
+          </LineChart>
         </ResponsiveContainer>
         
         {/* Milestone markers */}
