@@ -19,7 +19,7 @@ import {
   CloudRain, 
   Sprout, 
   Gem, 
-  WateringCan, 
+  Droplets, 
   Leaf, 
   Clover, 
   Bird, 
@@ -60,7 +60,7 @@ const seasonalThemes = [
 
 const achievements = [
   { id: 1, name: "First Bloom", description: "Agent reached 100 interactions", icon: Flower, color: "#FF9800" },
-  { id: 2, name: "Garden Guardian", description: "5 consecutive days of growth", icon: WateringCan, color: "#03A9F4" },
+  { id: 2, name: "Garden Guardian", description: "5 consecutive days of growth", icon: Droplets, color: "#03A9F4" },
   { id: 3, name: "Lucky Clover", description: "Exceptional performance spike", icon: Clover, color: "#8BC34A" },
   { id: 4, name: "Butterfly Effect", description: "Created viral content", icon: Bird, color: "#E91E63" },
   { id: 5, name: "Hidden Gem", description: "Discovered underutilized potential", icon: Gem, color: "#673AB7" },
@@ -155,7 +155,7 @@ const Analytics = () => {
           <StatsCard 
             title="Water Supply" 
             value="643L" 
-            icon={WateringCan}
+            icon={Droplets}
             trend="up"
             trendValue="8%"
             delay={2}
@@ -405,3 +405,4 @@ const Analytics = () => {
 };
 
 export default Analytics;
+
