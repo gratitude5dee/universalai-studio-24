@@ -13,6 +13,7 @@ import SpellcraftContracts from "./pages/SpellcraftContracts";
 import TreasureVault from "./pages/TreasureVault";
 import Projects from "./pages/Projects";
 import Bridge from "./pages/Bridge";
+import Observability from "./pages/Observability";
 import "./App.css";
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         <Route path="/treasury" element={<TreasureVault />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/bridge" element={<Bridge />} />
+        <Route path="/observability" element={<Observability />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster />
