@@ -1,7 +1,6 @@
-
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { CoinIcon, Plus, Info, ArrowRight, Gem, Crown, Scroll } from "lucide-react";
+import { Coins, Plus, Info, ArrowRight, Gem, Crown, Scroll, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useEffect } from "react";
@@ -144,7 +143,7 @@ const TreasureCollection = () => {
                       className="w-10 h-10 rounded-full flex items-center justify-center mr-3"
                       style={{ backgroundColor: `${treasure.color}30` }}
                     >
-                      {treasure.type === "coin" && <CoinIcon className="w-5 h-5" style={{ color: treasure.color }} />}
+                      {treasure.type === "coin" && <Coins className="w-5 h-5" style={{ color: treasure.color }} />}
                       {treasure.type === "gem" && <Gem className="w-5 h-5" style={{ color: treasure.color }} />}
                       {treasure.type === "artifact" && <Scroll className="w-5 h-5" style={{ color: treasure.color }} />}
                     </div>
@@ -180,7 +179,7 @@ const TreasureCollection = () => {
                 className="w-10 h-10 rounded-full flex items-center justify-center"
                 style={{ backgroundColor: `${selectedTreasure.color}30` }}
               >
-                {selectedTreasure.type === "coin" && <CoinIcon className="w-5 h-5" style={{ color: selectedTreasure.color }} />}
+                {selectedTreasure.type === "coin" && <Coins className="w-5 h-5" style={{ color: selectedTreasure.color }} />}
                 {selectedTreasure.type === "gem" && <Gem className="w-5 h-5" style={{ color: selectedTreasure.color }} />}
                 {selectedTreasure.type === "artifact" && <Crown className="w-5 h-5" style={{ color: selectedTreasure.color }} />}
               </div>

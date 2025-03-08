@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Crystal, TrendingUp, TrendingDown, AlertCircle, ArrowRight, Calendar, Eye, Sparkles, GemIcon } from "lucide-react";
+import { Gem, TrendingUp, TrendingDown, AlertCircle, ArrowRight, Calendar, Eye, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import {
@@ -127,7 +127,7 @@ const CrystalBall = () => {
       <div className="lg:col-span-2 glass-card p-6">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold flex items-center">
-            <Crystal className="w-5 h-5 mr-2 text-studio-accent" />
+            <Gem className="w-5 h-5 mr-2 text-studio-accent" />
             Magical Prophecies
           </h2>
           <Button size="sm" onClick={performScrying} disabled={isScrying}>
@@ -147,7 +147,7 @@ const CrystalBall = () => {
                   selectedForecast?.id === forecast.id ? 'ring-2 ring-offset-2' : ''
                 }`}
                 style={{ 
-                  ringColor: forecast.color,
+                  ...(selectedForecast?.id === forecast.id ? { ring: `2px solid ${forecast.color}` } : {})
                 }}
                 whileHover={{ y: -3 }}
                 onClick={() => handleForecastClick(forecast)}

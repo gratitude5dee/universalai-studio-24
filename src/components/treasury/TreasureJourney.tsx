@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Map, ArrowRight, Send, FileCheck, Users, Clock, Star } from "lucide-react";
@@ -77,7 +76,6 @@ const TreasureJourney = () => {
   const [selectedJourney, setSelectedJourney] = useState<Journey | null>(null);
   const [journeyProgress, setJourneyProgress] = useState<Journey[]>(journeys);
 
-  // Simulate journey progress
   useEffect(() => {
     const interval = setInterval(() => {
       setJourneyProgress(current => 
@@ -86,14 +84,12 @@ const TreasureJourney = () => {
             const newStep = journey.currentStep + 1;
             const newStatus = newStep >= journey.steps ? "completed" : "in-transit";
             
-            // Toast when a journey completes
-            if (newStatus === "completed" && journey.status !== "completed") {
+            if (newStatus === "completed" && journey.status === "in-transit") {
               toast("Journey Completed!", {
                 description: `${journey.title} has arrived at ${journey.to}`,
                 icon: <Star className="h-5 w-5 text-yellow-400" />,
               });
               
-              // Play a success sound
               const audio = new Audio("/journey-complete.mp3");
               audio.volume = 0.3;
               audio.play().catch(() => {
@@ -128,7 +124,6 @@ const TreasureJourney = () => {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      {/* Journey List */}
       <div className="lg:col-span-2 glass-card p-6">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold flex items-center">
@@ -171,7 +166,6 @@ const TreasureJourney = () => {
                   </div>
                 </div>
                 
-                {/* Progress bar for in-transit journeys */}
                 {journey.status === "in-transit" && (
                   <div className="mt-4">
                     <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
@@ -195,7 +189,6 @@ const TreasureJourney = () => {
         </div>
       </div>
 
-      {/* Journey Details or New Journey Form */}
       <div className="glass-card p-6">
         {selectedJourney ? (
           <motion.div
@@ -239,7 +232,6 @@ const TreasureJourney = () => {
               </div>
             </div>
             
-            {/* Journey Path Visualization */}
             <div className="bg-white rounded-xl p-4 mb-4 border border-studio-sand/30">
               <h4 className="text-sm font-medium mb-3">Journey Path</h4>
               <div className="relative py-2">

@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Chest, TrendingUp, CoinIcon, ArrowUpRight, Sparkles } from "lucide-react";
+import { Briefcase, TrendingUp, Coins, ArrowUpRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
@@ -91,7 +91,7 @@ const TreasureChest: React.FC = () => {
       <div className="flex items-center justify-between p-6">
         <div className="flex items-center">
           <div className="bg-studio-highlight p-3 rounded-2xl mr-4">
-            <Chest className="h-8 w-8 text-studio-accent" />
+            <Briefcase className="h-8 w-8 text-studio-accent" />
           </div>
           <div>
             <h2 className="text-2xl font-bold">Magical Treasury</h2>
@@ -116,7 +116,7 @@ const TreasureChest: React.FC = () => {
               <p className="text-3xl font-bold">${totalBalance.toLocaleString()}</p>
             </div>
             <div className="bg-green-100 p-2 rounded-lg">
-              <CoinIcon className="h-5 w-5 text-green-600" />
+              <Coins className="h-5 w-5 text-green-600" />
             </div>
           </div>
           <div className="mt-2 flex items-center text-sm text-green-600">

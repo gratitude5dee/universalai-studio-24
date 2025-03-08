@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -60,12 +59,14 @@ const SpellDeployment: React.FC<SpellDeploymentProps> = ({ spellData }) => {
     setIsDeploying(true);
     
     // Simulate deployment steps
-    const interval = setInterval(() => {
+    let deployInterval: NodeJS.Timeout;
+    
+    deployInterval = setInterval(() => {
       setDeploymentStep((prev) => {
         if (prev < deploymentSteps.length - 1) {
           return prev + 1;
         } else {
-          clearInterval(interval);
+          clearInterval(deployInterval);
           setIsDeploying(false);
           setIsDeployed(true);
           
@@ -85,11 +86,11 @@ const SpellDeployment: React.FC<SpellDeploymentProps> = ({ spellData }) => {
             return Math.random() * (max - min) + min;
           }
           
-          const interval = setInterval(function() {
+          const confettiInterval = setInterval(function() {
             const timeLeft = animationEnd - Date.now();
             
             if (timeLeft <= 0) {
-              return clearInterval(interval);
+              return clearInterval(confettiInterval);
             }
             
             const particleCount = 50 * (timeLeft / duration);

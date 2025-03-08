@@ -1,7 +1,6 @@
-
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Coins, Map, Sparkles, Scroll, Crystal } from "lucide-react";
+import { Coins, Map, Sparkles, Scroll, Gem } from "lucide-react";
 import DashboardLayout from "@/layouts/dashboard-layout";
 import TreasureCollection from "@/components/treasury/TreasureCollection";
 import TreasureJourney from "@/components/treasury/TreasureJourney";
@@ -16,7 +15,7 @@ const TreasureVault = () => {
     { id: "collection", name: "Treasure Collection", icon: Coins },
     { id: "journey", name: "Token Journeys", icon: Map },
     { id: "allocation", name: "Treasure Maps", icon: Scroll },
-    { id: "forecast", name: "Crystal Scrying", icon: Crystal },
+    { id: "forecast", name: "Crystal Scrying", icon: Gem },
   ];
 
   const renderTabContent = () => {
