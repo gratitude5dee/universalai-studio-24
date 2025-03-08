@@ -97,7 +97,14 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             })}
           </nav>
           
-          <div className="mt-auto mb-4">
+          <div className="mt-auto mb-4 space-y-1">
+            {/* Settings button */}
+            <Link to="/settings" className={`flex items-center ${isCollapsed ? 'justify-center' : 'px-3'} py-3 text-sm text-muted-foreground hover:bg-studio-sand/30 rounded-xl transition-all duration-200`} title={isCollapsed ? "Settings" : ""}>
+              <Settings className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-studio-clay`} />
+              {!isCollapsed && "Settings"}
+            </Link>
+            
+            {/* Log Out button */}
             <Link to="/logout" className={`flex items-center ${isCollapsed ? 'justify-center' : 'px-3'} py-3 text-sm text-muted-foreground hover:bg-studio-sand/30 rounded-xl transition-all duration-200`} title={isCollapsed ? "Log Out" : ""}>
               <LogOut className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-studio-clay`} />
               {!isCollapsed && "Log Out"}
