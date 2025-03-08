@@ -24,7 +24,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     { name: "Dashboard", path: "/", icon: LayoutDashboard },
     { name: "Gallery", path: "/gallery", icon: ImageIcon },
     { name: "Analytics", path: "/analytics", icon: BarChart3 },
-    { name: "Settings", path: "/settings", icon: Settings },
+    { name: "Create New Agent", path: "/settings", icon: Settings },
   ];
 
   return (
