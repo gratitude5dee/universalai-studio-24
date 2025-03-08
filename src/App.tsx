@@ -9,6 +9,7 @@ import Gallery from "./pages/Gallery";
 import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
 import Collection from "./pages/Collection";
+import RightsManagement from "./pages/RightsManagement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/collection" element={<Collection />} />
+          <Route path="/rights" element={<RightsManagement />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
