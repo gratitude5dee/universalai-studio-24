@@ -12,8 +12,6 @@ import { motion } from "framer-motion";
 import Header from "@/components/ui/header";
 import Ambient from "@/components/ui/ambient";
 
-<lov-add-dependency>framer-motion@latest</lov-add-dependency>
-
 interface DashboardLayoutProps {
   children: ReactNode;
 }
