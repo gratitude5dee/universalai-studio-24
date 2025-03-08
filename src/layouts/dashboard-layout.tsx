@@ -31,7 +31,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     { name: "Dashboard", path: "/", icon: LayoutDashboard },
     { name: "Gallery", path: "/gallery", icon: ImageIcon },
     { name: "Analytics", path: "/analytics", icon: BarChart3 },
-    { name: "Create New Agent", path: "/settings", icon: Settings },
+    { name: "Create New Agent", path: "/create-agent", icon: Settings },
     { name: "My Collection", path: "/collection", icon: Gem },
     { name: "Rights Journey", path: "/rights", icon: Book },
     { name: "Marketplace Launch", path: "/marketplace-launch", icon: Globe },
@@ -99,9 +99,9 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           
           <div className="mt-auto mb-4 space-y-1">
             {/* Settings button */}
-            <Link to="/settings" className={`flex items-center ${isCollapsed ? 'justify-center' : 'px-3'} py-3 text-sm text-muted-foreground hover:bg-studio-sand/30 rounded-xl transition-all duration-200`} title={isCollapsed ? "Settings" : ""}>
+            <Link to="/create-agent" className={`flex items-center ${isCollapsed ? 'justify-center' : 'px-3'} py-3 text-sm text-muted-foreground hover:bg-studio-sand/30 rounded-xl transition-all duration-200`} title={isCollapsed ? "Create New Agent" : ""}>
               <Settings className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-studio-clay`} />
-              {!isCollapsed && "Settings"}
+              {!isCollapsed && "Create New Agent"}
             </Link>
             
             {/* Log Out button */}
