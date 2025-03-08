@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Coins, Map, Sparkles, Scroll, Gem } from "lucide-react";

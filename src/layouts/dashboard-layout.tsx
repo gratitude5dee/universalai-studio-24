@@ -1,19 +1,23 @@
+
 import React, { ReactNode, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { LayoutDashboard, Image as ImageIcon, BarChart3, Settings, LogOut, Gem, Book, Globe, ChevronLeft, ChevronRight } from "lucide-react";
+import { LayoutDashboard, Image as ImageIcon, BarChart3, Settings, LogOut, Gem, Book, Globe, ChevronLeft, ChevronRight, Wallet } from "lucide-react";
 import { motion } from "framer-motion";
 import Header from "@/components/ui/header";
 import Ambient from "@/components/ui/ambient";
 import { Button } from "@/components/ui/button";
+
 interface DashboardLayoutProps {
   children: ReactNode;
 }
+
 const DashboardLayout = ({
   children
 }: DashboardLayoutProps) => {
   const location = useLocation();
   const currentPath = location.pathname;
   const [isCollapsed, setIsCollapsed] = useState(false);
+
   const navItems = [{
     name: "Dashboard",
     path: "/",
@@ -42,10 +46,16 @@ const DashboardLayout = ({
     name: "Marketplace Launch",
     path: "/marketplace-launch",
     icon: Globe
+  }, {
+    name: "Treasury",
+    path: "/treasury",
+    icon: Wallet
   }];
+
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
+
   return <div className="min-h-screen flex flex-col bg-studio-cream overflow-hidden">
       <Ambient />
       
@@ -53,15 +63,21 @@ const DashboardLayout = ({
         {/* Sidebar */}
         <aside className={`relative md:flex flex-col ${isCollapsed ? 'w-16' : 'w-64'} p-5 glass-card m-5 rounded-3xl transition-all duration-300`}>
           <div className={`mb-8 mt-2 ${isCollapsed ? 'justify-center' : 'px-3'} flex items-center`}>
-            {!isCollapsed ? <h1 className="text-2xl font-medium flex items-center">
+            {!isCollapsed ? 
+              <h1 className="text-2xl font-medium flex items-center">
                 <span className="bg-studio-accent/20 w-8 h-8 rounded-full flex items-center justify-center mr-2">
-                  <span className="text-studio-accent font-semibold">5
-Universal Studio</span>
+                  <span className="text-studio-accent font-semibold">5</span>
                 </span>
-                Creator Studio
-              </h1> : <span className="bg-studio-accent/20 w-8 h-8 rounded-full flex items-center justify-center">
-                <span className="text-studio-accent font-semibold">C</span>
-              </span>}
+                <div className="flex flex-col">
+                  <span className="text-studio-accent leading-tight">Universal</span>
+                  <span>Studio</span>
+                </div>
+              </h1> 
+              : 
+              <span className="bg-studio-accent/20 w-8 h-8 rounded-full flex items-center justify-center">
+                <span className="text-studio-accent font-semibold">5</span>
+              </span>
+            }
           </div>
           
           <nav className="flex-1 space-y-1">
@@ -87,12 +103,6 @@ Universal Studio</span>
           </nav>
           
           <div className="mt-auto mb-4 space-y-1">
-            {/* Settings button */}
-            <Link to="/create-agent" className={`flex items-center ${isCollapsed ? 'justify-center' : 'px-3'} py-3 text-sm text-muted-foreground hover:bg-studio-sand/30 rounded-xl transition-all duration-200`} title={isCollapsed ? "Create New Agent" : ""}>
-              <Settings className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-studio-clay`} />
-              {!isCollapsed && "Create New Agent"}
-            </Link>
-            
             {/* Log Out button */}
             <Link to="/logout" className={`flex items-center ${isCollapsed ? 'justify-center' : 'px-3'} py-3 text-sm text-muted-foreground hover:bg-studio-sand/30 rounded-xl transition-all duration-200`} title={isCollapsed ? "Log Out" : ""}>
               <LogOut className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-studio-clay`} />
@@ -116,4 +126,5 @@ Universal Studio</span>
       </div>
     </div>;
 };
+
 export default DashboardLayout;
