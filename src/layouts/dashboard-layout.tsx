@@ -11,7 +11,8 @@ import {
   Book,
   Globe,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Sparkles
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Header from "@/components/ui/header";
@@ -35,6 +36,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     { name: "My Collection", path: "/collection", icon: Gem },
     { name: "Rights Journey", path: "/rights", icon: Book },
     { name: "Marketplace Launch", path: "/marketplace-launch", icon: Globe },
+    { name: "Spellcraft Contracts", path: "/spellcraft", icon: Sparkles },
   ];
 
   const toggleSidebar = () => {
