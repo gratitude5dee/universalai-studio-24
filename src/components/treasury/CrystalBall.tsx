@@ -147,7 +147,7 @@ const CrystalBall = () => {
                   selectedForecast?.id === forecast.id ? 'ring-2 ring-offset-2' : ''
                 }`}
                 style={{ 
-                  ...(selectedForecast?.id === forecast.id ? { ring: `2px solid ${forecast.color}` } : {})
+                  ...(selectedForecast?.id === forecast.id ? { ringColor: forecast.color } : {})
                 }}
                 whileHover={{ y: -3 }}
                 onClick={() => handleForecastClick(forecast)}
@@ -227,7 +227,7 @@ const CrystalBall = () => {
                 className="w-10 h-10 rounded-full flex items-center justify-center"
                 style={{ backgroundColor: `${selectedForecast.color}20` }}
               >
-                <GemIcon className="w-5 h-5" style={{ color: selectedForecast.color }} />
+                <Gem className="w-5 h-5" style={{ color: selectedForecast.color }} />
               </div>
             </div>
             
@@ -365,7 +365,7 @@ const CrystalBall = () => {
                 }}
                 className="w-24 h-24 rounded-full bg-gradient-to-br from-purple-200 to-blue-200"
               />
-              <Crystal className="h-12 w-12 text-studio-accent absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+              <Gem className="h-12 w-12 text-studio-accent absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
               <motion.div
                 animate={{
                   opacity: [0, 0.5, 0],
