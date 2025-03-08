@@ -1,7 +1,7 @@
 
 import React, { ReactNode, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { LayoutDashboard, Image as ImageIcon, BarChart3, Settings, LogOut, Gem, Book, Globe, ChevronLeft, ChevronRight, Wallet, Users } from "lucide-react";
+import { LayoutDashboard, Image as ImageIcon, BarChart3, Settings, LogOut, Gem, Book, Globe, ChevronLeft, ChevronRight, Wallet, Users, Wand2 } from "lucide-react";
 import { motion } from "framer-motion";
 import Header from "@/components/ui/header";
 import Ambient from "@/components/ui/ambient";
@@ -50,6 +50,10 @@ const DashboardLayout = ({
     name: "Marketplace Launch",
     path: "/marketplace-launch",
     icon: Globe
+  }, {
+    name: "Bridge",
+    path: "/bridge",
+    icon: Wand2
   }, {
     name: "Treasury",
     path: "/treasury",
