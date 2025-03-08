@@ -6,7 +6,8 @@ import {
   Image as ImageIcon, 
   BarChart3, 
   Settings,
-  LogOut
+  LogOut,
+  Gem
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Header from "@/components/ui/header";
@@ -25,6 +26,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     { name: "Gallery", path: "/gallery", icon: ImageIcon },
     { name: "Analytics", path: "/analytics", icon: BarChart3 },
     { name: "Create New Agent", path: "/settings", icon: Settings },
+    { name: "My Collection", path: "/collection", icon: Gem },
   ];
 
   return (
