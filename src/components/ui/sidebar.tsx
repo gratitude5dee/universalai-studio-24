@@ -1,6 +1,4 @@
-
 import { Link, NavLink } from "react-router-dom";
-import { Icons } from "@/components/ui/icons";
 import { Button } from "./button";
 import {
   Home, 
@@ -15,10 +13,9 @@ import {
   Wallet,
   Users,
   PlusCircle,
-  BookOpen,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Define the links for the sidebar
 const links = [
@@ -76,13 +73,12 @@ const manageLinks = [
 ];
 
 export function Sidebar({ className }: { className?: string }) {
-  const isMobile = useMobile();
+  const isMobile = useIsMobile();
 
   return (
     <div className={cn("flex flex-col h-full bg-white", className)}>
       <div className="flex px-4 py-4">
         <Link to="/" className="flex items-center gap-2">
-          <Icons.logo className="h-6 w-6" color="var(--studio-accent)" />
           <h1 className="text-xl font-bold text-studio-charcoal hidden md:block">THOTH</h1>
         </Link>
       </div>
