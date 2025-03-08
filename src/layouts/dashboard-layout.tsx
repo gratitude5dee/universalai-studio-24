@@ -8,7 +8,8 @@ import {
   Settings,
   LogOut,
   Gem,
-  Book
+  Book,
+  Globe
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Header from "@/components/ui/header";
@@ -29,6 +30,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     { name: "Create New Agent", path: "/settings", icon: Settings },
     { name: "My Collection", path: "/collection", icon: Gem },
     { name: "Rights Journey", path: "/rights", icon: Book },
+    { name: "Marketplace Launch", path: "/marketplace-launch", icon: Globe },
   ];
 
   return (
