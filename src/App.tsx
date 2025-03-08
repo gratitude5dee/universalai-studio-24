@@ -12,6 +12,7 @@ import Collection from "./pages/Collection";
 import RightsManagement from "./pages/RightsManagement";
 import MarketplaceLaunch from "./pages/MarketplaceLaunch";
 import SpellcraftContracts from "./pages/SpellcraftContracts";
+import TreasureVault from "./pages/TreasureVault";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/rights" element={<RightsManagement />} />
           <Route path="/marketplace-launch" element={<MarketplaceLaunch />} />
           <Route path="/spellcraft" element={<SpellcraftContracts />} />
+          <Route path="/treasury" element={<TreasureVault />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
