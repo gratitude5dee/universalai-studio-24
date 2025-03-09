@@ -32,6 +32,22 @@ const TabNavigation: React.FC<TabNavigationProps> = ({ tabs, activeTab, setActiv
             onMouseEnter={() => setHoveredTab(tab.id)}
             onMouseLeave={() => setHoveredTab(null)}
           >
+            {/* Tooltip that appears on hover - now positioned above */}
+            <AnimatePresence>
+              {isHovered && (
+                <motion.div
+                  className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 px-3 py-1.5 bg-studio-charcoal/90 text-white text-sm rounded-lg backdrop-blur-md shadow-lg whitespace-nowrap z-50"
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 5 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  {tab.name}
+                  <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-studio-charcoal/90" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+            
             <motion.button
               onClick={() => setActiveTab(tab.id)}
               className={cn(
@@ -60,22 +76,6 @@ const TabNavigation: React.FC<TabNavigationProps> = ({ tabs, activeTab, setActiv
                 />
               )}
             </motion.button>
-            
-            {/* Tooltip that appears on hover */}
-            <AnimatePresence>
-              {isHovered && (
-                <motion.div
-                  className="absolute left-1/2 -translate-x-1/2 top-full mt-2 px-3 py-1.5 bg-studio-charcoal/90 text-white text-sm rounded-lg backdrop-blur-md shadow-lg whitespace-nowrap z-50"
-                  initial={{ opacity: 0, y: -5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -5 }}
-                  transition={{ duration: 0.15 }}
-                >
-                  {tab.name}
-                  <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[6px] border-b-studio-charcoal/90" />
-                </motion.div>
-              )}
-            </AnimatePresence>
           </div>
         );
       })}
