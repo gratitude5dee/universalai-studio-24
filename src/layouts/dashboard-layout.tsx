@@ -18,6 +18,7 @@ const DashboardLayout = ({
   const currentPath = location.pathname;
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [agentsSubmenuOpen, setAgentsSubmenuOpen] = useState(false);
+  const [projectsSubmenuOpen, setProjectsSubmenuOpen] = useState(false);
 
   const navItems = [{
     name: "Dashboard",
@@ -25,16 +26,26 @@ const DashboardLayout = ({
     icon: LayoutDashboard
   }, {
     name: "Projects",
-    path: "/projects",
-    icon: Users
-  }, {
-    name: "Gallery",
-    path: "/gallery",
-    icon: ImageIcon
-  }, {
-    name: "Analytics",
-    path: "/analytics",
-    icon: BarChart3
+    path: "#",
+    icon: Users,
+    hasSubmenu: true,
+    submenuItems: [
+      {
+        name: "Gallery",
+        path: "/gallery",
+        icon: ImageIcon
+      },
+      {
+        name: "Analytics",
+        path: "/analytics",
+        icon: BarChart3
+      },
+      {
+        name: "Marketplace Launch",
+        path: "/marketplace-launch",
+        icon: Globe
+      }
+    ]
   }, {
     name: "Agents",
     path: "#",
@@ -62,10 +73,6 @@ const DashboardLayout = ({
     path: "/rights",
     icon: Shield
   }, {
-    name: "Marketplace Launch",
-    path: "/marketplace-launch",
-    icon: Globe
-  }, {
     name: "Bridge",
     path: "/bridge",
     icon: Wand2
@@ -80,6 +87,7 @@ const DashboardLayout = ({
     if (isCollapsed) {
       // If expanding the sidebar, close any open submenus
       setAgentsSubmenuOpen(false);
+      setProjectsSubmenuOpen(false);
     }
   };
 
@@ -87,6 +95,13 @@ const DashboardLayout = ({
     e.preventDefault();
     if (!isCollapsed) {
       setAgentsSubmenuOpen(!agentsSubmenuOpen);
+    }
+  };
+
+  const toggleProjectsSubmenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!isCollapsed) {
+      setProjectsSubmenuOpen(!projectsSubmenuOpen);
     }
   };
 
@@ -146,7 +161,7 @@ const DashboardLayout = ({
                     <>
                       <a 
                         href="#" 
-                        onClick={toggleAgentsSubmenu} 
+                        onClick={item.name === "Agents" ? toggleAgentsSubmenu : toggleProjectsSubmenu} 
                         className="relative block" 
                         title={isCollapsed ? item.name : ""}
                       >
@@ -162,7 +177,7 @@ const DashboardLayout = ({
                           </div>
                           {!isCollapsed && (
                             <ChevronRight 
-                              className={`h-4 w-4 transition-transform duration-200 ${agentsSubmenuOpen ? 'rotate-90' : ''} 
+                              className={`h-4 w-4 transition-transform duration-200 ${(item.name === "Agents" ? agentsSubmenuOpen : projectsSubmenuOpen) ? 'rotate-90' : ''} 
                                 ${isSubMenuActive ? 'text-studio-cream' : 'text-studio-clay'}
                               `} 
                             />
@@ -171,7 +186,7 @@ const DashboardLayout = ({
                       </a>
                       
                       {/* Submenu */}
-                      {(agentsSubmenuOpen || isCollapsed) && item.submenuItems && (
+                      {((item.name === "Agents" ? agentsSubmenuOpen : projectsSubmenuOpen) || isCollapsed) && item.submenuItems && (
                         <div className={`mt-1 ml-4 space-y-1 ${isCollapsed ? 'absolute left-full top-0 ml-2 bg-white p-2 rounded-lg shadow-lg z-10 min-w-48' : ''}`}>
                           {item.submenuItems.map(subItem => {
                             const isSubItemActive = currentPath.startsWith(subItem.path);
