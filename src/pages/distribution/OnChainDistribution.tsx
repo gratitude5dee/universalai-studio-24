@@ -1,182 +1,379 @@
 
-import React from "react";
+import React, { useState } from "react";
 import DistributionLayout from "@/layouts/distribution-layout";
-import { Link, ArrowRightLeft, BarChart3, Wallet, Database, Shield } from "lucide-react";
-import StatsCard from "@/components/ui/stats-card";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { 
+  Link, Wallet, Layers, BarChart3, ArrowUpRight, ChevronRight,
+  Timer, RefreshCw, Sparkles, Share2, Boxes, CheckCircle
+} from "lucide-react";
 
 const OnChainDistribution = () => {
+  const [activeTab, setActiveTab] = useState("nfts");
+
+  // Mock data for blockchain platforms
+  const blockchains = [
+    { name: "Ethereum", icon: "https://placehold.co/40/6f42c1/FFFFFF?text=ETH", color: "#6f42c1" },
+    { name: "Solana", icon: "https://placehold.co/40/14f195/FFFFFF?text=SOL", color: "#14f195" },
+    { name: "Polygon", icon: "https://placehold.co/40/8247e5/FFFFFF?text=POLY", color: "#8247e5" },
+    { name: "Flow", icon: "https://placehold.co/40/13efc0/FFFFFF?text=FLOW", color: "#13efc0" },
+    { name: "Tezos", icon: "https://placehold.co/40/2c7df7/FFFFFF?text=XTZ", color: "#2c7df7" },
+  ];
+
+  // Mock NFT collection data
   const nftCollections = [
-    {
-      name: "Sonic Dimensions",
-      blockchain: "Ethereum",
-      released: "June 2023",
-      items: 1000,
-      sold: 782,
-      floorPrice: "0.15 ETH",
-      volume: "142 ETH"
+    { 
+      id: 1, 
+      name: "Sonic Artifacts: Genesis", 
+      blockchain: "Ethereum", 
+      totalSupply: 3000,
+      minted: 1845,
+      price: "0.08 ETH",
+      thumbnail: "https://placehold.co/80/6f42c1/FFFFFF?text=NFT1",
+      status: "Active"
     },
-    {
-      name: "Rhythm Genesis",
-      blockchain: "Solana",
-      released: "August 2023",
-      items: 5000,
-      sold: 4213,
-      floorPrice: "3.2 SOL",
-      volume: "12,450 SOL"
+    { 
+      id: 2, 
+      name: "Rhythm Fragments", 
+      blockchain: "Solana", 
+      totalSupply: 10000,
+      minted: 8721,
+      price: "2.5 SOL",
+      thumbnail: "https://placehold.co/80/14f195/FFFFFF?text=NFT2",
+      status: "Active"
     },
-    {
-      name: "Beats & Bytes",
-      blockchain: "Polygon",
-      released: "April 2023",
-      items: 2500,
-      sold: 2500,
-      floorPrice: "200 MATIC",
-      volume: "520,000 MATIC"
+    { 
+      id: 3, 
+      name: "Harmonic Landscapes", 
+      blockchain: "Polygon", 
+      totalSupply: 5000,
+      minted: 4998,
+      price: "45 MATIC",
+      thumbnail: "https://placehold.co/80/8247e5/FFFFFF?text=NFT3",
+      status: "Sold Out"
     }
   ];
-  
+
+  // Mock token distribution data
+  const tokenDistributions = [
+    {
+      id: 1,
+      name: "BEAT Token",
+      symbol: "BEAT",
+      blockchain: "Ethereum",
+      totalSupply: "1,000,000",
+      circulatingSupply: "450,000",
+      holders: 2735,
+      price: "$0.42",
+      change: "+5.2%"
+    },
+    {
+      id: 2,
+      name: "Metaverse Audio Coin",
+      symbol: "MAC",
+      blockchain: "Polygon",
+      totalSupply: "10,000,000",
+      circulatingSupply: "2,500,000",
+      holders: 8341,
+      price: "$0.018",
+      change: "-2.3%"
+    }
+  ];
+
   return (
     <DistributionLayout 
       title="On-Chain Distribution" 
-      subtitle="Manage your music NFTs, tokens, and on-chain royalties"
+      subtitle="Manage your music NFTs, tokens, and on-chain distribution channels"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatsCard
-          title="Total NFTs Sold"
-          value="7,495"
-          description="Across all collections"
-          icon={Link}
-          trend="up"
-          trendValue="24.3%"
-          delay={0}
-        />
-        <StatsCard
-          title="Trading Volume"
-          value="182 ETH"
-          description="All-time volume"
-          icon={ArrowRightLeft}
-          trend="up"
-          trendValue="18.5%"
-          delay={1}
-        />
-        <StatsCard
-          title="Royalty Revenue"
-          value="12.4 ETH"
-          description="Last 30 days"
-          icon={Wallet}
-          trend="up"
-          trendValue="8.7%"
-          delay={2}
-        />
-        <StatsCard
-          title="Unique Collectors"
-          value="3,241"
-          description="Across all chains"
-          icon={Database}
-          trend="up"
-          trendValue="15.2%"
-          delay={3}
-        />
+      {/* Blockchain Network Selection */}
+      <div className="glass-card p-5">
+        <h2 className="text-lg font-semibold mb-4">Select Blockchain Networks</h2>
+        <div className="flex flex-wrap gap-3">
+          {blockchains.map((blockchain) => (
+            <motion.div
+              key={blockchain.name}
+              className="flex items-center p-3 bg-white rounded-xl border border-studio-sand/30 cursor-pointer"
+              whileHover={{ y: -3, boxShadow: "0 4px 12px rgba(0,0,0,0.05)" }}
+            >
+              <img src={blockchain.icon} alt={blockchain.name} className="w-6 h-6 mr-2 rounded-full" />
+              <span className="font-medium">{blockchain.name}</span>
+            </motion.div>
+          ))}
+          <motion.div
+            className="flex items-center p-3 bg-studio-sand/20 rounded-xl border border-dashed border-studio-sand/50 cursor-pointer"
+            whileHover={{ y: -3 }}
+          >
+            <Plus className="w-5 h-5 mr-2 text-studio-clay" />
+            <span className="font-medium text-studio-clay">Add Network</span>
+          </motion.div>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-        <div className="glass-card p-6 lg:col-span-2">
-          <h2 className="text-xl font-bold mb-4">NFT Collections</h2>
-          <div className="space-y-6">
-            {nftCollections.map((collection, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl border border-studio-sand/30 hover:shadow-md transition-all">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center">
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-purple-100 mr-4">
-                      <Link className="h-6 w-6 text-purple-600" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold">{collection.name}</h3>
-                      <div className="flex items-center">
-                        <span className="text-sm text-muted-foreground">{collection.blockchain}</span>
-                        <span className="mx-2 text-muted-foreground">•</span>
-                        <span className="text-sm text-muted-foreground">Released {collection.released}</span>
+      {/* Distribution Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
+        <div className="glass-card p-5">
+          <div className="flex items-center mb-2">
+            <Boxes className="h-5 w-5 text-[#8B5CF6] mr-2" />
+            <span className="text-sm text-studio-clay">Total NFTs</span>
+          </div>
+          <div className="text-2xl font-semibold">18,000</div>
+          <div className="text-xs text-emerald-500 mt-1">+12.4% from last month</div>
+        </div>
+
+        <div className="glass-card p-5">
+          <div className="flex items-center mb-2">
+            <Wallet className="h-5 w-5 text-[#F97316] mr-2" />
+            <span className="text-sm text-studio-clay">Revenue Generated</span>
+          </div>
+          <div className="text-2xl font-semibold">$124,587</div>
+          <div className="text-xs text-emerald-500 mt-1">+23.7% from last month</div>
+        </div>
+
+        <div className="glass-card p-5">
+          <div className="flex items-center mb-2">
+            <Users className="h-5 w-5 text-[#0EA5E9] mr-2" />
+            <span className="text-sm text-studio-clay">Unique Collectors</span>
+          </div>
+          <div className="text-2xl font-semibold">8,342</div>
+          <div className="text-xs text-emerald-500 mt-1">+8.3% from last month</div>
+        </div>
+
+        <div className="glass-card p-5">
+          <div className="flex items-center mb-2">
+            <Layers className="h-5 w-5 text-[#10B981] mr-2" />
+            <span className="text-sm text-studio-clay">Active Collections</span>
+          </div>
+          <div className="text-2xl font-semibold">12</div>
+          <div className="text-xs text-emerald-500 mt-1">+2 new this month</div>
+        </div>
+      </div>
+
+      {/* Tab Navigation */}
+      <div className="mt-8 bg-white rounded-xl border border-studio-sand/30 overflow-hidden">
+        <div className="flex border-b border-studio-sand/30">
+          <button 
+            className={`px-6 py-3 text-sm font-medium ${activeTab === "nfts" ? "border-b-2 border-studio-accent text-studio-accent" : "text-studio-clay"}`}
+            onClick={() => setActiveTab("nfts")}
+          >
+            NFT Collections
+          </button>
+          <button 
+            className={`px-6 py-3 text-sm font-medium ${activeTab === "tokens" ? "border-b-2 border-studio-accent text-studio-accent" : "text-studio-clay"}`}
+            onClick={() => setActiveTab("tokens")}
+          >
+            Token Distribution
+          </button>
+          <button 
+            className={`px-6 py-3 text-sm font-medium ${activeTab === "royalties" ? "border-b-2 border-studio-accent text-studio-accent" : "text-studio-clay"}`}
+            onClick={() => setActiveTab("royalties")}
+          >
+            Royalty Management
+          </button>
+        </div>
+
+        <div className="p-5">
+          {activeTab === "nfts" && (
+            <div>
+              <div className="flex justify-between mb-4">
+                <h3 className="font-semibold">Your NFT Collections</h3>
+                <Button variant="default" size="sm" className="bg-studio-accent gap-1">
+                  <Plus className="h-4 w-4" />
+                  Create Collection
+                </Button>
+              </div>
+
+              <div className="space-y-4">
+                {nftCollections.map((collection) => (
+                  <div key={collection.id} className="bg-white rounded-xl border border-studio-sand/30 p-4 flex items-center justify-between">
+                    <div className="flex items-center">
+                      <img src={collection.thumbnail} alt={collection.name} className="w-12 h-12 object-cover rounded-lg mr-4" />
+                      <div>
+                        <h4 className="font-medium">{collection.name}</h4>
+                        <div className="flex items-center gap-3 text-sm text-studio-clay mt-1">
+                          <span>{collection.blockchain}</span>
+                          <span className="h-1 w-1 rounded-full bg-studio-clay"></span>
+                          <span>{collection.minted}/{collection.totalSupply} minted</span>
+                          <span className="h-1 w-1 rounded-full bg-studio-clay"></span>
+                          <span>{collection.price}</span>
+                        </div>
                       </div>
                     </div>
+                    <div className="flex items-center gap-3">
+                      <span className={`px-2 py-1 text-xs rounded-full ${
+                        collection.status === "Active" 
+                          ? "bg-emerald-100 text-emerald-700" 
+                          : "bg-amber-100 text-amber-700"
+                      }`}>
+                        {collection.status}
+                      </span>
+                      <Button variant="ghost" size="sm" className="gap-1">
+                        <BarChart3 className="h-4 w-4" />
+                        Stats
+                      </Button>
+                      <Button variant="outline" size="sm">
+                        Manage
+                      </Button>
+                    </div>
                   </div>
-                  <div className="bg-green-100 px-3 py-1 rounded-full text-green-700 text-sm font-medium">
-                    {Math.round((collection.sold / collection.items) * 100)}% Sold
+                ))}
+              </div>
+            </div>
+          )}
+
+          {activeTab === "tokens" && (
+            <div>
+              <div className="flex justify-between mb-4">
+                <h3 className="font-semibold">Your Tokens</h3>
+                <Button variant="default" size="sm" className="bg-studio-accent gap-1">
+                  <Plus className="h-4 w-4" />
+                  Create Token
+                </Button>
+              </div>
+
+              <div className="space-y-4">
+                {tokenDistributions.map((token) => (
+                  <div key={token.id} className="bg-white rounded-xl border border-studio-sand/30 p-4">
+                    <div className="flex justify-between">
+                      <div>
+                        <h4 className="font-medium">{token.name} <span className="text-sm text-studio-clay ml-1">({token.symbol})</span></h4>
+                        <div className="text-sm text-studio-clay mt-1">{token.blockchain}</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-lg font-semibold">{token.price}</div>
+                        <div className={`text-sm ${token.change.startsWith('+') ? 'text-emerald-500' : 'text-rose-500'}`}>
+                          {token.change}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-3 gap-4 mt-4">
+                      <div className="p-3 bg-studio-sand/10 rounded-lg">
+                        <div className="text-sm text-studio-clay">Total Supply</div>
+                        <div className="font-medium">{token.totalSupply}</div>
+                      </div>
+                      <div className="p-3 bg-studio-sand/10 rounded-lg">
+                        <div className="text-sm text-studio-clay">Circulating</div>
+                        <div className="font-medium">{token.circulatingSupply}</div>
+                      </div>
+                      <div className="p-3 bg-studio-sand/10 rounded-lg">
+                        <div className="text-sm text-studio-clay">Holders</div>
+                        <div className="font-medium">{token.holders}</div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex mt-4 gap-2">
+                      <Button variant="outline" size="sm" className="gap-1">
+                        <Share2 className="h-4 w-4" />
+                        Distribute
+                      </Button>
+                      <Button variant="outline" size="sm" className="gap-1">
+                        <ArrowUpRight className="h-4 w-4" />
+                        View Explorer
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {activeTab === "royalties" && (
+            <div>
+              <div className="flex justify-between mb-4">
+                <h3 className="font-semibold">Royalty Management</h3>
+                <Button variant="default" size="sm" className="bg-studio-accent gap-1">
+                  <Sparkles className="h-4 w-4" />
+                  Optimize Royalties
+                </Button>
+              </div>
+
+              <div className="glass-card p-5 bg-gradient-to-br from-purple-50 to-white">
+                <div className="flex items-center mb-4">
+                  <CheckCircle className="h-5 w-5 text-emerald-500 mr-2" />
+                  <h3 className="font-medium">Smart Royalty System Active</h3>
+                </div>
+                
+                <p className="text-sm text-studio-clay mb-4">
+                  Your on-chain royalty collection system is active and monitoring sales across 4 marketplaces.
+                  Recent improvements have increased collection efficiency by 23%.
+                </p>
+                
+                <div className="flex gap-3">
+                  <div className="bg-white p-3 rounded-lg border border-studio-sand/30 flex-1">
+                    <div className="text-sm text-studio-clay">Last 30 Days</div>
+                    <div className="text-xl font-semibold">$8,423.56</div>
+                    <div className="text-xs text-emerald-500">+12.4% from previous period</div>
+                  </div>
+                  <div className="bg-white p-3 rounded-lg border border-studio-sand/30 flex-1">
+                    <div className="text-sm text-studio-clay">Secondary Sales</div>
+                    <div className="text-xl font-semibold">542</div>
+                    <div className="text-xs text-emerald-500">+8.7% from previous period</div>
+                  </div>
+                  <div className="bg-white p-3 rounded-lg border border-studio-sand/30 flex-1">
+                    <div className="text-sm text-studio-clay">Floor Price (Avg)</div>
+                    <div className="text-xl font-semibold">0.12 ETH</div>
+                    <div className="text-xs text-emerald-500">+2.3% from previous period</div>
                   </div>
                 </div>
                 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-                  <div className="text-center p-3 bg-studio-sand/10 rounded-lg">
-                    <div className="text-sm text-muted-foreground">Items</div>
-                    <div className="text-lg font-medium">{collection.items.toLocaleString()}</div>
-                  </div>
-                  <div className="text-center p-3 bg-studio-sand/10 rounded-lg">
-                    <div className="text-sm text-muted-foreground">Sold</div>
-                    <div className="text-lg font-medium">{collection.sold.toLocaleString()}</div>
-                  </div>
-                  <div className="text-center p-3 bg-studio-sand/10 rounded-lg">
-                    <div className="text-sm text-muted-foreground">Floor Price</div>
-                    <div className="text-lg font-medium">{collection.floorPrice}</div>
-                  </div>
-                  <div className="text-center p-3 bg-studio-sand/10 rounded-lg">
-                    <div className="text-sm text-muted-foreground">Volume</div>
-                    <div className="text-lg font-medium">{collection.volume}</div>
-                  </div>
-                </div>
-                
-                <div className="mt-4 pt-4 border-t border-studio-sand/30 flex justify-end">
-                  <button className="text-purple-600 text-sm font-medium hover:text-purple-700 mr-4">
-                    View Dashboard
-                  </button>
-                  <button className="text-studio-accent text-sm font-medium hover:text-studio-accent/80">
-                    Manage Collection
-                  </button>
+                <div className="mt-4 flex justify-end">
+                  <Button variant="outline" size="sm" className="gap-1">
+                    <RefreshCw className="h-4 w-4" />
+                    Refresh Stats
+                  </Button>
+                  <Button variant="outline" size="sm" className="gap-1 ml-2">
+                    <Timer className="h-4 w-4" />
+                    View History
+                  </Button>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-        
-        <div className="space-y-6">
-          <div className="glass-card p-6">
-            <h2 className="text-xl font-bold mb-4">Quick Launch</h2>
-            <div className="space-y-3">
-              <button className="w-full py-3 px-4 bg-purple-100 text-purple-700 rounded-xl font-medium flex items-center hover:bg-purple-200 transition-colors">
-                <Link className="h-5 w-5 mr-3" />
-                Create New Collection
-              </button>
-              <button className="w-full py-3 px-4 bg-blue-100 text-blue-700 rounded-xl font-medium flex items-center hover:bg-blue-200 transition-colors">
-                <ArrowRightLeft className="h-5 w-5 mr-3" />
-                Manage Royalty Splits
-              </button>
-              <button className="w-full py-3 px-4 bg-green-100 text-green-700 rounded-xl font-medium flex items-center hover:bg-green-200 transition-colors">
-                <Shield className="h-5 w-5 mr-3" />
-                View Smart Contracts
-              </button>
             </div>
+          )}
+        </div>
+      </div>
+
+      {/* Smart Contract Templates */}
+      <div className="mt-8">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold">Smart Contract Templates</h2>
+          <Button variant="outline" size="sm">View All</Button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="bg-white p-5 rounded-xl border border-studio-sand/30">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-medium">Standard NFT Collection</h3>
+              <div className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">ERC-721</div>
+            </div>
+            <p className="text-sm text-studio-clay mb-4">Basic NFT collection with royalty support and metadata management.</p>
+            <Button variant="outline" size="sm" className="w-full flex items-center justify-center gap-1">
+              <ChevronRight className="h-4 w-4" />
+              Use Template
+            </Button>
           </div>
           
-          <div className="glass-card p-6">
-            <h2 className="text-xl font-bold mb-4">Connected Wallets</h2>
-            <div className="space-y-3">
-              {[
-                { name: "Creator Wallet", address: "0x7Fc...3a29", balance: "2.4 ETH" },
-                { name: "Royalty Wallet", address: "0x3Db...8f91", balance: "15.6 ETH" },
-                { name: "Team Wallet", address: "0x9aF...b271", balance: "4.2 ETH" }
-              ].map((wallet, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-white rounded-lg border border-studio-sand/30">
-                  <div className="flex items-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center bg-purple-100 mr-3">
-                      <Wallet className="h-4 w-4 text-purple-600" />
-                    </div>
-                    <div>
-                      <div className="font-medium">{wallet.name}</div>
-                      <div className="text-xs text-muted-foreground">{wallet.address}</div>
-                    </div>
-                  </div>
-                  <div className="text-sm font-medium">{wallet.balance}</div>
-                </div>
-              ))}
+          <div className="bg-white p-5 rounded-xl border border-studio-sand/30">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-medium">Token-Gated Content</h3>
+              <div className="bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded-full">Multi-chain</div>
             </div>
+            <p className="text-sm text-studio-clay mb-4">Exclusive content access for token or NFT holders with tiered permissions.</p>
+            <Button variant="outline" size="sm" className="w-full flex items-center justify-center gap-1">
+              <ChevronRight className="h-4 w-4" />
+              Use Template
+            </Button>
+          </div>
+          
+          <div className="bg-white p-5 rounded-xl border border-studio-sand/30">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-medium">Royalty Splitting</h3>
+              <div className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">Automated</div>
+            </div>
+            <p className="text-sm text-studio-clay mb-4">Automatically distribute royalties to collaborators based on predefined shares.</p>
+            <Button variant="outline" size="sm" className="w-full flex items-center justify-center gap-1">
+              <ChevronRight className="h-4 w-4" />
+              Use Template
+            </Button>
           </div>
         </div>
       </div>
