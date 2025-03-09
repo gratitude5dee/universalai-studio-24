@@ -1,7 +1,7 @@
 
 import React, { ReactNode, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { LayoutDashboard, Image as ImageIcon, BarChart3, Settings, LogOut, Gem, Book, Globe, ChevronLeft, ChevronRight, Wallet, Users, Wand2, Eye, Shield } from "lucide-react";
+import { LayoutDashboard, Image as ImageIcon, BarChart3, Settings, LogOut, Gem, Book, Globe, ChevronLeft, ChevronRight, Wallet, Users, Wand2, Eye, Shield, UserCircle2, Bot, Database } from "lucide-react";
 import { motion } from "framer-motion";
 import Header from "@/components/ui/header";
 import Ambient from "@/components/ui/ambient";
@@ -17,6 +17,7 @@ const DashboardLayout = ({
   const location = useLocation();
   const currentPath = location.pathname;
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [agentsSubmenuOpen, setAgentsSubmenuOpen] = useState(false);
 
   const navItems = [{
     name: "Dashboard",
@@ -35,13 +36,27 @@ const DashboardLayout = ({
     path: "/analytics",
     icon: BarChart3
   }, {
-    name: "Create New Agent",
-    path: "/create-agent",
-    icon: Settings
-  }, {
-    name: "My Collection",
-    path: "/collection",
-    icon: Gem
+    name: "Agents",
+    path: "#",
+    icon: UserCircle2,
+    hasSubmenu: true,
+    submenuItems: [
+      {
+        name: "Create New Agent",
+        path: "/create-agent",
+        icon: Bot
+      },
+      {
+        name: "My Collection",
+        path: "/collection",
+        icon: Database
+      },
+      {
+        name: "Observability",
+        path: "/observability",
+        icon: Eye
+      }
+    ]
   }, {
     name: "IP Portal",
     path: "/rights",
@@ -55,10 +70,6 @@ const DashboardLayout = ({
     path: "/bridge",
     icon: Wand2
   }, {
-    name: "Observability",
-    path: "/observability",
-    icon: Eye
-  }, {
     name: "Treasury",
     path: "/treasury",
     icon: Wallet
@@ -66,6 +77,17 @@ const DashboardLayout = ({
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
+    if (isCollapsed) {
+      // If expanding the sidebar, close any open submenus
+      setAgentsSubmenuOpen(false);
+    }
+  };
+
+  const toggleAgentsSubmenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!isCollapsed) {
+      setAgentsSubmenuOpen(!agentsSubmenuOpen);
+    }
   };
 
   return <div className="min-h-screen flex flex-col bg-studio-cream overflow-hidden">
@@ -94,24 +116,88 @@ const DashboardLayout = ({
           
           <nav className="flex-1 space-y-1">
             {navItems.map(item => {
-            const isActive = item.path === "/" && currentPath === "/" || item.path !== "/" && currentPath.startsWith(item.path);
-            return <Link to={item.path} key={item.name} className="relative block" title={isCollapsed ? item.name : ""}>
-                  <div className={`
-                    flex items-center ${isCollapsed ? 'justify-center' : 'px-3'} py-3 rounded-xl text-sm font-medium transition-all duration-200 group
-                    ${isActive ? 'text-studio-cream bg-studio-accent' : 'hover:bg-studio-sand/30'}
-                  `}>
-                    <item.icon className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 transition-all duration-200
-                      ${isActive ? 'text-studio-cream' : 'text-studio-clay group-hover:text-studio-accent'}
-                    `} />
-                    {!isCollapsed && item.name}
-                    {isActive && !isCollapsed && <motion.div layoutId="sidebar-indicator" className="absolute right-3 w-1.5 h-1.5 rounded-full bg-white" transition={{
-                  type: "spring",
-                  bounce: 0.2,
-                  duration: 0.6
-                }} />}
-                  </div>
-                </Link>;
-          })}
+              const isActive = item.path === "/" && currentPath === "/" || 
+                               (item.path !== "/" && item.path !== "#" && currentPath.startsWith(item.path)) ||
+                               (item.hasSubmenu && item.submenuItems?.some(subItem => currentPath.startsWith(subItem.path)));
+              const isSubMenuActive = item.hasSubmenu && item.submenuItems?.some(subItem => currentPath.startsWith(subItem.path));
+              
+              return (
+                <div key={item.name} className="relative">
+                  {/* Main menu item */}
+                  {!item.hasSubmenu ? (
+                    <Link to={item.path} className="relative block" title={isCollapsed ? item.name : ""}>
+                      <div className={`
+                        flex items-center ${isCollapsed ? 'justify-center' : 'px-3'} py-3 rounded-xl text-sm font-medium transition-all duration-200 group
+                        ${isActive ? 'text-studio-cream bg-studio-accent' : 'hover:bg-studio-sand/30'}
+                      `}>
+                        <item.icon className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 transition-all duration-200
+                          ${isActive ? 'text-studio-cream' : 'text-studio-clay group-hover:text-studio-accent'}
+                        `} />
+                        {!isCollapsed && item.name}
+                        {isActive && !isCollapsed && <motion.div layoutId="sidebar-indicator" className="absolute right-3 w-1.5 h-1.5 rounded-full bg-white" transition={{
+                          type: "spring",
+                          bounce: 0.2,
+                          duration: 0.6
+                        }} />}
+                      </div>
+                    </Link>
+                  ) : (
+                    /* Menu item with submenu */
+                    <>
+                      <a 
+                        href="#" 
+                        onClick={toggleAgentsSubmenu} 
+                        className="relative block" 
+                        title={isCollapsed ? item.name : ""}
+                      >
+                        <div className={`
+                          flex items-center justify-between ${isCollapsed ? 'justify-center' : 'px-3'} py-3 rounded-xl text-sm font-medium transition-all duration-200 group
+                          ${isSubMenuActive ? 'text-studio-cream bg-studio-accent' : 'hover:bg-studio-sand/30'}
+                        `}>
+                          <div className="flex items-center">
+                            <item.icon className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 transition-all duration-200
+                              ${isSubMenuActive ? 'text-studio-cream' : 'text-studio-clay group-hover:text-studio-accent'}
+                            `} />
+                            {!isCollapsed && item.name}
+                          </div>
+                          {!isCollapsed && (
+                            <ChevronRight 
+                              className={`h-4 w-4 transition-transform duration-200 ${agentsSubmenuOpen ? 'rotate-90' : ''} 
+                                ${isSubMenuActive ? 'text-studio-cream' : 'text-studio-clay'}
+                              `} 
+                            />
+                          )}
+                        </div>
+                      </a>
+                      
+                      {/* Submenu */}
+                      {(agentsSubmenuOpen || isCollapsed) && item.submenuItems && (
+                        <div className={`mt-1 ml-4 space-y-1 ${isCollapsed ? 'absolute left-full top-0 ml-2 bg-white p-2 rounded-lg shadow-lg z-10 min-w-48' : ''}`}>
+                          {item.submenuItems.map(subItem => {
+                            const isSubItemActive = currentPath.startsWith(subItem.path);
+                            
+                            return (
+                              <Link 
+                                key={subItem.name} 
+                                to={subItem.path} 
+                                className={`
+                                  flex items-center px-3 py-2 rounded-lg text-sm transition-colors duration-200
+                                  ${isSubItemActive ? 'bg-studio-accent/10 text-studio-accent' : 'hover:bg-studio-sand/20'}
+                                `}
+                                title={isCollapsed ? subItem.name : ""}
+                              >
+                                <subItem.icon className={`h-4 w-4 ${isCollapsed ? '' : 'mr-2'} ${isSubItemActive ? 'text-studio-accent' : 'text-studio-clay'}`} />
+                                {(!isCollapsed || (isCollapsed && item.hasSubmenu)) && subItem.name}
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              );
+            })}
           </nav>
           
           <div className="mt-auto mb-4 space-y-1">
