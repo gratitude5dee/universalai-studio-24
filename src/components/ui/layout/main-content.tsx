@@ -1,5 +1,5 @@
 
-import React, { ReactNode, useState, useEffect } from "react";
+import React, { ReactNode, useState, useEffect, useRef } from "react";
 import Header from "../header";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
@@ -11,18 +11,27 @@ interface MainContentProps {
 const MainContent: React.FC<MainContentProps> = ({ children }) => {
   const location = useLocation();
   const [isPageTransition, setIsPageTransition] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isAnimationComplete, setIsAnimationComplete] = useState(true);
   
   // Trigger transition when route changes
   useEffect(() => {
-    setIsPageTransition(true);
+    // Only start a new transition if the previous one is complete
+    if (isAnimationComplete) {
+      setIsAnimationComplete(false);
+      setIsPageTransition(true);
+    }
+  }, [location.pathname, isAnimationComplete]);
+
+  // Handle video ended event
+  const handleVideoEnded = () => {
+    setIsPageTransition(false);
     
-    // Reset transition after video plays
-    const timer = setTimeout(() => {
-      setIsPageTransition(false);
-    }, 1500); // Adjust based on video length
-    
-    return () => clearTimeout(timer);
-  }, [location.pathname]);
+    // Allow a small delay before allowing new transitions
+    setTimeout(() => {
+      setIsAnimationComplete(true);
+    }, 300); // Small buffer after video ends
+  };
 
   return (
     <motion.div 
@@ -43,12 +52,13 @@ const MainContent: React.FC<MainContentProps> = ({ children }) => {
             transition={{ duration: 0.3 }}
           >
             <video 
+              ref={videoRef}
               src="/ascii-video.mp4" 
               autoPlay 
               muted 
               playsInline
               className="max-w-full max-h-full object-contain"
-              onEnded={() => setIsPageTransition(false)}
+              onEnded={handleVideoEnded}
             />
           </motion.div>
         )}
