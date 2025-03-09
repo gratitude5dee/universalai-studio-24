@@ -10,14 +10,19 @@ interface MainContentProps {
 const MainContent: React.FC<MainContentProps> = ({ children }) => {
   return (
     <motion.div 
-      className="flex-1 min-h-screen flex flex-col w-full bg-studio-cream"
+      className="flex-1 min-h-screen flex flex-col w-full bg-studio-cream bg-[radial-gradient(circle_at_top_right,rgba(217,143,100,0.08),transparent_60%)]"
       layout
       transition={{ duration: 0.25, ease: "easeOut" }}
     >
       <Header />
-      <main className="px-4 pb-8 mt-2 flex-1">
+      <motion.main 
+        className="px-4 pb-8 mt-2 flex-1 overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      >
         {children}
-      </main>
+      </motion.main>
     </motion.div>
   );
 };

@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Coins, Map, Sparkles, Scroll, BarChart3, Clock, Landmark, TrendingUp, Droplets } from "lucide-react";
 import DashboardLayout from "@/layouts/dashboard-layout";
 import { Content } from "@/components/ui/content";
@@ -16,6 +16,7 @@ import DirectoryOfAgents from "@/components/treasury/DirectoryOfAgents";
 const TreasureVault = () => {
   const [activeTab, setActiveTab] = useState("collection");
   const location = useLocation();
+  const navigate = useNavigate();
   const [currentTab, setCurrentTab] = useState("overview");
   
   // Parse the URL query parameter to set the active tab
@@ -28,6 +29,14 @@ const TreasureVault = () => {
       setCurrentTab("overview");
     }
   }, [location.search]);
+  
+  // Update URL when tab changes
+  const handleTabChange = (value: string) => {
+    setCurrentTab(value);
+    const params = new URLSearchParams(location.search);
+    params.set("tab", value);
+    navigate(`${location.pathname}?${params.toString()}`, { replace: true });
+  };
 
   const tabs = [
     { id: "collection", name: "Asset Collection", icon: Coins },
@@ -43,12 +52,32 @@ const TreasureVault = () => {
   return (
     <DashboardLayout>
       <Content title="Organization Finances" subtitle="Manage your magical treasures and watch your wealth grow through enchanted stewardship">
-        <Tabs value={currentTab} defaultValue="overview" className="w-full">
-          <TabsList className="w-full max-w-md mb-6">
-            <TabsTrigger value="overview" className="flex-1">Overview</TabsTrigger>
-            <TabsTrigger value="onchain" className="flex-1">On-Chain Actions</TabsTrigger>
-            <TabsTrigger value="trading" className="flex-1">Trading Agents</TabsTrigger>
-            <TabsTrigger value="liquidity" className="flex-1">Liquidity Agents</TabsTrigger>
+        <Tabs value={currentTab} defaultValue="overview" className="w-full" onValueChange={handleTabChange}>
+          <TabsList className="w-full max-w-md mb-6 bg-white/70 backdrop-blur-sm border border-studio-sand/20 rounded-xl p-1 shadow-sm">
+            <TabsTrigger 
+              value="overview" 
+              className="flex-1 py-2.5 rounded-lg data-[state=active]:bg-studio-accent data-[state=active]:text-white data-[state=active]:shadow-sm transition-all duration-200"
+            >
+              Overview
+            </TabsTrigger>
+            <TabsTrigger 
+              value="onchain" 
+              className="flex-1 py-2.5 rounded-lg data-[state=active]:bg-studio-accent data-[state=active]:text-white data-[state=active]:shadow-sm transition-all duration-200"
+            >
+              On-Chain Actions
+            </TabsTrigger>
+            <TabsTrigger 
+              value="trading" 
+              className="flex-1 py-2.5 rounded-lg data-[state=active]:bg-studio-accent data-[state=active]:text-white data-[state=active]:shadow-sm transition-all duration-200"
+            >
+              Trading Agents
+            </TabsTrigger>
+            <TabsTrigger 
+              value="liquidity" 
+              className="flex-1 py-2.5 rounded-lg data-[state=active]:bg-studio-accent data-[state=active]:text-white data-[state=active]:shadow-sm transition-all duration-200"
+            >
+              Liquidity Agents
+            </TabsTrigger>
           </TabsList>
           
           <TabsContent value="overview" className="space-y-6">
