@@ -142,13 +142,13 @@ const MatrixAnimation: React.FC<{onComplete: () => void}> = ({ onComplete }) => 
       setShowAscii(true);
     }, 1000);
     
-    // Complete animation after a set time
+    // Complete animation after a set time - changed from 4000ms to 1500ms
     const completeTimer = setTimeout(() => {
       if (!completedRef.current) {
         completedRef.current = true;
         onComplete();
       }
-    }, 4000);
+    }, 1500);
     
     return () => {
       clearTimeout(asciiTimer);
@@ -166,9 +166,9 @@ const MatrixAnimation: React.FC<{onComplete: () => void}> = ({ onComplete }) => 
         {drops}
       </div>
       
-      {/* ASCII art display */}
+      {/* ASCII art display - reduced height by scaling down */}
       {showAscii && (
-        <div className="relative z-10 text-green-400 font-mono leading-none text-xs md:text-sm whitespace-pre overflow-hidden max-w-full max-h-full scale-[0.6] sm:scale-75 md:scale-90 lg:scale-100">
+        <div className="relative z-10 text-green-400 font-mono leading-none text-xs md:text-sm whitespace-pre overflow-hidden max-w-full max-h-full scale-[0.3] sm:scale-[0.375] md:scale-[0.45] lg:scale-[0.5]">
           {asciiArt.map((line, index) => (
             <motion.div 
               key={index}
