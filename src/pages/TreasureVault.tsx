@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Coins, Map, Sparkles, Scroll, BarChart3, Clock, Landmark, TrendingUp, Droplets } from "lucide-react";
@@ -79,14 +78,14 @@ const TreasureVault = () => {
           </TabsList>
           
           <TabsContent value="overview" className="space-y-6">
-            <TreasureChest />
-            
             <TabNavigation 
               tabs={tabs} 
               activeTab={activeTab} 
               setActiveTab={setActiveTab} 
             />
-
+            
+            <TreasureChest />
+            
             <TabContentRenderer activeTab={activeTab} />
             
             <div className="mt-6">

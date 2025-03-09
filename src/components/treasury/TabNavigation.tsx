@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -19,7 +18,7 @@ const TabNavigation: React.FC<TabNavigationProps> = ({ tabs, activeTab, setActiv
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
 
   return (
-    <div className="flex justify-center overflow-x-auto py-4 px-6 gap-7 bg-white/60 backdrop-blur-sm rounded-2xl border border-studio-sand/20 shadow-[0_4px_20px_rgba(0,0,0,0.07)] relative">
+    <div className="flex justify-center overflow-x-auto py-4 px-6 gap-10 bg-white/60 backdrop-blur-sm rounded-2xl border border-studio-sand/20 shadow-[0_4px_20px_rgba(0,0,0,0.07)] relative">
       {tabs.map((tab) => {
         const TabIcon = tab.icon;
         const isActive = activeTab === tab.id;
@@ -91,7 +90,6 @@ const TabNavigation: React.FC<TabNavigationProps> = ({ tabs, activeTab, setActiv
                 )}
               </motion.button>
               
-              {/* Label that slides out horizontally within the button */}
               <AnimatePresence>
                 {isHovered && (
                   <motion.div
