@@ -57,7 +57,7 @@ const Sidebar: React.FC<SidebarProps> = ({ navItems }) => {
         variant="outline" 
         size="icon" 
         onClick={toggleSidebar} 
-        className="absolute -right-4 top-1/2 transform -translate-y-1/2 h-8 w-8 rounded-full bg-white border-studio-sand shadow-subtle" 
+        className="absolute -right-4 top-1/2 transform -translate-y-1/2 h-8 w-8 rounded-full bg-white border-studio-sand shadow-subtle z-10" 
         aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
       >
         {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
