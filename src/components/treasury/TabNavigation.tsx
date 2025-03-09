@@ -1,7 +1,8 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Sparkles } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 
 interface TabItem {
   id: string;
@@ -17,35 +18,46 @@ interface TabNavigationProps {
 
 const TabNavigation: React.FC<TabNavigationProps> = ({ tabs, activeTab, setActiveTab }) => {
   return (
-    <div className="flex overflow-x-auto pb-2 -mx-1">
-      {tabs.map((tab) => {
-        const TabIcon = tab.icon;
-        return (
-          <motion.button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center px-4 py-2 mx-1 rounded-full transition-all ${
-              activeTab === tab.id
-                ? "bg-studio-accent text-white"
-                : "bg-white/80 hover:bg-white"
-            }`}
-            whileHover={{ y: -2 }}
-            whileTap={{ y: 0 }}
-          >
-            <TabIcon className="w-4 h-4 mr-2" />
-            <span>{tab.name}</span>
-            {activeTab === tab.id && (
-              <motion.span
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                className="ml-2 bg-white/20 rounded-full p-1"
-              >
-                <Sparkles className="w-3 h-3" />
-              </motion.span>
-            )}
-          </motion.button>
-        );
-      })}
+    <div className="flex justify-center overflow-x-auto py-2 px-2 gap-4 bg-white/40 backdrop-blur-sm rounded-xl border border-studio-sand/20 shadow-subtle">
+      <TooltipProvider delayDuration={150}>
+        {tabs.map((tab) => {
+          const TabIcon = tab.icon;
+          const isActive = activeTab === tab.id;
+          
+          return (
+            <Tooltip key={tab.id}>
+              <TooltipTrigger asChild>
+                <motion.button
+                  onClick={() => setActiveTab(tab.id)}
+                  className={cn(
+                    "relative p-2.5 rounded-lg transition-all duration-300",
+                    isActive 
+                      ? "bg-studio-accent text-white shadow-sm" 
+                      : "bg-white/80 text-studio-charcoal hover:bg-white hover:scale-110"
+                  )}
+                  whileHover={{ y: -2 }}
+                  whileTap={{ y: 0 }}
+                  aria-label={tab.name}
+                >
+                  <TabIcon className="w-5 h-5" />
+                  
+                  {isActive && (
+                    <motion.span 
+                      className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    />
+                  )}
+                </motion.button>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" className="bg-studio-charcoal/90 text-white border-none px-3 py-1.5 rounded-lg backdrop-blur-md">
+                {tab.name}
+              </TooltipContent>
+            </Tooltip>
+          );
+        })}
+      </TooltipProvider>
     </div>
   );
 };
