@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Coins, Map, Sparkles, Scroll, BarChart3, Clock, Landmark, TrendingUp, Droplets } from "lucide-react";
@@ -19,7 +18,6 @@ const TreasureVault = () => {
   const navigate = useNavigate();
   const [currentTab, setCurrentTab] = useState("overview");
   
-  // Parse the URL query parameter to set the active tab
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const tab = params.get("tab");
@@ -30,7 +28,6 @@ const TreasureVault = () => {
     }
   }, [location.search]);
   
-  // Update URL when tab changes
   const handleTabChange = (value: string) => {
     setCurrentTab(value);
     const params = new URLSearchParams(location.search);
@@ -53,7 +50,7 @@ const TreasureVault = () => {
     <DashboardLayout>
       <Content title="Organization Finances" subtitle="Manage your magical treasures and watch your wealth grow through enchanted stewardship">
         <Tabs value={currentTab} defaultValue="overview" className="w-full" onValueChange={handleTabChange}>
-          <TabsList className="w-full max-w-[calc(28rem+5px)] mb-6 bg-white/80 backdrop-blur-md border border-studio-sand/30 rounded-xl p-1 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] relative overflow-hidden before:absolute before:inset-0 before:bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1IiBkPSJNMCAwaDMwMHYzMDBIMHoiLz48L3N2Zz4=')] before:opacity-30">
+          <TabsList className="w-full max-w-[calc(28rem+15px)] mb-6 bg-white/80 backdrop-blur-md border border-studio-sand/30 rounded-xl p-1 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] relative overflow-hidden before:absolute before:inset-0 before:bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1IiBkPSJNMCAwaDMwMHYzMDBIMHoiLz48L3N2Zz4=')] before:opacity-30">
             <TabsTrigger 
               value="overview" 
               className="flex-1 py-2.5 rounded-lg hover:bg-white/30 data-[state=active]:bg-studio-accent data-[state=active]:text-white data-[state=active]:shadow-sm data-[state=active]:backdrop-blur-md transition-all duration-300 z-10 relative"
@@ -91,7 +88,6 @@ const TreasureVault = () => {
 
             <TabContentRenderer activeTab={activeTab} />
             
-            {/* Directory of Agents moved to bottom of overview page */}
             <div className="mt-6">
               <DirectoryOfAgents />
             </div>
