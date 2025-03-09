@@ -10,8 +10,8 @@ const WzrdLibrary = () => {
       <Content title="WZRD.tech Library" subtitle="Access our vast collection of magical knowledge and resources">
         <div className="glass-card p-6">
           <div className="flex items-center mb-4">
-            <div className="bg-studio-highlight p-3 rounded-2xl mr-4">
-              <BookOpen className="h-8 w-8 text-studio-accent" />
+            <div className="bg-purple-100 p-3 rounded-2xl mr-4">
+              <BookOpen className="h-8 w-8 text-purple-500" />
             </div>
             <div>
               <h2 className="text-2xl font-bold">Library</h2>

@@ -1,6 +1,6 @@
 
 import React, { ReactNode } from "react";
-import { LayoutDashboard, Image as ImageIcon, BarChart3, Shield, Wand2, Wallet, Users, Bot, Database, Eye, Globe, ShoppingCart, Landmark, TrendingUp, Droplets, Building, Trees, ArrowRightLeft, Palette, BookOpen, Brain, Headphones, Infinity, UserRound } from "lucide-react";
+import { LayoutDashboard, Image as ImageIcon, BarChart3, Shield, Zap, Wallet, Users, Bot, Database, Eye, Globe, ShoppingCart, Landmark, TrendingUp, Droplets, Building, Trees, ArrowRightLeft, Palette, BookOpen, Brain, Headphones, Infinity, UserRound } from "lucide-react";
 import Header from "@/components/ui/header";
 import Ambient from "@/components/ui/ambient";
 import Sidebar from "@/components/ui/sidebar/sidebar";
@@ -14,6 +14,43 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     name: "Dashboard",
     path: "/",
     icon: LayoutDashboard
+  }, {
+    name: "WZRD.tech",
+    path: "#",
+    icon: Zap,
+    hasSubmenu: true,
+    submenuItems: [
+      {
+        name: "Studio",
+        path: "/wzrd/studio",
+        icon: Palette
+      },
+      {
+        name: "Library",
+        path: "/wzrd/library",
+        icon: BookOpen
+      },
+      {
+        name: "DeepResearch",
+        path: "/wzrd/research",
+        icon: Brain
+      },
+      {
+        name: "Generative Podcasts",
+        path: "/wzrd/podcasts",
+        icon: Headphones
+      },
+      {
+        name: "Infinite Library",
+        path: "/wzrd/infinite-library",
+        icon: Infinity
+      },
+      {
+        name: "Companions",
+        path: "/wzrd/companions",
+        icon: UserRound
+      }
+    ]
   }, {
     name: "Projects",
     path: "#",
@@ -61,43 +98,6 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         name: "Observability",
         path: "/observability",
         icon: Eye
-      }
-    ]
-  }, {
-    name: "WZRD.tech",
-    path: "#",
-    icon: Wand2,
-    hasSubmenu: true,
-    submenuItems: [
-      {
-        name: "Studio",
-        path: "/wzrd/studio",
-        icon: Palette
-      },
-      {
-        name: "Library",
-        path: "/wzrd/library",
-        icon: BookOpen
-      },
-      {
-        name: "DeepResearch",
-        path: "/wzrd/research",
-        icon: Brain
-      },
-      {
-        name: "Generative Podcasts",
-        path: "/wzrd/podcasts",
-        icon: Headphones
-      },
-      {
-        name: "Infinite Library",
-        path: "/wzrd/infinite-library",
-        icon: Infinity
-      },
-      {
-        name: "Companions",
-        path: "/wzrd/companions",
-        icon: UserRound
       }
     ]
   }, {
@@ -171,3 +171,4 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
 };
 
 export default DashboardLayout;
+

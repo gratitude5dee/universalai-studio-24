@@ -10,8 +10,8 @@ const WzrdResearch = () => {
       <Content title="WZRD.tech DeepResearch" subtitle="Explore the cutting edge of magical technology research">
         <div className="glass-card p-6">
           <div className="flex items-center mb-4">
-            <div className="bg-studio-highlight p-3 rounded-2xl mr-4">
-              <Brain className="h-8 w-8 text-studio-accent" />
+            <div className="bg-purple-100 p-3 rounded-2xl mr-4">
+              <Brain className="h-8 w-8 text-purple-500" />
             </div>
             <div>
               <h2 className="text-2xl font-bold">DeepResearch</h2>
