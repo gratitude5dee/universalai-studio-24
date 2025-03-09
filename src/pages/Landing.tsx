@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, useMotionValue, useTransform, useAnimation } from "framer-motion";
@@ -13,7 +12,7 @@ const Landing = () => {
   const controls = useAnimation();
   const [isLoading, setIsLoading] = useState(true);
   const [typedText, setTypedText] = useState("");
-  const fullText = "Transform Ideas Into Reality";
+  const fullText = "Cultivate your Creator";
 
   // ASCII animation effect
   useEffect(() => {
@@ -527,11 +526,4 @@ const Landing = () => {
         </motion.div>
       </div>
       
-      <footer className="mt-auto py-4 sm:py-6 text-center text-white/50 text-xs sm:text-sm relative z-10">
-        <p>© 2023 UniversalAI | Unleash your creative potential</p>
-      </footer>
-    </div>
-  );
-};
-
-export default Landing;
+      <footer className
