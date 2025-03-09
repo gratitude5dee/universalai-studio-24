@@ -2,7 +2,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
 import Index from "./pages/Index";
-import Gallery from "./pages/Gallery";
+import AssetLibrary from "./pages/AssetLibrary";
 import Analytics from "./pages/Analytics";
 import NotFound from "./pages/NotFound";
 import CreateAgent from "./pages/CreateAgent";
@@ -21,7 +21,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Index />} />
-        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/asset-library" element={<AssetLibrary />} />
         <Route path="/analytics" element={<Analytics />} />
         <Route path="/create-agent" element={<CreateAgent />} />
         <Route path="/collection" element={<Collection />} />

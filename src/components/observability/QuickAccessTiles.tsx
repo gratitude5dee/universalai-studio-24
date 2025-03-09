@@ -27,7 +27,7 @@ interface QuickAccessTile {
 export const QuickAccessTiles = () => {
   const tiles: QuickAccessTile[] = [
     { id: "1", title: "Create Agent", icon: Bot, path: "/create-agent", color: "#8B5CF6" },
-    { id: "2", title: "Gallery", icon: Image, path: "/gallery", color: "#F97316" },
+    { id: "2", title: "Asset Library", icon: Image, path: "/asset-library", color: "#F97316" },
     { id: "3", title: "Collection", icon: Gem, path: "/collection", color: "#0EA5E9" },
     { id: "4", title: "Projects", icon: Users, path: "/projects", color: "#10B981" },
     { id: "5", title: "Bridge", icon: Wand2, path: "/bridge", color: "#EC4899" },
