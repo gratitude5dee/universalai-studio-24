@@ -36,13 +36,13 @@ const TabNavigation: React.FC<TabNavigationProps> = ({ tabs, activeTab, setActiv
             <AnimatePresence>
               {isHovered && (
                 <motion.div
-                  className="fixed left-1/2 -translate-x-1/2 bottom-full mb-2 px-3 py-1.5 bg-studio-charcoal/90 text-white text-sm rounded-lg backdrop-blur-md shadow-lg whitespace-nowrap z-[9999]"
+                  className="absolute left-1/2 bottom-full mb-2 px-3 py-1.5 bg-studio-charcoal/90 text-white text-sm rounded-lg backdrop-blur-md shadow-lg whitespace-nowrap z-[9999]"
                   initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 5 }}
                   transition={{ duration: 0.15 }}
                   style={{ 
-                    transform: `translate(-50%, -8px)`,
+                    transform: 'translate(-50%, -8px)',
                     pointerEvents: "none"
                   }}
                 >
