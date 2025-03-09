@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Coins, Map, Landmark, Globe, Wallet, Link, Network, ArrowRightLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -19,11 +18,13 @@ const OnChainActions = () => {
         </p>
         
         <Tabs value={activePortal} onValueChange={setActivePortal} className="mt-6">
-          <TabsList className="grid grid-cols-4 w-full mb-6">
+          <TabsList className="grid grid-cols-6 w-full mb-6">
             <TabsTrigger value="transactions">Transactions</TabsTrigger>
-            <TabsTrigger value="mantle">Mantle Portal</TabsTrigger>
-            <TabsTrigger value="wormhole">Wormhole Portal</TabsTrigger>
-            <TabsTrigger value="mode">Mode Portal</TabsTrigger>
+            <TabsTrigger value="mantle">Mantle</TabsTrigger>
+            <TabsTrigger value="wormhole">Wormhole</TabsTrigger>
+            <TabsTrigger value="mode">Mode</TabsTrigger>
+            <TabsTrigger value="taiko">Taiko</TabsTrigger>
+            <TabsTrigger value="monad">Monad</TabsTrigger>
           </TabsList>
           
           <TabsContent value="transactions">
@@ -103,7 +104,7 @@ const OnChainActions = () => {
                   <Globe className="w-5 h-5 text-[#2563EB]" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-medium">Mantle Portal</h3>
+                  <h3 className="text-lg font-medium">Mantle</h3>
                   <p className="text-sm text-muted-foreground">High-speed layer 2 bridge for optimized transactions</p>
                 </div>
               </div>
@@ -178,7 +179,7 @@ const OnChainActions = () => {
                   <Network className="w-5 h-5 text-[#8B5CF6]" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-medium">Wormhole Portal</h3>
+                  <h3 className="text-lg font-medium">Wormhole</h3>
                   <p className="text-sm text-muted-foreground">Cross-chain interoperability for seamless asset transfers</p>
                 </div>
               </div>
@@ -266,7 +267,7 @@ const OnChainActions = () => {
                   <ArrowRightLeft className="w-5 h-5 text-[#10B981]" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-medium">Mode Portal</h3>
+                  <h3 className="text-lg font-medium">Mode</h3>
                   <p className="text-sm text-muted-foreground">Optimized Ethereum L2 with enhanced developer rewards</p>
                 </div>
               </div>
@@ -344,6 +345,198 @@ const OnChainActions = () => {
                     <Button className="w-full mt-2 bg-[#10B981]">
                       <ArrowRightLeft className="w-4 h-4 mr-2" />
                       Bridge to Mode
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="taiko">
+            <div className="bg-white/90 border border-studio-sand/20 rounded-xl p-6">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 rounded-full bg-[#EC4899]/10 flex items-center justify-center mr-3">
+                  <Link className="w-5 h-5 text-[#EC4899]" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-medium">Taiko</h3>
+                  <p className="text-sm text-muted-foreground">Type 1 ZK-EVM with seamless Ethereum compatibility</p>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                <div className="space-y-4">
+                  <div className="bg-muted/30 p-4 rounded-lg">
+                    <h4 className="font-medium mb-2">Network Status</h4>
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Network</span>
+                        <span className="text-sm font-medium text-green-600">Active</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Gas Fee</span>
+                        <span className="text-sm font-medium">0.0002 ETH</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Block Time</span>
+                        <span className="text-sm font-medium">~3 seconds</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Finality</span>
+                        <span className="text-sm font-medium">~10 minutes</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="p-4 border border-dashed border-[#EC4899]/30 rounded-lg">
+                    <h4 className="font-medium text-[#EC4899] mb-2">Taiko Features</h4>
+                    <ul className="space-y-1 text-sm">
+                      <li className="flex items-center">
+                        <Link className="w-3 h-3 mr-2 text-[#EC4899]" />
+                        100% EVM equivalence
+                      </li>
+                      <li className="flex items-center">
+                        <Link className="w-3 h-3 mr-2 text-[#EC4899]" />
+                        Zero-knowledge proofs
+                      </li>
+                      <li className="flex items-center">
+                        <Link className="w-3 h-3 mr-2 text-[#EC4899]" />
+                        Permissionless block production
+                      </li>
+                      <li className="flex items-center">
+                        <Link className="w-3 h-3 mr-2 text-[#EC4899]" />
+                        Ethereum-aligned security
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="bg-gradient-to-br from-[#fdf2f8] to-white p-5 rounded-lg border border-[#EC4899]/20">
+                  <h4 className="font-medium mb-4">Taiko Bridge</h4>
+                  <div className="space-y-3">
+                    <div>
+                      <label className="text-sm font-medium block mb-1">Direction</label>
+                      <select className="w-full p-2 border border-studio-sand rounded-md text-sm">
+                        <option>Ethereum → Taiko</option>
+                        <option>Taiko → Ethereum</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium block mb-1">Asset</label>
+                      <select className="w-full p-2 border border-studio-sand rounded-md text-sm">
+                        <option>ETH</option>
+                        <option>USDC</option>
+                        <option>DAI</option>
+                        <option>WBTC</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium block mb-1">Amount</label>
+                      <div className="relative">
+                        <input type="text" className="w-full p-2 border border-studio-sand rounded-md text-sm" placeholder="0.0" />
+                        <button className="absolute right-2 top-2 text-xs text-[#EC4899]">MAX</button>
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-1">Processing time: ~30 minutes</p>
+                    </div>
+                    <Button className="w-full mt-2 bg-[#EC4899]">
+                      <Link className="w-4 h-4 mr-2" />
+                      Bridge to Taiko
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="monad">
+            <div className="bg-white/90 border border-studio-sand/20 rounded-xl p-6">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 rounded-full bg-[#F59E0B]/10 flex items-center justify-center mr-3">
+                  <Globe className="w-5 h-5 text-[#F59E0B]" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-medium">Monad</h3>
+                  <p className="text-sm text-muted-foreground">High-performance L1 blockchain with parallel processing</p>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                <div className="space-y-4">
+                  <div className="bg-muted/30 p-4 rounded-lg">
+                    <h4 className="font-medium mb-2">Network Metrics</h4>
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">TPS</span>
+                        <span className="text-sm font-medium">10,000+</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Latency</span>
+                        <span className="text-sm font-medium">~0.5 seconds</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Gas Price</span>
+                        <span className="text-sm font-medium text-green-600">0.0001 MONAD</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Network Load</span>
+                        <span className="text-sm font-medium">12%</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="p-4 border border-dashed border-[#F59E0B]/30 rounded-lg">
+                    <h4 className="font-medium text-[#F59E0B] mb-2">Monad Innovations</h4>
+                    <ul className="space-y-1 text-sm">
+                      <li className="flex items-center">
+                        <Globe className="w-3 h-3 mr-2 text-[#F59E0B]" />
+                        Parallel transaction execution
+                      </li>
+                      <li className="flex items-center">
+                        <Globe className="w-3 h-3 mr-2 text-[#F59E0B]" />
+                        Optimized VM for high throughput
+                      </li>
+                      <li className="flex items-center">
+                        <Globe className="w-3 h-3 mr-2 text-[#F59E0B]" />
+                        Sublinear validator scaling
+                      </li>
+                      <li className="flex items-center">
+                        <Globe className="w-3 h-3 mr-2 text-[#F59E0B]" />
+                        EVM-compatible smart contracts
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="bg-gradient-to-br from-[#fef3c7] to-white p-5 rounded-lg border border-[#F59E0B]/20">
+                  <h4 className="font-medium mb-4">Monad Bridge</h4>
+                  <div className="space-y-3">
+                    <div>
+                      <label className="text-sm font-medium block mb-1">Bridge Direction</label>
+                      <select className="w-full p-2 border border-studio-sand rounded-md text-sm">
+                        <option>Ethereum → Monad</option>
+                        <option>Monad → Ethereum</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium block mb-1">Token</label>
+                      <select className="w-full p-2 border border-studio-sand rounded-md text-sm">
+                        <option>ETH</option>
+                        <option>USDC</option>
+                        <option>DAI</option>
+                        <option>WBTC</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium block mb-1">Amount</label>
+                      <div className="relative">
+                        <input type="text" className="w-full p-2 border border-studio-sand rounded-md text-sm" placeholder="0.0" />
+                        <button className="absolute right-2 top-2 text-xs text-[#F59E0B]">MAX</button>
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-1">Est. completion: 15 minutes</p>
+                    </div>
+                    <Button className="w-full mt-2 bg-[#F59E0B]">
+                      <Globe className="w-4 h-4 mr-2" />
+                      Bridge to Monad
                     </Button>
                   </div>
                 </div>
