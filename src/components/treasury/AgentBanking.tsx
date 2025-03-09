@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
@@ -257,7 +256,7 @@ const AgentBanking: React.FC = () => {
                   <div 
                     key={index}
                     onClick={() => setWizardStep(3)}
-                    className="flex items-center p-3 bg-white rounded-lg border border-studio-sand/30 cursor-pointer hover:border-studio-accent/50 hover:shadow-sm transition-all"
+                    className="flex items-center p-3 bg-white rounded-lg border border-studio-sand/30 cursor-pointer hover:border-studio-accent/50"
                   >
                     <div className="bg-studio-highlight/20 w-10 h-10 rounded-full flex items-center justify-center mr-3">
                       <Bot className="h-5 w-5 text-studio-accent" />
@@ -1114,7 +1113,5 @@ const AgentBanking: React.FC = () => {
     </div>
   );
 };
-
-import { Check, Filter, Search, ClipboardCopy, Trash, Bot, ChevronRight, Globe, Badge } from 'lucide-react';
 
 export default AgentBanking;
