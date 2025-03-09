@@ -11,6 +11,7 @@ import TabContentRenderer from "@/components/treasury/TabContentRenderer";
 import OnChainActions from "@/components/treasury/OnChainActions";
 import TradingAgents from "@/components/treasury/TradingAgents";
 import LiquidityAgents from "@/components/treasury/LiquidityAgents";
+import DirectoryOfAgents from "@/components/treasury/DirectoryOfAgents";
 
 const TreasureVault = () => {
   const [activeTab, setActiveTab] = useState("collection");
@@ -60,6 +61,11 @@ const TreasureVault = () => {
             />
 
             <TabContentRenderer activeTab={activeTab} />
+            
+            {/* Directory of Agents moved to bottom of overview page */}
+            <div className="mt-6">
+              <DirectoryOfAgents />
+            </div>
           </TabsContent>
           
           <TabsContent value="onchain" className="space-y-6">
