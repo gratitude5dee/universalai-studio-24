@@ -1,6 +1,6 @@
 
 import React, { ReactNode } from "react";
-import { LayoutDashboard, Image as ImageIcon, BarChart3, Shield, Zap, Wallet, Users, Bot, Database, Eye, Globe, ShoppingCart, Landmark, TrendingUp, Droplets, Building, Trees, ArrowRightLeft, Palette, BookOpen, Brain, Headphones, Infinity, UserRound } from "lucide-react";
+import { LayoutDashboard, Image as ImageIcon, BarChart3, Shield, Zap, Wallet, Users, Bot, Database, Eye, Globe, ShoppingCart, Landmark, TrendingUp, Droplets, Building, Trees, ArrowRightLeft, Palette, BookOpen, Brain, Headphones, Infinity, UserRound, Share2, Link, Tv, User, Music } from "lucide-react";
 import Header from "@/components/ui/header";
 import Ambient from "@/components/ui/ambient";
 import Sidebar from "@/components/ui/sidebar/sidebar";
@@ -120,6 +120,38 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         name: "Bridge",
         path: "/bridge",
         icon: ArrowRightLeft
+      }
+    ]
+  }, {
+    name: "Distribution",
+    path: "#",
+    icon: Share2,
+    hasSubmenu: true,
+    submenuItems: [
+      {
+        name: "Social Media WZRD",
+        path: "/distribution/social-media",
+        icon: Globe
+      },
+      {
+        name: "On-Chain Distribution",
+        path: "/distribution/on-chain",
+        icon: Link
+      },
+      {
+        name: "Media Channels",
+        path: "/distribution/media-channels",
+        icon: Tv
+      },
+      {
+        name: "Independent Channels",
+        path: "/distribution/independent",
+        icon: User
+      },
+      {
+        name: "Sync Licensing",
+        path: "/distribution/sync-licensing",
+        icon: Music
       }
     ]
   }, {
