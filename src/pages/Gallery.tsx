@@ -89,7 +89,7 @@ const Gallery = () => {
     <DashboardLayout>
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <h1 className="text-2xl font-semibold">Gallery</h1>
+          <h1 className="text-2xl font-semibold">Asset Library</h1>
           
           <div className="flex flex-wrap items-center gap-3">
             <div className="flex items-center gap-1 bg-white border border-studio-sand/50 rounded-xl overflow-hidden">

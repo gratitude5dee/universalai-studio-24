@@ -21,7 +21,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     hasSubmenu: true,
     submenuItems: [
       {
-        name: "Gallery",
+        name: "Asset Library",
         path: "/gallery",
         icon: ImageIcon
       },
