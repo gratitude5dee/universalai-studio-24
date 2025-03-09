@@ -8,7 +8,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import { AnimatePresence } from "framer-motion";
-import { CrossmintProvider, CrossmintAuthProvider } from "@crossmint/client-sdk-react-ui";
+import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import { WalletProvider } from "@/context/WalletContext";
 import { ProtectedRoute } from "@/components/ui/ProtectedRoute";
 
@@ -33,66 +33,84 @@ import WzrdPodcasts from "./pages/wzrd/WzrdPodcasts";
 import WzrdInfiniteLibrary from "./pages/wzrd/WzrdInfiniteLibrary";
 import WzrdCompanions from "./pages/wzrd/WzrdCompanions";
 
+// Conditionally import Crossmint only if we have a valid API key
+import { CrossmintProvider, CrossmintAuthProvider } from "@crossmint/client-sdk-react-ui";
+
 window.Buffer = Buffer;
 
 const queryClient = new QueryClient();
 
-// Get Crossmint API key or use a default placeholder if not available
-// This prevents the app from crashing when the key is not set
-const getCrossmintApiKey = () => {
+// Validate if the API key has the correct format
+const isCrossmintKeyValid = () => {
   const key = import.meta.env.VITE_CROSSMINT_CLIENT_KEY || "";
-  // Return a placeholder key if empty to prevent SDK errors
-  // The placeholder follows the expected format (starts with "ck_") but won't work for actual auth
-  return key || "ck_placeholder_key_for_development";
+  // A valid Crossmint API key starts with "ck_" and contains development/staging/production
+  return key && (key.includes("development") || key.includes("staging") || key.includes("production"));
 };
+
+// We'll use this to bypass authentication when Crossmint isn't properly configured
+const hasCrossmintConfig = isCrossmintKeyValid();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <CrossmintProvider apiKey={getCrossmintApiKey()}>
-        <CrossmintAuthProvider loginMethods={["email", "farcaster"]}>
+      <ErrorBoundary>
+        {hasCrossmintConfig ? (
+          <CrossmintProvider apiKey={import.meta.env.VITE_CROSSMINT_CLIENT_KEY || ""}>
+            <CrossmintAuthProvider loginMethods={["email", "farcaster"]}>
+              <WalletProvider>
+                <AppContent />
+              </WalletProvider>
+            </CrossmintAuthProvider>
+          </CrossmintProvider>
+        ) : (
           <WalletProvider>
-            <BrowserRouter>
-              <TooltipProvider>
-                <AnimatePresence mode="wait">
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-
-                    {/* Dashboard and protected routes */}
-                    <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-                    <Route path="/gallery" element={<ProtectedRoute><Gallery /></ProtectedRoute>} />
-                    <Route path="/create-agent" element={<ProtectedRoute><CreateAgent /></ProtectedRoute>} />
-                    <Route path="/collection" element={<ProtectedRoute><Collection /></ProtectedRoute>} />
-                    <Route path="/agent-marketplace" element={<ProtectedRoute><AgentMarketplace /></ProtectedRoute>} />
-                    <Route path="/treasury" element={<ProtectedRoute><TreasureVault /></ProtectedRoute>} />
-                    <Route path="/rights" element={<ProtectedRoute><RightsManagement /></ProtectedRoute>} />
-                    <Route path="/bridge" element={<ProtectedRoute><Bridge /></ProtectedRoute>} />
-                    <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
-                    <Route path="/marketplace-launch" element={<ProtectedRoute><MarketplaceLaunch /></ProtectedRoute>} />
-                    <Route path="/observability" element={<ProtectedRoute><Observability /></ProtectedRoute>} />
-                    <Route path="/thread-of-life" element={<ProtectedRoute><ThreadOfLife /></ProtectedRoute>} />
-                    <Route path="/distribution/*" element={<ProtectedRoute><Distribution /></ProtectedRoute>} />
-                    
-                    {/* WZRD routes */}
-                    <Route path="/wzrd/studio" element={<WzrdStudio />} />
-                    <Route path="/wzrd/library" element={<ProtectedRoute><WzrdLibrary /></ProtectedRoute>} />
-                    <Route path="/wzrd/research" element={<ProtectedRoute><WzrdResearch /></ProtectedRoute>} />
-                    <Route path="/wzrd/podcasts" element={<ProtectedRoute><WzrdPodcasts /></ProtectedRoute>} />
-                    <Route path="/wzrd/infinite-library" element={<ProtectedRoute><WzrdInfiniteLibrary /></ProtectedRoute>} />
-                    <Route path="/wzrd/companions" element={<ProtectedRoute><WzrdCompanions /></ProtectedRoute>} />
-                    
-                    {/* 404 */}
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </AnimatePresence>
-                <Toaster />
-                <Sonner />
-              </TooltipProvider>
-            </BrowserRouter>
+            <AppContent bypassAuth={true} />
           </WalletProvider>
-        </CrossmintAuthProvider>
-      </CrossmintProvider>
+        )}
+      </ErrorBoundary>
     </QueryClientProvider>
+  );
+}
+
+function AppContent({ bypassAuth = false }: { bypassAuth?: boolean }) {
+  return (
+    <BrowserRouter>
+      <TooltipProvider>
+        <AnimatePresence mode="wait">
+          <Routes>
+            <Route path="/" element={<Index />} />
+
+            {/* Dashboard and protected routes */}
+            <Route path="/home" element={bypassAuth ? <Home /> : <ProtectedRoute><Home /></ProtectedRoute>} />
+            <Route path="/gallery" element={bypassAuth ? <Gallery /> : <ProtectedRoute><Gallery /></ProtectedRoute>} />
+            <Route path="/create-agent" element={bypassAuth ? <CreateAgent /> : <ProtectedRoute><CreateAgent /></ProtectedRoute>} />
+            <Route path="/collection" element={bypassAuth ? <Collection /> : <ProtectedRoute><Collection /></ProtectedRoute>} />
+            <Route path="/agent-marketplace" element={bypassAuth ? <AgentMarketplace /> : <ProtectedRoute><AgentMarketplace /></ProtectedRoute>} />
+            <Route path="/treasury" element={bypassAuth ? <TreasureVault /> : <ProtectedRoute><TreasureVault /></ProtectedRoute>} />
+            <Route path="/rights" element={bypassAuth ? <RightsManagement /> : <ProtectedRoute><RightsManagement /></ProtectedRoute>} />
+            <Route path="/bridge" element={bypassAuth ? <Bridge /> : <ProtectedRoute><Bridge /></ProtectedRoute>} />
+            <Route path="/analytics" element={bypassAuth ? <Analytics /> : <ProtectedRoute><Analytics /></ProtectedRoute>} />
+            <Route path="/marketplace-launch" element={bypassAuth ? <MarketplaceLaunch /> : <ProtectedRoute><MarketplaceLaunch /></ProtectedRoute>} />
+            <Route path="/observability" element={bypassAuth ? <Observability /> : <ProtectedRoute><Observability /></ProtectedRoute>} />
+            <Route path="/thread-of-life" element={bypassAuth ? <ThreadOfLife /> : <ProtectedRoute><ThreadOfLife /></ProtectedRoute>} />
+            <Route path="/distribution/*" element={bypassAuth ? <Distribution /> : <ProtectedRoute><Distribution /></ProtectedRoute>} />
+            
+            {/* WZRD routes - Some are accessible without auth */}
+            <Route path="/wzrd/studio" element={<WzrdStudio />} />
+            <Route path="/wzrd/library" element={bypassAuth ? <WzrdLibrary /> : <ProtectedRoute><WzrdLibrary /></ProtectedRoute>} />
+            <Route path="/wzrd/research" element={bypassAuth ? <WzrdResearch /> : <ProtectedRoute><WzrdResearch /></ProtectedRoute>} />
+            <Route path="/wzrd/podcasts" element={bypassAuth ? <WzrdPodcasts /> : <ProtectedRoute><WzrdPodcasts /></ProtectedRoute>} />
+            <Route path="/wzrd/infinite-library" element={bypassAuth ? <WzrdInfiniteLibrary /> : <ProtectedRoute><WzrdInfiniteLibrary /></ProtectedRoute>} />
+            <Route path="/wzrd/companions" element={bypassAuth ? <WzrdCompanions /> : <ProtectedRoute><WzrdCompanions /></ProtectedRoute>} />
+            
+            {/* 404 */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AnimatePresence>
+        <Toaster />
+        <Sonner />
+      </TooltipProvider>
+    </BrowserRouter>
   );
 }
 

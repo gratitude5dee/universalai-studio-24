@@ -17,7 +17,13 @@ export default function Index() {
 
   const handleLogin = async () => {
     try {
-      await login();
+      // Check if login function exists (it will be undefined if Crossmint isn't properly configured)
+      if (login) {
+        await login();
+      } else {
+        // If Crossmint is not available, just navigate to home
+        navigate("/home");
+      }
     } catch (error) {
       console.error("Login error:", error);
     }
@@ -41,7 +47,7 @@ export default function Index() {
             className="w-full bg-studio-accent hover:bg-studio-accent/90"
             onClick={handleLogin}
           >
-            Sign in with Crossmint
+            {login ? "Sign in with Crossmint" : "Continue to App"}
           </Button>
           
           <div className="relative py-2">
@@ -55,7 +61,7 @@ export default function Index() {
           
           <Button 
             className="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20"
-            onClick={() => navigate("/home")}
+            onClick={() => navigate("/wzrd/studio")}
           >
             Enter as Guest
           </Button>
