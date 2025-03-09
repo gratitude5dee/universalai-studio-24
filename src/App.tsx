@@ -15,6 +15,7 @@ import Projects from "./pages/Projects";
 import Bridge from "./pages/Bridge";
 import Observability from "./pages/Observability";
 import AgentMarketplace from "./pages/AgentMarketplace";
+import ThreadOfLife from "./pages/ThreadOfLife";
 import "./App.css";
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         <Route path="/bridge" element={<Bridge />} />
         <Route path="/observability" element={<Observability />} />
         <Route path="/agent-marketplace" element={<AgentMarketplace />} />
+        <Route path="/thread-of-life" element={<ThreadOfLife />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster />

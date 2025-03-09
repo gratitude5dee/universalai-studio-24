@@ -1,7 +1,7 @@
 
 import React from "react";
 import DashboardLayout from "@/layouts/dashboard-layout";
-import { Tree, GitBranch, ArrowUpRight, Clock } from "lucide-react";
+import { Trees, GitBranch, ArrowUpRight, Clock } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 
@@ -18,7 +18,7 @@ const ThreadOfLife = () => {
           <div className="bg-white rounded-xl p-4 shadow-subtle">
             <div className="flex items-center gap-3 mb-2">
               <div className="w-10 h-10 rounded-full bg-[#22c55e]/10 flex items-center justify-center">
-                <Tree className="w-5 h-5 text-[#22c55e]" />
+                <Trees className="w-5 h-5 text-[#22c55e]" />
               </div>
               <h3 className="font-medium">Asset Lineage</h3>
             </div>

@@ -1,6 +1,6 @@
 
 import React, { ReactNode } from "react";
-import { LayoutDashboard, Image as ImageIcon, BarChart3, Shield, Wand2, Wallet, Users, Bot, Database, Eye, Globe, ShoppingCart, Landmark, TrendingUp, Droplets, Building, Tree, Bridge } from "lucide-react";
+import { LayoutDashboard, Image as ImageIcon, BarChart3, Shield, Wand2, Wallet, Users, Bot, Database, Eye, Globe, ShoppingCart, Landmark, TrendingUp, Droplets, Building, Trees, ArrowRightLeft } from "lucide-react";
 import Header from "@/components/ui/header";
 import Ambient from "@/components/ui/ambient";
 import Sidebar from "@/components/ui/sidebar/sidebar";
@@ -77,12 +77,12 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       {
         name: "Thread of Life",
         path: "/thread-of-life",
-        icon: Tree
+        icon: Trees
       },
       {
         name: "Bridge",
         path: "/bridge",
-        icon: Bridge
+        icon: ArrowRightLeft
       }
     ]
   }, {
