@@ -22,6 +22,16 @@ import WzrdResearch from "./pages/wzrd/WzrdResearch";
 import WzrdPodcasts from "./pages/wzrd/WzrdPodcasts";
 import WzrdInfiniteLibrary from "./pages/wzrd/WzrdInfiniteLibrary";
 import WzrdCompanions from "./pages/wzrd/WzrdCompanions";
+
+// Distribution pages
+import Distribution from "./pages/distribution/Distribution";
+import DistributionOverview from "./pages/distribution/DistributionOverview";
+import SocialMediaWzrd from "./pages/distribution/SocialMediaWzrd";
+import OnChainDistribution from "./pages/distribution/OnChainDistribution";
+import MediaChannels from "./pages/distribution/MediaChannels";
+import IndependentChannels from "./pages/distribution/IndependentChannels";
+import SyncLicensing from "./pages/distribution/SyncLicensing";
+
 import "./App.css";
 
 function App() {
@@ -48,6 +58,16 @@ function App() {
         <Route path="/wzrd/podcasts" element={<WzrdPodcasts />} />
         <Route path="/wzrd/infinite-library" element={<WzrdInfiniteLibrary />} />
         <Route path="/wzrd/companions" element={<WzrdCompanions />} />
+        
+        {/* Distribution routes */}
+        <Route path="/distribution" element={<Distribution />} />
+        <Route path="/distribution/overview" element={<DistributionOverview />} />
+        <Route path="/distribution/social-media" element={<SocialMediaWzrd />} />
+        <Route path="/distribution/on-chain" element={<OnChainDistribution />} />
+        <Route path="/distribution/media-channels" element={<MediaChannels />} />
+        <Route path="/distribution/independent" element={<IndependentChannels />} />
+        <Route path="/distribution/sync-licensing" element={<SyncLicensing />} />
+        
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster />

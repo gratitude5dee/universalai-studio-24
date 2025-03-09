@@ -119,7 +119,7 @@ export const navItems = [{
   ]
 }, {
   name: "Distribution",
-  path: "#",
+  path: "/distribution",
   icon: Share2,
   hasSubmenu: true,
   submenuItems: [
