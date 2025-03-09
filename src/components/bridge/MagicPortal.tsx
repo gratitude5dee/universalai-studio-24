@@ -1,12 +1,18 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, ArrowRightLeft, Upload, Download } from "lucide-react";
+import { Sparkles, ArrowRightLeft, Upload, Download, QrCode, Package, Ticket } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { BridgeDirection } from "./types";
+import { toast } from "sonner";
 
 export const MagicPortal = () => {
   const [portalActive, setPortalActive] = useState(false);
   const [showGlimpse, setShowGlimpse] = useState(false);
+  const [assetName, setAssetName] = useState("");
+  const [assetType, setAssetType] = useState<"product" | "ticket" | "certificate" | "document">("product");
+  const [direction, setDirection] = useState<BridgeDirection>("digital-to-physical");
   
   useEffect(() => {
     if (portalActive) {
@@ -20,8 +26,34 @@ export const MagicPortal = () => {
     }
   }, [portalActive]);
 
+  const handleBridgeAsset = (bridgeDirection: BridgeDirection) => {
+    if (!assetName.trim()) {
+      toast("Please enter an asset name");
+      return;
+    }
+
+    toast.success(`Beginning bridge process for ${assetName}`, {
+      description: `Direction: ${bridgeDirection === "digital-to-physical" ? "Digital to Physical" : "Physical to Digital"}`,
+    });
+    
+    // Simulate bridge processing
+    setTimeout(() => {
+      toast.success(`Asset "${assetName}" has been queued for bridging`, {
+        description: "You will be notified when the process completes",
+      });
+    }, 2000);
+  };
+
+  const assetIcons = {
+    product: <Package className="mr-2 h-4 w-4" />,
+    ticket: <Ticket className="mr-2 h-4 w-4" />,
+    certificate: <Sparkles className="mr-2 h-4 w-4" />,
+    document: <QrCode className="mr-2 h-4 w-4" />,
+  };
+
   return (
     <div className="flex flex-col items-center space-y-8">
+      {/* Portal visualization */}
       <div className="relative w-full max-w-2xl aspect-[16/9] rounded-3xl overflow-hidden">
         {/* Portal background */}
         <motion.div 
@@ -140,34 +172,81 @@ export const MagicPortal = () => {
         </AnimatePresence>
       </div>
       
-      <div className="flex flex-col items-center gap-6">
-        <Button 
-          size="lg"
-          onClick={() => setPortalActive(!portalActive)}
-          className={`${portalActive 
-            ? 'bg-[#8B5CF6] hover:bg-[#7E69AB] text-white' 
-            : 'bg-studio-sand/50 hover:bg-studio-sand text-studio-charcoal'} 
-            transition-all duration-300`}
-        >
-          {portalActive ? "Close Portal" : "Activate Portal"}
-          <Sparkles className={`ml-2 ${portalActive ? 'animate-pulse' : ''}`} />
-        </Button>
-        
-        {portalActive && (
+      {/* Bridge controls */}
+      <div className="flex flex-col items-center gap-6 w-full max-w-md">
+        {!portalActive ? (
+          <Button 
+            size="lg"
+            onClick={() => setPortalActive(true)}
+            className="bg-studio-sand/50 hover:bg-studio-sand text-studio-charcoal transition-all duration-300 w-full"
+          >
+            Activate Portal
+            <Sparkles className="ml-2" />
+          </Button>
+        ) : (
           <motion.div 
-            className="grid grid-cols-2 gap-4"
+            className="w-full space-y-4" 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <Button variant="outline" className="gap-2 px-6">
-              <Upload size={18} />
-              Send to Physical
-            </Button>
-            <Button variant="outline" className="gap-2 px-6">
-              <Download size={18} />
-              Bring to Digital
-            </Button>
+            <div className="space-y-2">
+              <div className="flex gap-2">
+                <Input 
+                  value={assetName}
+                  onChange={(e) => setAssetName(e.target.value)}
+                  placeholder="Asset name"
+                  className="flex-1"
+                />
+                <select
+                  value={assetType}
+                  onChange={(e) => setAssetType(e.target.value as any)}
+                  className="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                >
+                  <option value="product">Product</option>
+                  <option value="ticket">Ticket</option>
+                  <option value="certificate">Certificate</option>
+                  <option value="document">Document</option>
+                </select>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Enter the name of the asset you wish to bridge between realms
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <Button 
+                variant="outline" 
+                className="gap-2 w-full justify-between bg-white hover:bg-studio-accent/10"
+                onClick={() => handleBridgeAsset("digital-to-physical")}
+              >
+                <div className="flex items-center">
+                  <Upload size={18} />
+                  <span className="ml-2">Digital to Physical</span>
+                </div>
+                {assetIcons[assetType]}
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                className="gap-2 w-full justify-between bg-white hover:bg-studio-accent/10"
+                onClick={() => handleBridgeAsset("physical-to-digital")}
+              >
+                <div className="flex items-center">
+                  <Download size={18} />
+                  <span className="ml-2">Physical to Digital</span>
+                </div>
+                {assetIcons[assetType]}
+              </Button>
+              
+              <Button 
+                variant="secondary"
+                onClick={() => setPortalActive(false)}
+                className="mt-2"
+              >
+                Close Portal
+              </Button>
+            </div>
           </motion.div>
         )}
       </div>

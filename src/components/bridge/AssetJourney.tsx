@@ -1,12 +1,44 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, FileText, Sparkles, Truck, CheckCircle2 } from "lucide-react";
+import { ArrowRight, FileText, Sparkles, Truck, CheckCircle2, QrCode, Shield, Box, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { BridgeAsset } from "./types";
+
+// Sample data
+const sampleAssets: BridgeAsset[] = [
+  {
+    id: "asset-1",
+    name: "Limited Edition Print",
+    type: "product",
+    status: "completed",
+    createdAt: "2023-09-15T14:30:00Z",
+    direction: "digital-to-physical",
+    verificationCode: "PRINT-2023-XYZ",
+  },
+  {
+    id: "asset-2",
+    name: "VIP Concert Access",
+    type: "ticket",
+    status: "pending",
+    createdAt: "2023-10-20T09:15:00Z",
+    direction: "digital-to-physical",
+  },
+  {
+    id: "asset-3",
+    name: "Handcrafted Sculpture",
+    type: "product",
+    status: "bridging",
+    createdAt: "2023-10-25T11:45:00Z",
+    direction: "physical-to-digital",
+  }
+];
 
 export const AssetJourney = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [selectedAsset, setSelectedAsset] = useState<BridgeAsset | null>(null);
   
   const steps = [
     { 
@@ -32,6 +64,11 @@ export const AssetJourney = () => {
   ];
   
   const startJourney = () => {
+    if (!selectedAsset) {
+      toast.info("Please select an asset from the list first");
+      return;
+    }
+    
     setIsAnimating(true);
     setCurrentStep(0);
     
@@ -40,7 +77,10 @@ export const AssetJourney = () => {
       setCurrentStep(prev => {
         if (prev >= steps.length - 1) {
           clearInterval(interval);
-          setTimeout(() => setIsAnimating(false), 2000);
+          setTimeout(() => {
+            setIsAnimating(false);
+            toast.success(`Journey completed for ${selectedAsset.name}`);
+          }, 2000);
           return prev;
         }
         return prev + 1;
@@ -50,8 +90,61 @@ export const AssetJourney = () => {
     return () => clearInterval(interval);
   };
 
+  const assetTypeIcons = {
+    "product": <Box className="w-4 h-4" />,
+    "ticket": <Calendar className="w-4 h-4" />,
+    "certificate": <Shield className="w-4 h-4" />,
+    "document": <FileText className="w-4 h-4" />,
+  };
+
   return (
     <div className="space-y-8">
+      {/* Asset selection */}
+      <div className="bg-white rounded-xl shadow-subtle p-4">
+        <h3 className="text-lg font-medium mb-3">Select an Asset</h3>
+        <div className="space-y-3 max-h-48 overflow-y-auto pr-2">
+          {sampleAssets.map((asset) => (
+            <div 
+              key={asset.id}
+              className={`p-3 rounded-lg border transition-all cursor-pointer flex items-center justify-between
+                ${selectedAsset?.id === asset.id 
+                  ? 'border-[#9b87f5] bg-[#9b87f5]/10' 
+                  : 'border-gray-200 hover:border-[#9b87f5]/50'}`}
+              onClick={() => setSelectedAsset(asset)}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-[#9b87f5]/10 flex items-center justify-center">
+                  {assetTypeIcons[asset.type]}
+                </div>
+                <div>
+                  <p className="font-medium">{asset.name}</p>
+                  <div className="flex items-center gap-2">
+                    <span className={`text-xs px-2 py-0.5 rounded-full ${
+                      asset.status === 'completed' ? 'bg-green-100 text-green-700' :
+                      asset.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
+                      'bg-blue-100 text-blue-700'
+                    }`}>
+                      {asset.status}
+                    </span>
+                    <span className="text-xs text-gray-500">
+                      {asset.direction === "digital-to-physical" ? "Digital → Physical" : "Physical → Digital"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+              {asset.verificationCode && (
+                <div className="flex items-center gap-1 text-sm text-gray-500">
+                  <QrCode className="w-4 h-4" />
+                  <span>{asset.verificationCode}</span>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Journey path visualization */}
       <div className="relative h-20 max-w-3xl mx-auto">
         {/* Journey path */}
         <div className="absolute top-1/2 left-0 w-full h-1 bg-studio-sand/50 -translate-y-1/2 rounded-full" />
@@ -118,6 +211,18 @@ export const AssetJourney = () => {
             {steps[currentStep].title}
           </h3>
           <p className="text-studio-clay">{steps[currentStep].description}</p>
+          
+          {selectedAsset && currentStep === 0 && (
+            <div className="mt-4 p-3 bg-[#9b87f5]/10 rounded-lg text-left">
+              <p className="font-medium">{selectedAsset.name}</p>
+              <p className="text-sm text-gray-600">Type: {selectedAsset.type}</p>
+              <p className="text-sm text-gray-600">Direction: {
+                selectedAsset.direction === "digital-to-physical" 
+                  ? "Digital to Physical" 
+                  : "Physical to Digital"
+              }</p>
+            </div>
+          )}
         </motion.div>
       </AnimatePresence>
       

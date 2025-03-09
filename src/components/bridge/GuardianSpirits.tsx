@@ -1,12 +1,14 @@
-
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Shield, Eye, Lock, Key, ShieldCheck } from "lucide-react";
+import { Shield, Eye, Lock, Key, ShieldCheck, FileCheck, AlertTriangle, Fingerprint, QrCode, Scroll } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { VerificationMethod } from "./types";
+import { toast } from "sonner";
 
 export const GuardianSpirits = () => {
   const [activeGuardian, setActiveGuardian] = useState<number | null>(null);
   const [isProtecting, setIsProtecting] = useState(false);
+  const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
   
   const guardians = [
     {
@@ -39,22 +41,68 @@ export const GuardianSpirits = () => {
     }
   ];
   
+  const verificationMethods: VerificationMethod[] = [
+    {
+      id: "qr",
+      name: "QR Code Verification",
+      description: "Scan unique QR codes to verify the authenticity of physical items",
+      icon: QrCode,
+      securityLevel: "medium",
+    },
+    {
+      id: "nfc",
+      name: "NFC Chip Authentication",
+      description: "Embedded NFC chips provide tamper-proof verification",
+      icon: Fingerprint,
+      securityLevel: "high",
+    },
+    {
+      id: "certificate",
+      name: "Certificate of Authenticity",
+      description: "Digital certificates signed with cryptographic proofs",
+      icon: Scroll,
+      securityLevel: "medium",
+    },
+    {
+      id: "multi",
+      name: "Multi-Factor Verification",
+      description: "Combines multiple verification methods for highest security",
+      icon: FileCheck,
+      securityLevel: "high",
+    },
+  ];
+  
   const toggleProtection = () => {
     setIsProtecting(!isProtecting);
     setActiveGuardian(null);
+    
+    if (!isProtecting) {
+      toast.success("Guardian spirits summoned", {
+        description: "Your bridge is now protected by mystical guardians"
+      });
+    } else {
+      toast.info("Guardians have returned to their realm");
+    }
+  };
+
+  const applyVerificationMethod = (methodId: string) => {
+    setSelectedMethod(methodId);
+    const method = verificationMethods.find(m => m.id === methodId);
+    
+    toast.success(`${method?.name} activated`, {
+      description: `Security level: ${method?.securityLevel}`
+    });
   };
 
   return (
     <div className="space-y-8">
       <div className="relative">
-        {/* Protection visualization */}
         <motion.div 
           className="relative w-full h-64 rounded-xl glass-card overflow-hidden"
           animate={{
             backgroundColor: isProtecting ? "rgba(255, 255, 255, 0.3)" : "rgba(255, 255, 255, 0.1)"
           }}
         >
-          {/* Portal simulation */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32">
             <motion.div 
               className="w-full h-full rounded-full bg-gradient-to-br from-[#9b87f5]/70 to-[#7E69AB]/70 backdrop-blur-md"
@@ -69,7 +117,6 @@ export const GuardianSpirits = () => {
             />
           </div>
           
-          {/* Protection symbols */}
           <AnimatePresence>
             {isProtecting && (
               <>
@@ -119,7 +166,6 @@ export const GuardianSpirits = () => {
                   );
                 })}
                 
-                {/* Protection lines */}
                 <svg className="absolute inset-0 w-full h-full pointer-events-none">
                   {guardians.map((_, index) => {
                     const nextIndex = (index + 1) % guardians.length;
@@ -152,7 +198,6 @@ export const GuardianSpirits = () => {
             )}
           </AnimatePresence>
           
-          {/* Central protection shield */}
           <motion.div 
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
             animate={{
@@ -191,7 +236,6 @@ export const GuardianSpirits = () => {
           </motion.div>
         </motion.div>
         
-        {/* Guardian details */}
         <AnimatePresence mode="wait">
           {activeGuardian !== null && (
             <motion.div 
@@ -225,6 +269,65 @@ export const GuardianSpirits = () => {
             </motion.div>
           )}
         </AnimatePresence>
+      </div>
+      
+      <div className="bg-white rounded-xl shadow-subtle p-5">
+        <h3 className="text-lg font-medium mb-4 flex items-center">
+          <Shield className="mr-2 h-5 w-5 text-[#9b87f5]" />
+          Bridge Security Verification Methods
+        </h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {verificationMethods.map((method) => {
+            const MethodIcon = method.icon;
+            return (
+              <div 
+                key={method.id}
+                className={`border rounded-lg p-4 cursor-pointer transition-all
+                  ${selectedMethod === method.id 
+                    ? 'border-[#9b87f5] bg-[#9b87f5]/5' 
+                    : 'border-gray-200 hover:border-[#9b87f5]/50'}`}
+                onClick={() => applyVerificationMethod(method.id)}
+              >
+                <div className="flex items-start gap-3">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                    method.securityLevel === 'high' 
+                      ? 'bg-green-100 text-green-600' 
+                      : 'bg-yellow-100 text-yellow-600'
+                  }`}>
+                    <MethodIcon className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="flex items-center">
+                      <h4 className="font-medium text-sm">{method.name}</h4>
+                      <span className={`ml-2 text-xs px-1.5 py-0.5 rounded-full ${
+                        method.securityLevel === 'high' 
+                          ? 'bg-green-100 text-green-600' 
+                          : 'bg-yellow-100 text-yellow-600'
+                      }`}>
+                        {method.securityLevel}
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">{method.description}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        
+        <div className="mt-4 p-3 bg-amber-50 rounded-lg border border-amber-100 flex items-start gap-2">
+          <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+          <div>
+            <p className="text-sm font-medium text-amber-800">Security Best Practices</p>
+            <ul className="text-xs text-amber-700 list-disc pl-4 mt-1 space-y-1">
+              <li>Always verify physical items through multiple methods</li>
+              <li>Keep verification credentials secure and never share private keys</li>
+              <li>For high-value assets, use high security verification methods</li>
+              <li>Update verification methods regularly as technology evolves</li>
+            </ul>
+          </div>
+        </div>
       </div>
       
       <div className="text-center">
