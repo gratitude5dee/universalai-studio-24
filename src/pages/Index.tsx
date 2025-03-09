@@ -1,19 +1,27 @@
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth, CrossmintLoginButton } from "@crossmint/client-sdk-react-ui";
+import { useAuth } from "@crossmint/client-sdk-react-ui";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
 export default function Index() {
   const navigate = useNavigate();
-  const { user, isLoading } = useAuth();
+  const { user, login } = useAuth();
 
   React.useEffect(() => {
-    if (user && !isLoading) {
+    if (user) {
       navigate("/home");
     }
-  }, [user, isLoading, navigate]);
+  }, [user, navigate]);
+
+  const handleLogin = async () => {
+    try {
+      await login();
+    } catch (error) {
+      console.error("Login error:", error);
+    }
+  };
 
   return (
     <motion.div
@@ -29,7 +37,12 @@ export default function Index() {
         </div>
         
         <div className="space-y-4">
-          <CrossmintLoginButton />
+          <Button 
+            className="w-full bg-studio-accent hover:bg-studio-accent/90"
+            onClick={handleLogin}
+          >
+            Sign in with Crossmint
+          </Button>
           
           <div className="relative py-2">
             <div className="absolute inset-0 flex items-center">

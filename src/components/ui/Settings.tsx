@@ -17,14 +17,12 @@ export const Settings = () => {
       await logout();
       setOpen(false);
       navigate('/', { replace: true });
-      toast({
-        title: "Success",
+      toast("Success", {
         description: "You have been logged out successfully",
       });
     } catch (error) {
       console.error('Logout error:', error);
-      toast({
-        title: "Error",
+      toast("Error", {
         description: "Failed to log out. Please try again.",
         variant: "destructive",
       });
@@ -50,7 +48,7 @@ export const Settings = () => {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium truncate">
-                  {user.email || user.username || "Authenticated User"}
+                  {user.email || "Authenticated User"}
                 </p>
                 <p className="text-xs text-muted-foreground truncate">
                   {user.id}
