@@ -28,20 +28,26 @@ const TabNavigation: React.FC<TabNavigationProps> = ({ tabs, activeTab, setActiv
         return (
           <div 
             key={tab.id} 
-            className="relative flex items-center"
+            className="relative"
             onMouseEnter={() => setHoveredTab(tab.id)}
             onMouseLeave={() => setHoveredTab(null)}
           >
-            <motion.button
-              onClick={() => setActiveTab(tab.id)}
+            <motion.div
               className={cn(
-                "relative overflow-hidden p-3.5 rounded-xl transition-colors flex items-center justify-center",
+                "flex items-center rounded-xl transition-all overflow-hidden",
                 isActive 
                   ? "bg-studio-accent text-white shadow-[0_4px_12px_rgba(217,143,100,0.35)]" 
                   : "bg-white/90 text-studio-charcoal hover:bg-white hover:shadow-md"
               )}
+              animate={{
+                width: isHovered ? 'auto' : 'auto',
+                transition: { 
+                  type: "spring", 
+                  stiffness: 500, 
+                  damping: 30 
+                }
+              }}
               whileHover={{ 
-                scale: 1.08,
                 y: -2,
                 transition: { type: "spring", stiffness: 400, damping: 10 }
               }}
@@ -49,71 +55,74 @@ const TabNavigation: React.FC<TabNavigationProps> = ({ tabs, activeTab, setActiv
                 scale: 0.95,
                 transition: { type: "spring", stiffness: 400, damping: 17 }
               }}
-              aria-label={tab.name}
             >
-              <TabIcon className={cn(
-                "w-5 h-5 transition-all duration-300",
-                isActive ? "scale-110" : ""
-              )} />
+              <motion.button
+                onClick={() => setActiveTab(tab.id)}
+                className="p-3.5 flex items-center justify-center relative"
+                aria-label={tab.name}
+              >
+                <TabIcon className={cn(
+                  "w-5 h-5 transition-all duration-300",
+                  isActive ? "scale-110" : ""
+                )} />
+                
+                {isActive && (
+                  <motion.span
+                    className="absolute inset-0 bg-white/10 rounded-xl"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    layoutId="tab-highlight"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
+
+                {isActive && (
+                  <motion.span 
+                    className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ 
+                      type: "spring", 
+                      stiffness: 500, 
+                      damping: 30,
+                      delay: 0.1
+                    }}
+                  />
+                )}
+              </motion.button>
               
-              {isActive && (
-                <motion.span
-                  className="absolute inset-0 bg-white/10 rounded-xl"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  layoutId="tab-highlight"
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                />
-              )}
-
-              {isActive && (
-                <motion.span 
-                  className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ 
-                    type: "spring", 
-                    stiffness: 500, 
-                    damping: 30,
-                    delay: 0.1
-                  }}
-                />
-              )}
-
-              {/* Label that slides out on hover */}
+              {/* Label that slides out horizontally within the button */}
               <AnimatePresence>
                 {isHovered && (
                   <motion.div
-                    className="absolute left-[calc(100%+12px)] pointer-events-none bg-studio-charcoal/90 text-white px-3 py-1.5 rounded-lg text-sm whitespace-nowrap shadow-lg"
-                    initial={{ opacity: 0, x: -5, scale: 0.95 }}
+                    className="pr-3.5 pl-1 flex items-center"
+                    initial={{ width: 0, opacity: 0 }}
                     animate={{ 
-                      opacity: 1, 
-                      x: 0, 
-                      scale: 1,
+                      width: 'auto', 
+                      opacity: 1,
                       transition: { 
                         type: "spring", 
-                        stiffness: 400, 
-                        damping: 25 
+                        stiffness: 500, 
+                        damping: 30 
                       }
                     }}
                     exit={{ 
-                      opacity: 0, 
-                      x: -5, 
-                      scale: 0.95,
-                      transition: { duration: 0.15 } 
+                      width: 0, 
+                      opacity: 0,
+                      transition: { 
+                        type: "spring", 
+                        stiffness: 500, 
+                        damping: 30 
+                      }
                     }}
                   >
-                    {tab.name}
-                    <motion.div 
-                      className="absolute top-1/2 -left-1.5 -translate-y-1/2 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-r-[6px] border-r-studio-charcoal/90"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.05 }}
-                    />
+                    <span className="text-sm font-medium whitespace-nowrap">
+                      {tab.name}
+                    </span>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.button>
+            </motion.div>
           </div>
         );
       })}
