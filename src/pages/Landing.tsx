@@ -526,4 +526,11 @@ const Landing = () => {
         </motion.div>
       </div>
       
-      <footer className
+      <footer className="mt-auto py-4 sm:py-6 text-center text-white/50 text-xs sm:text-sm relative z-10">
+        <p>© 2023 UniversalAI | Unleash your creative potential</p>
+      </footer>
+    </div>
+  );
+};
+
+export default Landing;
