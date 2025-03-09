@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Coins, Map, Landmark, Globe } from "lucide-react";
+import { Coins, Map, Landmark, Globe, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const OnChainActions = () => {
