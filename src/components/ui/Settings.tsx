@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -24,7 +23,6 @@ export const Settings = () => {
       console.error('Logout error:', error);
       toast("Error", {
         description: "Failed to log out. Please try again.",
-        variant: "destructive",
       });
     }
   };
