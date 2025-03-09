@@ -1,6 +1,7 @@
 
 import React, { ReactNode } from "react";
-import Header from "@/components/ui/header";
+import Header from "../header";
+import { motion } from "framer-motion";
 
 interface MainContentProps {
   children: ReactNode;
@@ -8,12 +9,16 @@ interface MainContentProps {
 
 const MainContent: React.FC<MainContentProps> = ({ children }) => {
   return (
-    <main className="flex-1 flex flex-col max-h-screen overflow-y-auto">
+    <motion.div 
+      className="flex-1 overflow-auto"
+      layout
+      transition={{ duration: 0.3, ease: "easeOut" }}
+    >
       <Header />
-      <div className="flex-1 px-4 md:px-8 py-4 pb-10">
+      <main className="px-4 pb-8">
         {children}
-      </div>
-    </main>
+      </main>
+    </motion.div>
   );
 };
 

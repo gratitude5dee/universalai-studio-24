@@ -26,16 +26,30 @@ const SidebarSubmenu: React.FC<SubmenuProps> = ({
 }) => {
   if (!submenuItems.length) return null;
 
+  // Animation variants for menu items
+  const menuItemVariants = {
+    hidden: { opacity: 0, y: -5 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: 0.05 * i,
+        duration: 0.2,
+      }
+    }),
+    exit: { opacity: 0, y: -5, transition: { duration: 0.1 } }
+  };
+
   // Submenu that appears on hover when sidebar is collapsed
   if (isCollapsed) {
     return (
       <div className="absolute left-full top-0 ml-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-        <div className="bg-white rounded-lg shadow-lg p-2 min-w-48 border border-studio-sand/30">
-          <div className="text-xs font-medium text-muted-foreground mb-1 px-2 uppercase tracking-wider">
+        <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-elevation p-3 min-w-52 border border-studio-sand/30">
+          <div className="text-xs font-medium text-studio-accent mb-2 px-2 uppercase tracking-wider">
             {parentName}
           </div>
           <div className="space-y-1">
-            {submenuItems.map(subItem => {
+            {submenuItems.map((subItem, index) => {
               const basePathMatch = currentPath.startsWith(subItem.path.split("?")[0]);
               const queryMatch = subItem.path.includes(`tab=${currentTab}`);
               
@@ -43,17 +57,27 @@ const SidebarSubmenu: React.FC<SubmenuProps> = ({
                 (!subItem.path.includes("?tab=") || (currentTab && queryMatch));
               
               return (
-                <Link 
-                  key={subItem.name} 
-                  to={subItem.path} 
-                  className={`
-                    flex items-center px-3 py-2 rounded-lg text-sm transition-all duration-200
-                    ${isSubItemActive ? 'bg-studio-accent/10 text-studio-accent' : 'hover:bg-studio-sand/20'}
-                  `}
+                <motion.div
+                  key={subItem.name}
+                  custom={index}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  variants={menuItemVariants}
                 >
-                  <subItem.icon className={`h-4 w-4 mr-2 ${isSubItemActive ? 'text-studio-accent' : 'text-studio-clay'}`} />
-                  {subItem.name}
-                </Link>
+                  <Link 
+                    to={subItem.path} 
+                    className={`
+                      flex items-center px-3 py-2 rounded-lg text-sm transition-all duration-200
+                      ${isSubItemActive 
+                        ? 'bg-studio-accent/10 text-studio-accent font-medium' 
+                        : 'hover:bg-studio-sand/30'}
+                    `}
+                  >
+                    <subItem.icon className={`h-4 w-4 mr-2 ${isSubItemActive ? 'text-studio-accent' : 'text-studio-clay'}`} />
+                    {subItem.name}
+                  </Link>
+                </motion.div>
               );
             })}
           </div>
@@ -73,7 +97,7 @@ const SidebarSubmenu: React.FC<SubmenuProps> = ({
           transition={{ duration: 0.2, ease: "easeInOut" }}
           className="mt-1 ml-4 space-y-1 overflow-hidden"
         >
-          {submenuItems.map(subItem => {
+          {submenuItems.map((subItem, index) => {
             const basePathMatch = currentPath.startsWith(subItem.path.split("?")[0]);
             const queryMatch = subItem.path.includes(`tab=${currentTab}`);
             
@@ -81,17 +105,26 @@ const SidebarSubmenu: React.FC<SubmenuProps> = ({
               (!subItem.path.includes("?tab=") || (currentTab && queryMatch));
             
             return (
-              <Link 
-                key={subItem.name} 
-                to={subItem.path} 
-                className={`
-                  flex items-center px-3 py-2 rounded-lg text-sm transition-all duration-200
-                  ${isSubItemActive ? 'bg-studio-accent/10 text-studio-accent' : 'hover:bg-studio-sand/20'}
-                `}
+              <motion.div
+                key={subItem.name}
+                custom={index}
+                initial="hidden"
+                animate="visible"
+                variants={menuItemVariants}
               >
-                <subItem.icon className={`h-4 w-4 mr-2 ${isSubItemActive ? 'text-studio-accent' : 'text-studio-clay'}`} />
-                {subItem.name}
-              </Link>
+                <Link 
+                  to={subItem.path} 
+                  className={`
+                    flex items-center px-3 py-2 rounded-lg text-sm transition-all duration-200
+                    ${isSubItemActive 
+                      ? 'bg-studio-accent/10 text-studio-accent font-medium' 
+                      : 'hover:bg-studio-sand/30'}
+                  `}
+                >
+                  <subItem.icon className={`h-4 w-4 mr-2 ${isSubItemActive ? 'text-studio-accent' : 'text-studio-clay'}`} />
+                  {subItem.name}
+                </Link>
+              </motion.div>
             );
           })}
         </motion.div>

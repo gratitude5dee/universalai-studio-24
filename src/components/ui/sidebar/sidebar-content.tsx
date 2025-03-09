@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { LogOut } from "lucide-react";
 import SidebarNavItem from "./sidebar-nav-item";
 import SidebarSubmenu from "./sidebar-submenu";
+import { motion } from "framer-motion";
 
 interface SidebarContentProps {
   navItems: {
@@ -29,6 +30,17 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ navItems, isCollapsed }
   
   // Initialize state for each submenu with empty object
   const [openSubmenus, setOpenSubmenus] = useState<{ [key: string]: boolean }>({});
+
+  // Logo animation variants
+  const logoVariants = {
+    collapsed: { opacity: 1 },
+    expanded: { opacity: 1, transition: { duration: 0.2 } }
+  };
+  
+  const textVariants = {
+    collapsed: { opacity: 0, x: -10 },
+    expanded: { opacity: 1, x: 0, transition: { delay: 0.1, duration: 0.2 } }
+  };
 
   // Close all submenus when sidebar is collapsed
   useEffect(() => {
@@ -77,25 +89,32 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ navItems, isCollapsed }
 
   return (
     <>
-      <div className={`mb-8 mt-2 ${isCollapsed ? 'justify-center' : 'px-3'} flex items-center`}>
-        {!isCollapsed ? 
-          <h1 className="text-2xl font-medium flex items-center">
-            <span className="bg-studio-accent/20 w-8 h-8 rounded-full flex items-center justify-center mr-2">
-              <span className="text-studio-accent font-semibold">5</span>
-            </span>
-            <div className="flex flex-col">
-              <span className="text-studio-accent leading-tight">Universal</span>
-              <span>Studio</span>
-            </div>
-          </h1> 
-          : 
-          <span className="bg-studio-accent/20 w-8 h-8 rounded-full flex items-center justify-center">
+      <div 
+        className={`mb-8 mt-2 ${isCollapsed ? 'justify-center' : 'px-3'} flex items-center transition-all duration-300`}
+      >
+        <motion.div
+          initial={false}
+          animate={isCollapsed ? "collapsed" : "expanded"}
+          variants={logoVariants}
+          className="flex items-center"
+        >
+          <span className="bg-studio-accent/20 w-8 h-8 rounded-full flex items-center justify-center mr-2 transition-all duration-300">
             <span className="text-studio-accent font-semibold">5</span>
           </span>
-        }
+
+          {!isCollapsed && (
+            <motion.div 
+              className="flex flex-col"
+              variants={textVariants}
+            >
+              <span className="text-studio-accent leading-tight text-2xl">Universal</span>
+              <span className="text-2xl">Studio</span>
+            </motion.div>
+          )}
+        </motion.div>
       </div>
           
-      <nav className="flex-1 space-y-1 overflow-hidden hover:overflow-y-auto scrollbar-thin">
+      <nav className="flex-1 space-y-1 overflow-hidden hover:overflow-y-auto scrollbar-thin py-2">
         {navItems.map(item => {
           const isActive = item.path === "/" ? 
                            currentPath === "/" : 
@@ -136,9 +155,21 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ navItems, isCollapsed }
         
       <div className="mt-auto mb-4 space-y-1">
         {/* Log Out button */}
-        <Link to="/logout" className={`flex items-center ${isCollapsed ? 'justify-center' : 'px-3'} py-3 text-sm text-muted-foreground hover:bg-studio-sand/30 rounded-xl transition-all duration-200`} title={isCollapsed ? "Log Out" : ""}>
+        <Link 
+          to="/logout" 
+          className={`flex items-center ${isCollapsed ? 'justify-center' : 'px-3'} py-3 text-sm text-muted-foreground hover:bg-studio-sand/30 rounded-xl transition-all duration-200`} 
+          title={isCollapsed ? "Log Out" : ""}
+        >
           <LogOut className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-studio-clay`} />
-          {!isCollapsed && "Log Out"}
+          {!isCollapsed && (
+            <motion.span
+              initial="collapsed"
+              animate="expanded"
+              variants={textVariants}
+            >
+              Log Out
+            </motion.span>
+          )}
         </Link>
       </div>
     </>
