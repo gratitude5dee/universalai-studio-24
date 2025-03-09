@@ -1,7 +1,12 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CreditCard, Landmark, Lock, Eye, EyeOff, Wallet, Send, Download, Plus, Shield, BellRing, Calendar, RefreshCw, AlertTriangle, Zap, Settings, Ban, Key } from "lucide-react";
+import { 
+  CreditCard, Landmark, Lock, Eye, EyeOff, Wallet, Send, Download, 
+  Plus, Shield, BellRing, Calendar, RefreshCw, AlertTriangle, Zap, 
+  Settings, Ban, Key, Check, Filter, Search, ClipboardCopy, Trash, 
+  Bot, ChevronRight, Globe, Badge, Link, BarChart3
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
