@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, useMotionValue, useTransform, useAnimation } from "framer-motion";
@@ -165,7 +164,7 @@ const Landing = () => {
   };
   
   return (
-    <div className="min-h-screen w-screen bg-gradient-to-b from-[#120825] to-[#1F0443] text-white overflow-hidden relative">
+    <div className="min-h-screen w-full bg-gradient-to-b from-[#120825] to-[#1F0443] text-white overflow-hidden absolute inset-0">
       {/* ASCII loading screen */}
       {isLoading && <AsciiLoadingScreen />}
 
@@ -581,16 +580,4 @@ const Landing = () => {
                 {/* Shine effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 opacity-0 group-hover:opacity-100 transform -translate-x-full group-hover:translate-x-full transition-all duration-700" />
                 
-                <feature.icon className="h-8 w-8 sm:h-10 sm:w-10 mb-3 sm:mb-4 text-white relative z-10" />
-                <h3 className="text-base sm:text-lg font-medium mb-1 sm:mb-2 relative z-10">{feature.title}</h3>
-                <p className="text-xs sm:text-sm text-white/70 relative z-10">{feature.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-    </div>
-  );
-};
-
-export default Landing;
+                <feature.icon className="h-8 w-8
