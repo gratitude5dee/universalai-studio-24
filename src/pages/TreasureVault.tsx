@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useLocation } from "react-router-dom";
 import { Coins, Map, Sparkles, Scroll, Gem, Wallet, BarChart3, Clock, DollarSign, PiggyBank, Landmark, TrendingUp, Droplets } from "lucide-react";
 import DashboardLayout from "@/layouts/dashboard-layout";
 import TreasureCollection from "@/components/treasury/TreasureCollection";
@@ -15,6 +17,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const TreasureVault = () => {
   const [activeTab, setActiveTab] = useState("collection");
+  const location = useLocation();
+  const [currentTab, setCurrentTab] = useState("overview");
+  
+  // Parse the URL query parameter to set the active tab
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const tab = params.get("tab");
+    if (tab && ["overview", "onchain", "trading", "liquidity"].includes(tab)) {
+      setCurrentTab(tab);
+    } else {
+      setCurrentTab("overview");
+    }
+  }, [location.search]);
 
   const tabs = [
     { id: "collection", name: "Asset Collection", icon: Coins },
@@ -63,7 +78,7 @@ const TreasureVault = () => {
   return (
     <DashboardLayout>
       <Content title="Organization Finances" subtitle="Manage your magical treasures and watch your wealth grow through enchanted stewardship">
-        <Tabs defaultValue="overview" className="w-full">
+        <Tabs value={currentTab} defaultValue="overview" className="w-full">
           <TabsList className="w-full max-w-md mb-6">
             <TabsTrigger value="overview" className="flex-1">Overview</TabsTrigger>
             <TabsTrigger value="onchain" className="flex-1">On-Chain Actions</TabsTrigger>
