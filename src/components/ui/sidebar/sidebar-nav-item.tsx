@@ -31,6 +31,12 @@ const SidebarNavItem: React.FC<NavItemProps> = ({
   submenuOpen,
   toggleSubmenu,
 }) => {
+  // Create variants for the animated indicator
+  const indicatorVariants = {
+    initial: { scale: 0.5, opacity: 0 },
+    animate: { scale: 1, opacity: 1, transition: { duration: 0.3 } }
+  };
+
   if (!item.hasSubmenu) {
     return (
       <Link to={item.path} className="relative block" title={isCollapsed ? item.name : ""}>
@@ -46,11 +52,9 @@ const SidebarNavItem: React.FC<NavItemProps> = ({
             <motion.div 
               layoutId="sidebar-indicator" 
               className="absolute right-3 w-1.5 h-1.5 rounded-full bg-white" 
-              transition={{
-                type: "spring",
-                bounce: 0.2,
-                duration: 0.6
-              }} 
+              initial="initial"
+              animate="animate"
+              variants={indicatorVariants}
             />
           )}
         </div>
@@ -81,6 +85,15 @@ const SidebarNavItem: React.FC<NavItemProps> = ({
               className={`h-4 w-4 transition-transform duration-200 ${submenuOpen ? 'rotate-90' : ''} 
                 ${isSubMenuActive ? 'text-studio-cream' : 'text-studio-clay'}
               `} 
+            />
+          )}
+          {isSubMenuActive && !isCollapsed && (
+            <motion.div 
+              layoutId="sidebar-indicator" 
+              className="absolute right-3 w-1.5 h-1.5 rounded-full bg-white"
+              initial="initial"
+              animate="animate" 
+              variants={indicatorVariants}
             />
           )}
         </div>

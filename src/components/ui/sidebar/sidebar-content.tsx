@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { LogOut } from "lucide-react";
@@ -29,6 +29,22 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ navItems, isCollapsed }
   
   // Initialize state for each submenu with empty object
   const [openSubmenus, setOpenSubmenus] = useState<{ [key: string]: boolean }>({});
+
+  // Close all submenus when sidebar is collapsed
+  useEffect(() => {
+    if (isCollapsed) {
+      setOpenSubmenus({});
+    } else {
+      // When expanding, auto-open submenus that contain active items
+      const updatedOpenSubmenus: { [key: string]: boolean } = {};
+      navItems.forEach(item => {
+        if (item.hasSubmenu && hasActiveSubmenuItem(item.submenuItems)) {
+          updatedOpenSubmenus[item.name] = true;
+        }
+      });
+      setOpenSubmenus(prev => ({...prev, ...updatedOpenSubmenus}));
+    }
+  }, [isCollapsed, navItems, currentPath, currentTab]);
 
   const toggleSubmenu = (name: string, e: React.MouseEvent) => {
     e.preventDefault();
@@ -79,7 +95,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ navItems, isCollapsed }
         }
       </div>
           
-      <nav className="flex-1 space-y-1">
+      <nav className="flex-1 space-y-1 overflow-hidden hover:overflow-y-auto scrollbar-thin">
         {navItems.map(item => {
           const isActive = item.path === "/" ? 
                            currentPath === "/" : 
@@ -89,10 +105,10 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ navItems, isCollapsed }
           const isSubMenuActive = item.hasSubmenu && hasActiveSubmenuItem(item.submenuItems);
           
           // Determine if submenu should be open based on user toggle or active status
-          const isSubmenuOpen = openSubmenus[item.name] || (isSubMenuActive && openSubmenus[item.name] !== false);
+          const isSubmenuOpen = !isCollapsed && (openSubmenus[item.name] || (isSubMenuActive && openSubmenus[item.name] !== false));
           
           return (
-            <div key={item.name} className="relative">
+            <div key={item.name} className="relative group">
               <SidebarNavItem 
                 item={item}
                 isActive={isActive}
@@ -110,6 +126,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ navItems, isCollapsed }
                   submenuItems={item.submenuItems || []}
                   currentPath={currentPath}
                   currentTab={currentTab}
+                  parentName={item.name}
                 />
               )}
             </div>
