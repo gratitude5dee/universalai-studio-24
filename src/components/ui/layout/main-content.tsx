@@ -25,6 +25,7 @@ const MainContent: React.FC<MainContentProps> = ({ children }) => {
 
   // Handle video ended event
   const handleVideoEnded = () => {
+    // Start fading out the animation
     setIsPageTransition(false);
     
     // Allow a small delay before allowing new transitions
