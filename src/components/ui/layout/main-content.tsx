@@ -54,22 +54,22 @@ const MatrixAnimation: React.FC<{onComplete: () => void}> = ({ onComplete }) => 
                    @%          #@@@@@+                .:.::.:.::.:.:.:.::.:.:.                        :.:.:::.:.:.. :                                     
                   @-             +@@@@@@-              :.:.:.:.:.::.:.:.:.:.::.:.                     .::.:.:.::.:                                        
                  @:                @@@@@@@=           :.:.:.::.::.:.::.:.::.:.:.:.:                .::.:.:.:.:.:.:                                        
-                 @-                 @@@@@@@@-         .:.::.:.:.:.:.:.::.:.:.:.::.:.:.:.:.:.:.:.:.  :.::.:.:.::.:.:.:                                         
-                 @.     @@-          @@@@@@@@@       :.::.:.:.:.:.:.::.:.:.::.:.:.::.::.::.:.:.:.:.:.:.:.:.::.:.::.:..                                        
-                  @:   +@@@*         -@@@@@@@@@      .:.:.:.::.:.::...:.:.:.:.::.:.:.:.:.::.:.::.:.::.:.:.:.:.:.                                            
+                 @-                 @@@@@@@@-         .:.::.:.:.:.:.:.::.:.:.:.::.:.:.:.:.:.:.:.  :.::.:.:.::.:.:.:                                         
+                 @.     @@-          @@@@@@@@@       :.::.:.:.:.:.:.::.:.:.::.:.:.::.::.::.:.:.:.:.:.:.:.::.:.::.:..                                        
+                  @:   +@@@*         -@@@@@@@@@      .:.:.:.::.:.::...:.:.:.:.::.:.:.:.:.:.::.:.::.:.::.:.:.:.:.                                            
                    @@:   :@-          @@@@@@@@@@     .::.:.:.:.::.:         :.:.:.:.:.:.:.:.:.::.:.::.:.:.::                                              
                      -*#*-            %@@@@@@@@@%   :: .:.::.: .:.:         .:.::.::.::.::.:.:.:.::.:.:.::                                                
                                       :@@@@@@@@@@   .:.::.:.:.::.:             .:.:.:.:.:.::.::.:.:.:.::                                                  
                                        @@@@@@@@@@+  =@:.:.::.:.:.:..          .:  .:.:.:.:.:.:.:.:.::                                                     
                                        @@@@@@@@@@@.@@@@.:.:.:.:.:.::.        :.:.::.::.::.:.:.                                                            
                                        @@@@@@@@@@@@@--.:.:.::.::.:.:         .:.:.:.:.:.:.:.:                                                             
-                                       @@@@@@@@@@@#:.:.::.:.:.:.::..       : :.::.:.::.:.:.:.:.                                                          
+                                       @@@@@@@@@@@#:.:.::.:.:.:.::..       : :.::.:.::.:.:.:.:.:                                                          
                                        @@@@@@@@@@@@+.::.:.::.:.:.::.    .:.:.::.:.::.:.::.::.::.:.                                                        
                                        @@@@@@@@@@@%@::.:.:.:.::.:.:    .:.:.:. .:.:.:.:.:.:.:.:.::.:                                 #                    
                                 -      @@@@@@@@@@@@@+:.:.::.:.:.:.   .:.::.:.::.::.:.  .::.:.:.:.::.:                               @@                    
                                :@@     @@@@@@@@@@@@@.:.::.:.:.::.::   :.:.::.:.:.:.: :#-==.::.::.:.:.::.                          @@@@@                   
                               -@@@@+   @@@@@@@@@@@@@-:.:.:.:.:.:.:.:.:.:.:.:.:.:.:::@@%@@@@.::.:.:.:.:.                         @@@@@@@@-                 
-                            .@@@@@@@@@@@@@@@@@@@@@@@@@:.:.::.::.:.:.::.:.::.:  :@@@@@@@@@@%+.:.:.:.:.:.                     #@@@@@@@@@@@=               
+                            .@@@@@@@@@@@@@@@@@@@@@@@@@:.:.::.::.:.:.:.::.:.::.:  :@@@@@@@@@@%+.:.:.:.:.:.                     #@@@@@@@@@@@=               
                           .@@@@@@@@@@@@@@@@@@@@@@@@@=:.:.:.:.:.:.:.::.:.::.:.:: @@@@@@@@@@@@@@@#::.::.:.::.                 #@@@@@@@@@@@@@@@#             
                         @@@@@@@@@@@@@@@@@@@@@@@@@%@@@@.::.:.:.:.::.:.:.:.:.. .@@@@@@@@@@@@@@@@+=@::.:.::.:.:.             *@@@@@@@@@@@@@@@@@@@@+   @.     
                     :@@@@@@-@@@@@@@@@@@@@@@@@@@@@@@.:.:.:.::.::.:.:.:.::.:::@@@. @@@@@@@@@@@@@@@#@#:.:.:.:.::           @@@@ =@@@@@@@@@@@@@@@@@@@@+       
@@ -78,14 +78,15 @@ const MatrixAnimation: React.FC<{onComplete: () => void}> = ({ onComplete }) => 
           -%@@@@@@@@@@@@@@@=       +%@@@@@@@@@@@@@@@@@ :.:.:.:.:.:.::.:.@@@@@@@:      #@@@@@@@@@@:   ..:.:.:.:.=@@@@@@@@@@@@      -@@@@@@@@@@*            
             *@@@@@@@@@@@@@@+           @@@@@@@@@@@@@@@.:.:.:.::.:.:.:.@@@@@@@@@.        -@@@@@@:. :.:::.::.::.-@@@@@@@@@@@@@         *@@@@@@              
             *@@@@@@@@@@@@@@=           @@@@@@@@@@@:@@-:.::.::.:.::-:-@@@@@@@@@@:           -@@ :.:.:..      .:::@@@@@@@@@@@@            @@                
-            *@@@@@@@@@@@@@@=           @@@@@@@@@@@@@@@:.:.:.:.:.:@@:@@@@@@@@@@.         :@@. .:.:  ::.:.:.:.:..+@@@@@@@@@@@          *@+                 
+            *@@@@@@@@@@@@@@=           @@@@@@@@@@@@@@@:.:.:.:.::.:@@:@@@@@@@@@@.         :@@. .:.:  ::.:.:.:.:..+@@@@@@@@@@@          *@+                 
             *@@@@@@@@@@@@@@=           @@@@@@@@@@@@@@@.:.:.:.:.:.::@@@@@@@@@@@@:        %@-      .:..:.::.:.:.:=@@@@@@@@@@@@        -@@                   
             *@@@@@@@@@@@@@@=           @@@@@@@@@@@@@@@ :.::.:.:.:.@@@@@@@@@@@@@. #@@- *@*         .::.:.:.::.::@@@@@@@@@@@@@ :@@# :@@.                    
             *@@@@@@@@@@@@@@+           @@@@@@@@@@@@@@@ :.:.::.::.=@@@@@@@@@@@@@:=@@@@@=         .:.:.::.::.:.:@@@@@@@@@@@@@@ @@@@@#                       
             *@@@@@@@@@@@@@@=           @@@@@@@@@@@@*@@ .:.:.:.:.:=@@@@@@@@@@@@@.  ::             .:    :..:.:.%@@@@@@@@@@@@@   :.                         
             *@@@@@@@@@@@@@@=           @@@@@@@@@@@@@@@ :.::.::.:.+@@@@@@@@@@@@@:                 :.:.:  ..::.::@@@@@@@@@@@@@                              
-            *@@@@@@@@@@@@@@=           @@@@@@@@@@@@@@@  :.:.:.:. +@@@@@@@@@@@@@@@%#+=              :.:..:.:.:.*@@@@@@@@@@@@@@#*+:                        
-            *@@@@@@@@@@@@@@@@.         @@@@@@@@@@@@@@@@@=:.::.:. .-@@@=.-+%@@@@@@@@@@@@@@@@@%+     .:::.::.::.:@@@@@@@@@@@@@@@@@@@@@@@@@#:       -@@=    
+            *@@@@@@@@@@@@@@=           @@@@@@@@@@@@@@@ :.:.:.:.:.=@@@@@@@@@@@@@.                 .:.:.:::.:.:.:@@@@@@@@@@@@@                              
+            +@@@@@@@@@@@@@@=           @@@@@@@@@@@@@@@  :.:.:.:. +@@@@@@@@@@@@@@@%#+=              :.:..:.:.:.:*@@@@@@@@@@@@@@#*+:                        
+            *@@@@@@@@@@@@@@@@.         @@@@@@@@@@@@@@@@@=:.::.:. .-@@@=.-+%@@@@@@@@@@@@@@@@@%+     .:::.::.::.:=@@@@@@@@@@@@@@@@@@@@@@@@@#:       -@@=    
             +@@@@@@@@@@@@@@@@@@@+      @@@@@@@@@@@@@*== .:.:.: :.+@@@%@*@@@@@@@@@@@@@@@@@@#@@@@@#::.:.:.:.:.:.:@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@+@@=       
             @@@@@@@@@@@@@@@@@@@@@@@*   @@@@@@@@=        .::.:.    @@-#@@@@@@@@@@@@@@@@@@@@@@=@+:..:.:.:.:.:.::@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@          
           %@@@@@@@@@@@@@@@@@@@@@@@@@@@+@@@@@.           .:.:.    %@@@@@@@-@==@@%@@.:=@@@@@@@@@@::.::.:.::.:: +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@            
@@ -101,124 +102,107 @@ const MatrixAnimation: React.FC<{onComplete: () => void}> = ({ onComplete }) => 
                                      :.::.::.:       :.      .::         :.:.:           ::.::. .:             ::    :.:.::.::                            
                                  .:          ::      ::      ::.         :. :.           .::.:. :.            .:. .:         .:.                          
                                  :.::       .:.      :.       .::       :.. ::         :::. .::  ::.        .::.  :.:.       ::.                          
-                                    :.::.:::.:       ::         .::.:::.:   .:.::.:.::.:    :.:   :::.::.:::.:      .::.::.::.`;
-                                    
-    setAsciiArt(art.split('\n'));
+                                    :.::.:::.:       ::         .::.:::.:   .:.::.:.::.:    :.:   :::.::.:::.:      .::.::.::.
+    `.split('\n');
+    
+    // Remove empty lines and trim whitespace
+    setAsciiArt(art.filter(line => line.trim()));
   }, []);
-
+  
   useEffect(() => {
-    // Start the matrix effect
-    const chars = "!@#$%^&*()_+-=[]{}|;:,.<>?/~`";
+    // Matrix rain animation
+    const chars = '01:.@#$%*+-=';
     const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
+    const matrixDrops: React.ReactNode[] = [];
     
-    let startTime = Date.now();
-    let nextDropTime = startTime;
-    const duration = 1500; // 1.5 seconds total duration
-    
-    const animateMatrix = () => {
-      const currentTime = Date.now();
+    for (let i = 0; i < 100; i++) {
+      const x = Math.random() * screenWidth;
+      const y = Math.random() * -500; // Start above the screen
+      const speed = 2 + Math.random() * 3;
+      const opacity = 0.4 + Math.random() * 0.6;
+      const delay = Math.random() * 2;
+      const char = chars[Math.floor(Math.random() * chars.length)];
       
-      // Check if we should end the animation
-      if (currentTime - startTime > duration && !completedRef.current) {
-        setIsExiting(true);
+      matrixDrops.push(
+        <MatrixDrop 
+          key={`drop-${i}`} 
+          char={char} 
+          x={x} 
+          y={y} 
+          speed={speed} 
+          opacity={opacity}
+          delay={delay}
+        />
+      );
+    }
+    
+    setDrops(matrixDrops);
+    
+    // Show ASCII art after a brief delay
+    const asciiTimer = setTimeout(() => {
+      setShowAscii(true);
+    }, 600);
+    
+    // Start exiting after 1.5 seconds
+    const exitTimer = setTimeout(() => {
+      setIsExiting(true);
+    }, 1500);
+    
+    // Complete animation and notify parent after exit animation
+    const completeTimer = setTimeout(() => {
+      if (!completedRef.current) {
         completedRef.current = true;
-        setTimeout(() => {
-          onComplete();
-        }, 300); // Exit animation time
-        return;
+        onComplete();
       }
-      
-      // Add new matrix drops periodically
-      if (currentTime >= nextDropTime && currentTime - startTime < duration) {
-        const newDrops = [...drops];
-        
-        // Add a few new drops
-        for (let i = 0; i < 3; i++) {
-          const x = Math.random() * screenWidth;
-          const y = Math.random() * screenHeight;
-          const char = chars[Math.floor(Math.random() * chars.length)];
-          const speed = 2 + Math.random() * 2; // Random speed between 2-4s
-          const opacity = 0.3 + Math.random() * 0.7; // Random opacity
-          const delay = Math.random() * 0.5; // Slight delay variance
-          
-          newDrops.push(
-            <MatrixDrop 
-              key={`drop-${currentTime}-${i}`}
-              char={char} 
-              x={x} 
-              y={y} 
-              speed={speed} 
-              opacity={opacity}
-              delay={delay}
-            />
-          );
-        }
-        
-        setDrops(newDrops);
-        nextDropTime = currentTime + 50; // Add new drops every 50ms
-      }
-      
-      // Show ASCII art after a short delay
-      if (currentTime - startTime > 300 && !showAscii) {
-        setShowAscii(true);
-      }
-      
-      // Request next frame if we're still within duration
-      if (!isExiting) {
-        animationRef.current = requestAnimationFrame(animateMatrix);
-      }
-    };
+    }, 1800); // 1.5s + 300ms for exit animation
     
-    // Start the animation
-    animationRef.current = requestAnimationFrame(animateMatrix);
-    
-    // Cleanup
     return () => {
-      if (animationRef.current !== null) {
+      clearTimeout(asciiTimer);
+      clearTimeout(exitTimer);
+      clearTimeout(completeTimer);
+      if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [drops, showAscii, isExiting, onComplete]);
-
-  const scaleFactor = 0.4; // Reduce the size by 60%
-
+  }, [onComplete]);
+  
   return (
-    <AnimatePresence mode="wait">
-      {!isExiting ? (
-        <motion.div 
-          className="fixed inset-0 bg-black flex items-center justify-center z-50"
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          {/* Matrix rain effect */}
-          <div className="absolute inset-0 overflow-hidden">
-            {drops}
-          </div>
-          
-          {/* ASCII art overlay */}
-          {showAscii && (
-            <motion.div 
-              className="relative text-green-500 font-mono text-xs whitespace-pre z-10 opacity-80 scale-40"
-              initial={{ opacity: 0, scale: scaleFactor * 0.8 }}
-              animate={{ opacity: 0.8, scale: scaleFactor }}
-              exit={{ opacity: 0, scale: scaleFactor * 0.8 }}
-              transition={{ duration: 0.5 }}
-              style={{ 
-                transform: `scale(${scaleFactor})`,
-                lineHeight: '1em',
-                maxHeight: '80vh',
-                overflow: 'hidden'
-              }}
-            >
-              {asciiArt.map((line, i) => (
-                <div key={`line-${i}`}>{line}</div>
+    <div className="fixed inset-0 bg-[#120825] z-50 flex items-center justify-center overflow-hidden">
+      {/* Matrix rain effect */}
+      <div className="absolute inset-0 overflow-hidden">
+        {drops}
+      </div>
+      
+      {/* ASCII art display */}
+      <AnimatePresence>
+        {showAscii && !isExiting && (
+          <motion.div 
+            className="relative z-10 transform-gpu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="text-green-400 font-mono leading-none text-xs whitespace-pre overflow-hidden transform scale-[0.25] sm:scale-[0.35] md:scale-[0.4] lg:scale-[0.45]">
+              {asciiArt.map((line, index) => (
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.01 * index }}
+                  className={cn(
+                    "whitespace-pre font-mono", 
+                    index % 3 === 0 ? "text-green-300" : index % 3 === 1 ? "text-green-400" : "text-green-500"
+                  )}
+                >
+                  {line}
+                </motion.div>
               ))}
-            </motion.div>
-          )}
-        </motion.div>
-      ) : null}
-    </AnimatePresence>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 
@@ -227,31 +211,62 @@ interface MainContentProps {
 }
 
 const MainContent: React.FC<MainContentProps> = ({ children }) => {
-  const [showMatrix, setShowMatrix] = useState(false);
   const location = useLocation();
-  const prevPathRef = useRef(location.pathname);
-
+  const [isPageTransition, setIsPageTransition] = useState(false);
+  const [isAnimationComplete, setIsAnimationComplete] = useState(true);
+  
+  // Trigger transition when route changes
   useEffect(() => {
-    if (location.pathname !== prevPathRef.current) {
-      setShowMatrix(true);
-      prevPathRef.current = location.pathname;
+    // Only start a new transition if the previous one is complete
+    if (isAnimationComplete) {
+      setIsAnimationComplete(false);
+      setIsPageTransition(true);
     }
-  }, [location]);
+  }, [location.pathname, isAnimationComplete]);
 
-  const handleMatrixComplete = () => {
-    setShowMatrix(false);
+  // Handle animation completed
+  const handleAnimationComplete = () => {
+    // Start fading out the animation
+    setIsPageTransition(false);
+    
+    // Allow a small delay before allowing new transitions
+    setTimeout(() => {
+      setIsAnimationComplete(true);
+    }, 300); // Small buffer after animation ends
   };
 
   return (
-    <div className="flex flex-col flex-1 overflow-hidden">
+    <motion.div 
+      className="flex-1 min-h-screen flex flex-col w-full bg-studio-cream bg-[radial-gradient(circle_at_top_right,rgba(217,143,100,0.08),transparent_60%)]"
+      layout
+      transition={{ duration: 0.25, ease: "easeOut" }}
+    >
       <Header />
-      <div className={cn("flex-1 overflow-auto p-4 md:p-6 relative", {})}>
-        {children}
-      </div>
       
-      {/* Matrix animation on route change */}
-      {showMatrix && <MatrixAnimation onComplete={handleMatrixComplete} />}
-    </div>
+      {/* Matrix ASCII Animation Transition */}
+      <AnimatePresence>
+        {isPageTransition && (
+          <motion.div 
+            className="fixed inset-0 z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <MatrixAnimation onComplete={handleAnimationComplete} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
+      <motion.main 
+        className="px-4 pb-8 mt-2 flex-1 overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      >
+        {children}
+      </motion.main>
+    </motion.div>
   );
 };
 
