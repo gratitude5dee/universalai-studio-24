@@ -1,6 +1,6 @@
 
 import React, { ReactNode } from "react";
-import { LayoutDashboard, Image as ImageIcon, BarChart3, Shield, Wand2, Wallet, Users, Bot, Database, Eye, Globe } from "lucide-react";
+import { LayoutDashboard, Image as ImageIcon, BarChart3, Shield, Wand2, Wallet, Users, Bot, Database, Eye, Globe, ShoppingCart } from "lucide-react";
 import Header from "@/components/ui/header";
 import Ambient from "@/components/ui/ambient";
 import Sidebar from "@/components/ui/sidebar/sidebar";
@@ -51,6 +51,11 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         name: "My Collection",
         path: "/collection",
         icon: Database
+      },
+      {
+        name: "Marketplace",
+        path: "/agent-marketplace",
+        icon: ShoppingCart
       },
       {
         name: "Observability",

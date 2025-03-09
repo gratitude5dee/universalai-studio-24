@@ -14,6 +14,7 @@ import TreasureVault from "./pages/TreasureVault";
 import Projects from "./pages/Projects";
 import Bridge from "./pages/Bridge";
 import Observability from "./pages/Observability";
+import AgentMarketplace from "./pages/AgentMarketplace";
 import "./App.css";
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         <Route path="/projects" element={<Projects />} />
         <Route path="/bridge" element={<Bridge />} />
         <Route path="/observability" element={<Observability />} />
+        <Route path="/agent-marketplace" element={<AgentMarketplace />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster />
