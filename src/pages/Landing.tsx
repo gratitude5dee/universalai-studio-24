@@ -1,4 +1,4 @@
-<lov-code>
+
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, useMotionValue, useTransform, useAnimation } from "framer-motion";
@@ -103,7 +103,8 @@ const Landing = () => {
       }, 300);
       return () => clearInterval(interval);
     }, []);
-    return <div className="fixed inset-0 bg-[#120825] z-50 flex items-center justify-center text-white">
+    return (
+      <div className="fixed inset-0 bg-[#120825] z-50 flex items-center justify-center text-white">
         <div className="relative">
           <pre className="text-xs sm:text-sm md:text-base text-cyan-400 font-mono">
             {asciiFrames[frameIndex]}
@@ -114,23 +115,15 @@ const Landing = () => {
             <div className="inline-block h-2 w-2 rounded-full bg-orange-500 animate-ping animation-delay-400"></div>
           </div>
         </div>
-      </div>;
+      </div>
+    );
   };
 
   // ASCII data stream animation
-  const AsciiStream = ({
-    top,
-    left,
-    delay,
-    duration
-  }: {
-    top: string;
-    left: string;
-    delay: number;
-    duration: number;
-  }) => {
+  const AsciiStream = ({ top, left, delay, duration }: { top: string, left: string, delay: number, duration: number }) => {
     const characters = "10101010101010101010";
     const [streamChars, setStreamChars] = useState(characters);
+
     useEffect(() => {
       const interval = setInterval(() => {
         setStreamChars(prev => {
@@ -138,34 +131,39 @@ const Landing = () => {
           return shifted;
         });
       }, 150);
+      
       return () => clearInterval(interval);
     }, []);
-    return <motion.div className="fixed text-green-500/20 text-xs font-mono pointer-events-none" style={{
-      top,
-      left
-    }} initial={{
-      opacity: 0,
-      y: -50
-    }} animate={{
-      opacity: [0, 0.4, 0],
-      y: [0, 100]
-    }} transition={{
-      repeat: Infinity,
-      duration,
-      delay,
-      ease: "linear"
-    }}>
-        {streamChars.split('').map((char, i) => <motion.div key={i} animate={{
-        opacity: [0.2, 1, 0.2]
-      }} transition={{
-        duration: 2,
-        repeat: Infinity,
-        delay: i * 0.1
-      }}>
+
+    return (
+      <motion.div 
+        className="fixed text-green-500/20 text-xs font-mono pointer-events-none"
+        style={{ top, left }}
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ 
+          opacity: [0, 0.4, 0], 
+          y: [0, 100],
+        }}
+        transition={{
+          repeat: Infinity,
+          duration,
+          delay,
+          ease: "linear"
+        }}
+      >
+        {streamChars.split('').map((char, i) => (
+          <motion.div 
+            key={i}
+            animate={{ opacity: [0.2, 1, 0.2] }}
+            transition={{ duration: 2, repeat: Infinity, delay: i * 0.1 }}
+          >
             {char}
-          </motion.div>)}
-      </motion.div>;
+          </motion.div>
+        ))}
+      </motion.div>
+    );
   };
+  
   return (
     <div className="min-h-screen w-screen bg-gradient-to-b from-[#120825] to-[#1F0443] text-white overflow-hidden relative">
       {/* ASCII loading screen */}
@@ -583,4 +581,16 @@ const Landing = () => {
                 {/* Shine effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 opacity-0 group-hover:opacity-100 transform -translate-x-full group-hover:translate-x-full transition-all duration-700" />
                 
-                <feature.icon className="h-8 w-8 sm
+                <feature.icon className="h-8 w-8 sm:h-10 sm:w-10 mb-3 sm:mb-4 text-white relative z-10" />
+                <h3 className="text-base sm:text-lg font-medium mb-1 sm:mb-2 relative z-10">{feature.title}</h3>
+                <p className="text-xs sm:text-sm text-white/70 relative z-10">{feature.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+
+export default Landing;
