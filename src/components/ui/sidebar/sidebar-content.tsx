@@ -24,20 +24,19 @@ interface SidebarContentProps {
 const SidebarContent: React.FC<SidebarContentProps> = ({ navItems, isCollapsed }) => {
   const location = useLocation();
   const currentPath = location.pathname;
-  const [agentsSubmenuOpen, setAgentsSubmenuOpen] = useState(false);
-  const [projectsSubmenuOpen, setProjectsSubmenuOpen] = useState(false);
+  const searchParams = new URLSearchParams(location.search);
+  const currentTab = searchParams.get("tab");
+  
+  // Initialize state for each submenu
+  const [openSubmenus, setOpenSubmenus] = useState<{ [key: string]: boolean }>({});
 
-  const toggleAgentsSubmenu = (e: React.MouseEvent) => {
+  const toggleSubmenu = (name: string, e: React.MouseEvent) => {
     e.preventDefault();
     if (!isCollapsed) {
-      setAgentsSubmenuOpen(!agentsSubmenuOpen);
-    }
-  };
-
-  const toggleProjectsSubmenu = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (!isCollapsed) {
-      setProjectsSubmenuOpen(!projectsSubmenuOpen);
+      setOpenSubmenus(prev => ({
+        ...prev,
+        [name]: !prev[name]
+      }));
     }
   };
 
@@ -63,10 +62,19 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ navItems, isCollapsed }
           
       <nav className="flex-1 space-y-1">
         {navItems.map(item => {
-          const isActive = item.path === "/" && currentPath === "/" || 
+          const isActive = (item.path === "/" && currentPath === "/") || 
                            (item.path !== "/" && item.path !== "#" && currentPath.startsWith(item.path)) ||
-                           (item.hasSubmenu && item.submenuItems?.some(subItem => currentPath.startsWith(subItem.path)));
-          const isSubMenuActive = item.hasSubmenu && item.submenuItems?.some(subItem => currentPath.startsWith(subItem.path));
+                           (item.hasSubmenu && item.submenuItems?.some(subItem => 
+                             currentPath.startsWith(subItem.path.split("?")[0]) && 
+                             (!subItem.path.includes("?") || subItem.path.includes(currentTab || ""))
+                           ));
+          
+          const isSubMenuActive = item.hasSubmenu && item.submenuItems?.some(subItem => 
+            currentPath.startsWith(subItem.path.split("?")[0]) && 
+            (!subItem.path.includes("?") || subItem.path.includes(currentTab || ""))
+          );
+          
+          const isSubmenuOpen = openSubmenus[item.name] || isSubMenuActive;
           
           return (
             <div key={item.name} className="relative">
@@ -75,26 +83,20 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ navItems, isCollapsed }
                 isActive={isActive}
                 isSubMenuActive={isSubMenuActive}
                 isCollapsed={isCollapsed}
-                submenuOpen={item.name === "Agents" ? agentsSubmenuOpen : projectsSubmenuOpen}
-                toggleSubmenu={item.name === "Agents" ? toggleAgentsSubmenu : toggleProjectsSubmenu}
+                submenuOpen={isSubmenuOpen}
+                toggleSubmenu={(e) => toggleSubmenu(item.name, e)}
               />
               
               {/* Submenu */}
-              {item.name === "Agents" ? (
+              {item.hasSubmenu && (
                 <SidebarSubmenu
-                  isOpen={agentsSubmenuOpen}
+                  isOpen={isSubmenuOpen}
                   isCollapsed={isCollapsed}
                   submenuItems={item.submenuItems || []}
                   currentPath={currentPath}
+                  currentTab={currentTab}
                 />
-              ) : item.name === "Projects" ? (
-                <SidebarSubmenu
-                  isOpen={projectsSubmenuOpen}
-                  isCollapsed={isCollapsed}
-                  submenuItems={item.submenuItems || []}
-                  currentPath={currentPath}
-                />
-              ) : null}
+              )}
             </div>
           );
         })}

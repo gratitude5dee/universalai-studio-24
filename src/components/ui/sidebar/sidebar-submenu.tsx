@@ -11,6 +11,7 @@ interface SubmenuProps {
     icon: React.ComponentType<{ className?: string }>;
   }[];
   currentPath: string;
+  currentTab?: string | null;
 }
 
 const SidebarSubmenu: React.FC<SubmenuProps> = ({
@@ -18,6 +19,7 @@ const SidebarSubmenu: React.FC<SubmenuProps> = ({
   isCollapsed,
   submenuItems,
   currentPath,
+  currentTab,
 }) => {
   if (!(isOpen || isCollapsed) || !submenuItems) {
     return null;
@@ -26,7 +28,11 @@ const SidebarSubmenu: React.FC<SubmenuProps> = ({
   return (
     <div className={`mt-1 ml-4 space-y-1 ${isCollapsed ? 'absolute left-full top-0 ml-2 bg-white p-2 rounded-lg shadow-lg z-10 min-w-48' : ''}`}>
       {submenuItems.map(subItem => {
-        const isSubItemActive = currentPath.startsWith(subItem.path);
+        const basePathMatch = currentPath.startsWith(subItem.path.split("?")[0]);
+        const queryMatch = subItem.path.includes(`tab=${currentTab}`);
+        
+        const isSubItemActive = basePathMatch && 
+          (!subItem.path.includes("?tab=") || (currentTab && queryMatch));
         
         return (
           <Link 
