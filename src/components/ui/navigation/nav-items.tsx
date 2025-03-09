@@ -2,7 +2,8 @@
 import { 
   LayoutDashboard, Zap, Palette, BookOpen, Brain, Headphones, Infinity, UserRound, Users, 
   ImageIcon, BarChart3, Shield, Globe, Bot, Database, ShoppingCart, Eye, Building, 
-  Trees, ArrowRightLeft, Share2, Link, Tv, User, Music, Wallet, Landmark, TrendingUp, Droplets 
+  Trees, ArrowRightLeft, Share2, Link, Tv, User, Music, Wallet, Landmark, TrendingUp, Droplets, 
+  CreditCard
 } from "lucide-react";
 
 export const navItems = [{
@@ -85,6 +86,11 @@ export const navItems = [{
       icon: Database
     },
     {
+      name: "Agent Banking",
+      path: "/treasury?tab=banking",
+      icon: CreditCard
+    },
+    {
       name: "Marketplace",
       path: "/agent-marketplace",
       icon: ShoppingCart
@@ -159,6 +165,11 @@ export const navItems = [{
       name: "Overview",
       path: "/treasury",
       icon: Wallet
+    },
+    {
+      name: "Agent Banking",
+      path: "/treasury?tab=banking",
+      icon: CreditCard
     },
     {
       name: "On-Chain Actions",

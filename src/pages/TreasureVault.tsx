@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Coins, Map, Sparkles, Scroll, BarChart3, Clock, Landmark, TrendingUp, Droplets } from "lucide-react";
+import { Coins, Map, Sparkles, Scroll, BarChart3, Clock, Landmark, TrendingUp, Droplets, Wallet } from "lucide-react";
 import DashboardLayout from "@/layouts/dashboard-layout";
 import { Content } from "@/components/ui/content";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -11,6 +12,7 @@ import OnChainActions from "@/components/treasury/OnChainActions";
 import TradingAgents from "@/components/treasury/TradingAgents";
 import LiquidityAgents from "@/components/treasury/LiquidityAgents";
 import DirectoryOfAgents from "@/components/treasury/DirectoryOfAgents";
+import AgentBanking from "@/components/treasury/AgentBanking";
 
 const TreasureVault = () => {
   const [activeTab, setActiveTab] = useState("collection");
@@ -21,7 +23,7 @@ const TreasureVault = () => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const tab = params.get("tab");
-    if (tab && ["overview", "onchain", "trading", "liquidity"].includes(tab)) {
+    if (tab && ["overview", "onchain", "trading", "liquidity", "banking"].includes(tab)) {
       setCurrentTab(tab);
     } else {
       setCurrentTab("overview");
@@ -50,12 +52,18 @@ const TreasureVault = () => {
     <DashboardLayout>
       <Content title="Organization Finances" subtitle="Manage your magical treasures and watch your wealth grow through enchanted stewardship">
         <Tabs value={currentTab} defaultValue="overview" className="w-full" onValueChange={handleTabChange}>
-          <TabsList className="w-full max-w-[calc(28rem+35px)] mb-6 bg-white/80 backdrop-blur-md border border-studio-sand/30 rounded-xl p-1 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] relative overflow-hidden before:absolute before:inset-0 before:bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1IiBkPSJNMCAwaDMwMHYzMDBIMHoiLz48L3N2Zz4=')] before:opacity-30">
+          <TabsList className="w-full max-w-[calc(34rem+35px)] mb-6 bg-white/80 backdrop-blur-md border border-studio-sand/30 rounded-xl p-1 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] relative overflow-hidden before:absolute before:inset-0 before:bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1IiBkPSJNMCAwaDMwMHYzMDBIMHoiLz48L3N2Zz4=')] before:opacity-30">
             <TabsTrigger 
               value="overview" 
               className="flex-1 py-2.5 rounded-lg hover:bg-white/30 data-[state=active]:bg-studio-accent data-[state=active]:text-white data-[state=active]:shadow-sm data-[state=active]:backdrop-blur-md transition-all duration-300 z-10 relative"
             >
               Overview
+            </TabsTrigger>
+            <TabsTrigger 
+              value="banking" 
+              className="flex-1 py-2.5 rounded-lg hover:bg-white/30 data-[state=active]:bg-studio-accent data-[state=active]:text-white data-[state=active]:shadow-sm data-[state=active]:backdrop-blur-md transition-all duration-300 z-10 relative"
+            >
+              Agent Banking
             </TabsTrigger>
             <TabsTrigger 
               value="onchain" 
@@ -91,6 +99,10 @@ const TreasureVault = () => {
             <div className="mt-6">
               <DirectoryOfAgents />
             </div>
+          </TabsContent>
+          
+          <TabsContent value="banking" className="space-y-6">
+            <AgentBanking />
           </TabsContent>
           
           <TabsContent value="onchain" className="space-y-6">
