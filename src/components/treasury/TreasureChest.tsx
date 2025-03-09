@@ -1,11 +1,12 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Briefcase, TrendingUp, Coins, ArrowUpRight, Sparkles } from "lucide-react";
+import { Briefcase, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import confetti from "canvas-confetti";
+import TreasuryOverview from "./TreasuryOverview";
+import SavingsGoals from "./SavingsGoals";
 
 interface SavingsGoal {
   id: string;
@@ -107,51 +108,11 @@ const TreasureChest: React.FC = () => {
         </Button>
       </div>
       
-      <div className="px-6 pb-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Total Balance */}
-        <div className="bg-white/50 rounded-xl p-4 border border-studio-sand/30">
-          <div className="flex justify-between items-start">
-            <div>
-              <p className="text-sm text-muted-foreground">Total Treasury</p>
-              <p className="text-3xl font-bold">${totalBalance.toLocaleString()}</p>
-            </div>
-            <div className="bg-green-100 p-2 rounded-lg">
-              <Coins className="h-5 w-5 text-green-600" />
-            </div>
-          </div>
-          <div className="mt-2 flex items-center text-sm text-green-600">
-            <ArrowUpRight className="h-4 w-4 mr-1" />
-            <span>${todayChange.toLocaleString()} today</span>
-          </div>
-        </div>
-        
-        {/* Performance */}
-        <div className="bg-white/50 rounded-xl p-4 border border-studio-sand/30">
-          <div className="flex justify-between items-start">
-            <div>
-              <p className="text-sm text-muted-foreground">Growth Rate</p>
-              <p className="text-3xl font-bold text-green-600">+{percentageChange}%</p>
-            </div>
-            <div className="bg-blue-100 p-2 rounded-lg">
-              <TrendingUp className="h-5 w-5 text-blue-600" />
-            </div>
-          </div>
-          <div className="mt-2 flex items-center text-sm text-muted-foreground">
-            <span>Performing better than 82% of wizards</span>
-          </div>
-        </div>
-        
-        {/* Quick Actions */}
-        <div className="bg-white/50 rounded-xl p-4 border border-studio-sand/30">
-          <p className="text-sm text-muted-foreground mb-2">Quick Spells</p>
-          <div className="grid grid-cols-2 gap-2">
-            <Button size="sm" variant="outline" className="text-xs h-9">Add Treasure</Button>
-            <Button size="sm" variant="outline" className="text-xs h-9">Send Token</Button>
-            <Button size="sm" variant="outline" className="text-xs h-9">Set Goal</Button>
-            <Button size="sm" variant="outline" className="text-xs h-9">View History</Button>
-          </div>
-        </div>
-      </div>
+      <TreasuryOverview 
+        totalBalance={totalBalance}
+        todayChange={todayChange}
+        percentageChange={percentageChange}
+      />
       
       <AnimatePresence>
         {isOpen && (
@@ -161,58 +122,10 @@ const TreasureChest: React.FC = () => {
             exit={{ opacity: 0, y: -20 }}
             className="px-6 pb-6"
           >
-            <div className="bg-studio-sand/10 rounded-xl p-5 border border-studio-sand/30">
-              <h3 className="text-lg font-semibold mb-4 flex items-center">
-                <Sparkles className="h-5 w-5 mr-2 text-studio-accent" />
-                Enchanted Savings Goals
-              </h3>
-              
-              <div className="space-y-4">
-                {goals.map((goal) => (
-                  <div key={goal.id} className="bg-white/70 rounded-lg p-4">
-                    <div className="flex justify-between items-center mb-2">
-                      <h4 className="font-medium">{goal.name}</h4>
-                      <div className="text-sm font-medium">
-                        ${goal.current.toLocaleString()} / ${goal.target.toLocaleString()}
-                      </div>
-                    </div>
-                    
-                    <div className="mb-2">
-                      <Progress 
-                        value={(goal.current / goal.target) * 100} 
-                        className="h-2"
-                        indicatorClassName={`bg-gradient-to-r from-studio-accent/70 to-${goal.color}`}
-                      />
-                    </div>
-                    
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-muted-foreground">
-                        {goal.deadline}
-                      </span>
-                      <Button 
-                        size="sm" 
-                        variant="outline" 
-                        className="text-xs h-7 px-2"
-                        onClick={() => handleAddToGoal(goal.id)}
-                      >
-                        Add Magic (+$500)
-                      </Button>
-                    </div>
-                    
-                    {goal.current >= goal.target && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="mt-2 bg-green-100 p-2 rounded-lg text-xs text-green-800 flex items-center"
-                      >
-                        <Sparkles className="h-3 w-3 mr-1" />
-                        Goal achieved! Your magic is strong!
-                      </motion.div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
+            <SavingsGoals 
+              goals={goals} 
+              onAddToGoal={handleAddToGoal} 
+            />
           </motion.div>
         )}
       </AnimatePresence>
