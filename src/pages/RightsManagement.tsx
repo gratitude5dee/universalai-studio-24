@@ -29,11 +29,13 @@ import RecentMilestones from "@/components/rights/RecentMilestones";
 import IPAgreementVisualizer from "@/components/rights/IPAgreementVisualizer";
 import RoyaltyScenarioModeler from "@/components/rights/RoyaltyScenarioModeler";
 import RightsTransferWizard from "@/components/rights/RightsTransferWizard";
+import StoryPortal from "@/components/rights/StoryPortal";
 
 const RightsManagement = () => {
   const navigate = useNavigate();
   const [selectedAsset, setSelectedAsset] = useState<string | null>("The Universal Dream");
   const [activeTab, setActiveTab] = useState<string>("overview");
+  const [isStoryPortalOpen, setIsStoryPortalOpen] = useState(false);
   
   const assetOptions = [
     "The Universal Dream",
@@ -137,6 +139,15 @@ const RightsManagement = () => {
                         whileHover={{ x: 3 }}
                       >
                         <span>View Smart Contracts</span>
+                        <ChevronRight size={16} />
+                      </motion.button>
+                      <motion.button 
+                        className="w-full text-left p-3 flex items-center justify-between rounded-lg bg-gradient-to-r from-purple-500 to-indigo-600 text-white text-sm hover:from-purple-600 hover:to-indigo-700 shadow-lg"
+                        whileHover={{ x: 3, scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => setIsStoryPortalOpen(true)}
+                      >
+                        <span>Story Portal</span>
                         <ChevronRight size={16} />
                       </motion.button>
                     </div>
@@ -618,6 +629,12 @@ const RightsManagement = () => {
         </div>
 
         {renderActiveTab()}
+
+        {/* Story Portal Modal */}
+        <StoryPortal 
+          isOpen={isStoryPortalOpen} 
+          onClose={() => setIsStoryPortalOpen(false)} 
+        />
       </div>
     </DashboardLayout>
   );
