@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { User, Users } from "lucide-react";
+import { User, Users, Computer, Smartphone } from "lucide-react";
 import NearAgentsList from "./NearAgentsList";
 import AutonolasAgentsList from "./AutonolasAgentsList";
 
@@ -23,6 +23,14 @@ const DirectoryOfAgents: React.FC = () => {
             <Users className="w-4 h-4 mr-2" />
             Autonolas
           </TabsTrigger>
+          <TabsTrigger value="virtuals" className="flex-1 flex items-center justify-center">
+            <Computer className="w-4 h-4 mr-2" />
+            Virtuals
+          </TabsTrigger>
+          <TabsTrigger value="zerepy" className="flex-1 flex items-center justify-center">
+            <Smartphone className="w-4 h-4 mr-2" />
+            Zerepy
+          </TabsTrigger>
         </TabsList>
         
         <TabsContent value="near" className="space-y-4">
@@ -31,6 +39,20 @@ const DirectoryOfAgents: React.FC = () => {
         
         <TabsContent value="autonolas" className="space-y-4">
           <AutonolasAgentsList />
+        </TabsContent>
+        
+        <TabsContent value="virtuals" className="space-y-4">
+          <div className="text-center py-6 text-muted-foreground">
+            <Computer className="w-12 h-12 mx-auto mb-2 opacity-50" />
+            <p>Virtual agents will appear here soon</p>
+          </div>
+        </TabsContent>
+        
+        <TabsContent value="zerepy" className="space-y-4">
+          <div className="text-center py-6 text-muted-foreground">
+            <Smartphone className="w-12 h-12 mx-auto mb-2 opacity-50" />
+            <p>Zerepy agents will appear here soon</p>
+          </div>
         </TabsContent>
       </Tabs>
     </div>
