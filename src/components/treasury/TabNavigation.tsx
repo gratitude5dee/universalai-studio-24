@@ -19,7 +19,7 @@ const TabNavigation: React.FC<TabNavigationProps> = ({ tabs, activeTab, setActiv
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
 
   return (
-    <div className="flex justify-center overflow-x-auto py-4 px-6 gap-7 bg-white/60 backdrop-blur-sm rounded-2xl border border-studio-sand/20 shadow-[0_4px_20px_rgba(0,0,0,0.07)]">
+    <div className="flex justify-center overflow-x-auto py-4 px-6 gap-7 bg-white/60 backdrop-blur-sm rounded-2xl border border-studio-sand/20 shadow-[0_4px_20px_rgba(0,0,0,0.07)] relative">
       {tabs.map((tab) => {
         const TabIcon = tab.icon;
         const isActive = activeTab === tab.id;
@@ -32,15 +32,19 @@ const TabNavigation: React.FC<TabNavigationProps> = ({ tabs, activeTab, setActiv
             onMouseEnter={() => setHoveredTab(tab.id)}
             onMouseLeave={() => setHoveredTab(null)}
           >
-            {/* Tooltip that appears on hover - now positioned above */}
+            {/* Tooltip that appears on hover - positioned above with improved z-index */}
             <AnimatePresence>
               {isHovered && (
                 <motion.div
-                  className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 px-3 py-1.5 bg-studio-charcoal/90 text-white text-sm rounded-lg backdrop-blur-md shadow-lg whitespace-nowrap z-50"
+                  className="fixed left-1/2 -translate-x-1/2 bottom-full mb-2 px-3 py-1.5 bg-studio-charcoal/90 text-white text-sm rounded-lg backdrop-blur-md shadow-lg whitespace-nowrap z-[9999]"
                   initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 5 }}
                   transition={{ duration: 0.15 }}
+                  style={{ 
+                    transform: `translate(-50%, -8px)`,
+                    pointerEvents: "none"
+                  }}
                 >
                   {tab.name}
                   <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-studio-charcoal/90" />
