@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import DistributionLayout from "@/layouts/distribution-layout";
 import { 
   Instagram, Facebook, Twitter, Youtube, 
-  TrendingUp, Calendar, BarChart, Award, Plus
+  TrendingUp, Calendar, BarChart, Award, Plus, Zap
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
