@@ -18,7 +18,9 @@ import {
   BarChart4,
   Code,
   Briefcase,
-  Settings
+  Settings,
+  Check,
+  AlertTriangle
 } from "lucide-react";
 import RightsJourney from "@/components/rights/RightsJourney";
 import CollaboratorEcosystem from "@/components/rights/CollaboratorEcosystem";

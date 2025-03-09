@@ -1,7 +1,6 @@
-
 import React from "react";
 import DashboardLayout from "@/layouts/dashboard-layout";
-import { Content } from "@/components/ui/header";
+import { Content } from "@/components/ui/content";
 import Gallery from "@/components/ui/gallery";
 
 const AssetLibrary = () => {
