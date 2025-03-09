@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Coins, Map, Sparkles, Scroll, BarChart3, Clock, Landmark, TrendingUp, Droplets, Wallet, Home, Bank, AreaChart, Activity } from "lucide-react";
+import { Coins, Map, Sparkles, Scroll, BarChart3, Clock, Landmark, TrendingUp, Droplets, Wallet, Home, Building, AreaChart, Activity } from "lucide-react";
 import DashboardLayout from "@/layouts/dashboard-layout";
 import { Content } from "@/components/ui/content";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -75,7 +75,7 @@ const TreasureVault = () => {
                     value="banking" 
                     className="w-10 h-10 p-0 rounded-lg hover:bg-white/30 data-[state=active]:bg-studio-accent data-[state=active]:text-white data-[state=active]:shadow-sm data-[state=active]:backdrop-blur-md transition-all duration-300 z-10 relative flex items-center justify-center"
                   >
-                    <Bank size={18} />
+                    <Building size={18} />
                   </TabsTrigger>
                 </TooltipTrigger>
                 <TooltipContent>
