@@ -295,9 +295,7 @@ const Landing = () => {
             y: 20
           }} animate={controls} transition={{
             delay: 0.1
-          }}>
-              With Our Intelligent Platform
-            </motion.h2>
+          }}>Make Magic Real Again </motion.h2>
             
             <motion.div className="backdrop-blur-sm bg-white/5 border border-white/10 rounded-xl p-5 mb-8 shadow-[0_8px_30px_rgba(0,0,0,0.12)] relative overflow-hidden" initial={{
             opacity: 0,
@@ -311,10 +309,7 @@ const Landing = () => {
               opacity: 0.05,
               mixBlendMode: 'overlay'
             }} />
-              <p className="text-base sm:text-lg text-gray-200 max-w-xl mx-auto lg:mx-0 relative z-10">
-                Unlock the power of AI-driven creativity tools to transform your concepts into 
-                compelling digital experiences with unprecedented ease.
-              </p>
+              <p className="text-base sm:text-lg text-gray-200 max-w-xl mx-auto lg:mx-0 relative z-10">FREE DRAKE FROM OPPRESSION!!! UNIVERSAL.AI IS FOR THE CREATOR, PERPETUAL CREATOR CRYPTO MACHINES, HYPERLIQUID CULTURE FUND</p>
             </motion.div>
             
             <motion.div initial={{
