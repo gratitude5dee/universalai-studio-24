@@ -38,6 +38,7 @@ const MatrixAnimation: React.FC<{onComplete: () => void}> = ({ onComplete }) => 
   const [drops, setDrops] = useState<React.ReactNode[]>([]);
   const [asciiArt, setAsciiArt] = useState<string[]>([]);
   const [showAscii, setShowAscii] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
   const animationRef = useRef<number | null>(null);
   const completedRef = useRef(false);
   
@@ -140,18 +141,24 @@ const MatrixAnimation: React.FC<{onComplete: () => void}> = ({ onComplete }) => 
     // Show ASCII art after a brief delay
     const asciiTimer = setTimeout(() => {
       setShowAscii(true);
-    }, 1000);
+    }, 600);
     
-    // Complete animation after a set time - changed from 4000ms to 1500ms
+    // Start exiting after 1.5 seconds
+    const exitTimer = setTimeout(() => {
+      setIsExiting(true);
+    }, 1500);
+    
+    // Complete animation and notify parent after exit animation
     const completeTimer = setTimeout(() => {
       if (!completedRef.current) {
         completedRef.current = true;
         onComplete();
       }
-    }, 1500);
+    }, 1800); // 1.5s + 300ms for exit animation
     
     return () => {
       clearTimeout(asciiTimer);
+      clearTimeout(exitTimer);
       clearTimeout(completeTimer);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
@@ -166,25 +173,35 @@ const MatrixAnimation: React.FC<{onComplete: () => void}> = ({ onComplete }) => 
         {drops}
       </div>
       
-      {/* ASCII art display - reduced height by scaling down */}
-      {showAscii && (
-        <div className="relative z-10 text-green-400 font-mono leading-none text-xs md:text-sm whitespace-pre overflow-hidden max-w-full max-h-full scale-[0.3] sm:scale-[0.375] md:scale-[0.45] lg:scale-[0.5]">
-          {asciiArt.map((line, index) => (
-            <motion.div 
-              key={index}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.01 * index }}
-              className={cn(
-                "whitespace-pre font-mono", 
-                index % 3 === 0 ? "text-green-300" : index % 3 === 1 ? "text-green-400" : "text-green-500"
-              )}
-            >
-              {line}
-            </motion.div>
-          ))}
-        </div>
-      )}
+      {/* ASCII art display */}
+      <AnimatePresence>
+        {showAscii && !isExiting && (
+          <motion.div 
+            className="relative z-10 transform-gpu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="text-green-400 font-mono leading-none text-xs whitespace-pre overflow-hidden transform scale-[0.25] sm:scale-[0.35] md:scale-[0.4] lg:scale-[0.45]">
+              {asciiArt.map((line, index) => (
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.01 * index }}
+                  className={cn(
+                    "whitespace-pre font-mono", 
+                    index % 3 === 0 ? "text-green-300" : index % 3 === 1 ? "text-green-400" : "text-green-500"
+                  )}
+                >
+                  {line}
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
