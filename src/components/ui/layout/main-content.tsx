@@ -167,14 +167,20 @@ const MatrixAnimation: React.FC<{onComplete: () => void}> = ({ onComplete }) => 
   }, [onComplete]);
   
   return (
-    <div className="fixed inset-0 bg-[#120825] z-50 flex items-center justify-center overflow-hidden">
+    <motion.div 
+      className="fixed inset-0 bg-[#120825] z-50 flex items-center justify-center overflow-hidden"
+      initial={{ opacity: 1 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       {/* Matrix rain effect */}
       <div className="absolute inset-0 overflow-hidden">
         {drops}
       </div>
       
       {/* ASCII art display */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {showAscii && !isExiting && (
           <motion.div 
             className="relative z-10 transform-gpu"
@@ -189,6 +195,7 @@ const MatrixAnimation: React.FC<{onComplete: () => void}> = ({ onComplete }) => 
                   key={index}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
                   transition={{ duration: 0.5, delay: 0.01 * index }}
                   className={cn(
                     "whitespace-pre font-mono", 
@@ -202,7 +209,7 @@ const MatrixAnimation: React.FC<{onComplete: () => void}> = ({ onComplete }) => 
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 };
 
@@ -244,7 +251,7 @@ const MainContent: React.FC<MainContentProps> = ({ children }) => {
       <Header />
       
       {/* Matrix ASCII Animation Transition */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {isPageTransition && (
           <motion.div 
             className="fixed inset-0 z-50"
