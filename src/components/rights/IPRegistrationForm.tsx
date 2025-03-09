@@ -9,11 +9,13 @@ import { Shield, ArrowRight } from "lucide-react";
 import { Address } from "viem";
 
 export const IPRegistrationForm = () => {
-  const { register, loading: registeringIp } = useIpAsset();
+  const { register, loadings, errors } = useIpAsset();
   const [tokenId, setTokenId] = useState<string>("");
   const [nftContract, setNftContract] = useState<string>("0x73fcb515cee99e4991465ef586cfe2b072ebb512");
   const [txHash, setTxHash] = useState<string>("");
   const [ipId, setIpId] = useState<string>("");
+  
+  const registeringIp = loadings["register"] || false;
 
   const handleRegisterIp = async () => {
     if (!tokenId || !nftContract) {
