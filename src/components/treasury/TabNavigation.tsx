@@ -32,18 +32,19 @@ const TabNavigation: React.FC<TabNavigationProps> = ({ tabs, activeTab, setActiv
             onMouseEnter={() => setHoveredTab(tab.id)}
             onMouseLeave={() => setHoveredTab(null)}
           >
-            {/* Tooltip that appears on hover - positioned above with improved z-index */}
+            {/* Portal the tooltip to the document body to ensure it's not constrained by parent containers */}
             <AnimatePresence>
               {isHovered && (
                 <motion.div
-                  className="absolute left-1/2 bottom-full mb-2 px-3 py-1.5 bg-studio-charcoal/90 text-white text-sm rounded-lg backdrop-blur-md shadow-lg whitespace-nowrap z-[9999]"
+                  className="absolute left-1/2 bottom-full mb-2 px-3 py-1.5 bg-studio-charcoal/90 text-white text-sm rounded-lg backdrop-blur-md shadow-lg whitespace-nowrap"
                   initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 5 }}
                   transition={{ duration: 0.15 }}
                   style={{ 
                     transform: 'translate(-50%, -8px)',
-                    pointerEvents: "none"
+                    pointerEvents: "none",
+                    zIndex: 50000 // Extremely high z-index
                   }}
                 >
                   {tab.name}
