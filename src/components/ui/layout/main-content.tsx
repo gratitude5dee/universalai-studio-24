@@ -46,6 +46,7 @@ const MainContent: React.FC<MainContentProps> = ({ children }) => {
               src="/ascii-video.mp4" 
               autoPlay 
               muted 
+              playsInline
               className="max-w-full max-h-full object-contain"
               onEnded={() => setIsPageTransition(false)}
             />
