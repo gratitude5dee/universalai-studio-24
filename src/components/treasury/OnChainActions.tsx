@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Coins, Map, Landmark, Globe, Wallet, Link, Network, ArrowRightLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { MntBalanceChecker } from "@/components/treasury/MntBalanceChecker";
 
 const OnChainActions = () => {
   const [activePortal, setActivePortal] = useState("transactions");
@@ -110,37 +111,7 @@ const OnChainActions = () => {
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                <div className="space-y-4">
-                  <div className="bg-muted/30 p-4 rounded-lg">
-                    <h4 className="font-medium mb-2">Available Assets</h4>
-                    <div className="space-y-2">
-                      {['ETH', 'USDC', 'DAI', 'WBTC'].map(token => (
-                        <div key={token} className="flex justify-between items-center">
-                          <span className="text-sm">{token}</span>
-                          <span className="text-sm font-medium">2.54 {token}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div className="p-4 border border-dashed border-studio-accent/30 rounded-lg">
-                    <h4 className="font-medium text-studio-accent mb-2">Portal Benefits</h4>
-                    <ul className="space-y-1 text-sm">
-                      <li className="flex items-center">
-                        <ArrowRightLeft className="w-3 h-3 mr-2 text-studio-accent" />
-                        7-second finality
-                      </li>
-                      <li className="flex items-center">
-                        <ArrowRightLeft className="w-3 h-3 mr-2 text-studio-accent" />
-                        90% lower gas fees
-                      </li>
-                      <li className="flex items-center">
-                        <ArrowRightLeft className="w-3 h-3 mr-2 text-studio-accent" />
-                        EVM compatible transactions
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+                <MntBalanceChecker />
                 
                 <div className="bg-gradient-to-br from-[#f0f4ff] to-white p-5 rounded-lg border border-[#2563EB]/20">
                   <h4 className="font-medium mb-4">Bridge to Mantle</h4>

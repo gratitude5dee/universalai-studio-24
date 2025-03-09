@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Coins, Map, Sparkles, Scroll, BarChart3, Clock, Landmark, TrendingUp, Droplets, Wallet } from "lucide-react";
@@ -12,7 +13,6 @@ import TradingAgents from "@/components/treasury/TradingAgents";
 import LiquidityAgents from "@/components/treasury/LiquidityAgents";
 import DirectoryOfAgents from "@/components/treasury/DirectoryOfAgents";
 import AgentBanking from "@/components/treasury/AgentBanking";
-import { MntBalanceChecker } from "@/components/treasury/MntBalanceChecker";
 
 const TreasureVault = () => {
   const [activeTab, setActiveTab] = useState("collection");
@@ -83,12 +83,6 @@ const TreasureVault = () => {
             >
               Liquidity Agents
             </TabsTrigger>
-            <TabsTrigger 
-              value="mantle" 
-              className="flex-1 py-2.5 rounded-lg hover:bg-white/30 data-[state=active]:bg-studio-accent data-[state=active]:text-white data-[state=active]:shadow-sm data-[state=active]:backdrop-blur-md transition-all duration-300 z-10 relative"
-            >
-              Mantle
-            </TabsTrigger>
           </TabsList>
           
           <TabsContent value="overview" className="space-y-6">
@@ -121,40 +115,6 @@ const TreasureVault = () => {
           
           <TabsContent value="liquidity" className="space-y-6">
             <LiquidityAgents />
-          </TabsContent>
-          
-          <TabsContent value="mantle" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <MntBalanceChecker />
-              
-              <div className="glass-card p-6">
-                <h2 className="text-xl font-medium flex items-center gap-2 mb-4">
-                  <Sparkles className="text-studio-accent" size={20} />
-                  About Mantle Network
-                </h2>
-                
-                <p className="text-studio-clay mb-4">
-                  Mantle is a high-performance EVM-equivalent Layer 2 blockchain, offering fast transactions and low fees while maintaining Ethereum's security guarantees.
-                </p>
-                
-                <div className="space-y-4 mt-6">
-                  <div className="p-3 bg-studio-accent/10 rounded-lg">
-                    <h3 className="font-medium mb-1">Low Gas Fees</h3>
-                    <p className="text-sm text-studio-clay">Save up to 100x on transaction costs compared to Ethereum mainnet</p>
-                  </div>
-                  
-                  <div className="p-3 bg-studio-accent/10 rounded-lg">
-                    <h3 className="font-medium mb-1">Fast Finality</h3>
-                    <p className="text-sm text-studio-clay">Transactions confirm in seconds, not minutes</p>
-                  </div>
-                  
-                  <div className="p-3 bg-studio-accent/10 rounded-lg">
-                    <h3 className="font-medium mb-1">Ethereum Security</h3>
-                    <p className="text-sm text-studio-clay">Inherits the full security guarantees of Ethereum L1</p>
-                  </div>
-                </div>
-              </div>
-            </div>
           </TabsContent>
         </Tabs>
       </Content>
