@@ -11,7 +11,6 @@ import { AnimatePresence } from "framer-motion";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import { WalletProvider } from "@/context/WalletContext";
 import { ProtectedRoute } from "@/components/ui/ProtectedRoute";
-import { StoryProtocolProvider } from "@/context/StoryProtocolProvider";
 
 // Import all page components
 import Home from "./pages/Index";
@@ -59,17 +58,13 @@ function App() {
           <CrossmintProvider apiKey={import.meta.env.VITE_CROSSMINT_CLIENT_KEY || ""}>
             <CrossmintAuthProvider loginMethods={["email", "farcaster"]}>
               <WalletProvider>
-                <StoryProtocolProvider>
-                  <AppContent />
-                </StoryProtocolProvider>
+                <AppContent />
               </WalletProvider>
             </CrossmintAuthProvider>
           </CrossmintProvider>
         ) : (
           <WalletProvider>
-            <StoryProtocolProvider>
-              <AppContent bypassAuth={true} />
-            </StoryProtocolProvider>
+            <AppContent bypassAuth={true} />
           </WalletProvider>
         )}
       </ErrorBoundary>

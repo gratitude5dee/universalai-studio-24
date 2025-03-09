@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -28,7 +29,6 @@ import RecentMilestones from "@/components/rights/RecentMilestones";
 import IPAgreementVisualizer from "@/components/rights/IPAgreementVisualizer";
 import RoyaltyScenarioModeler from "@/components/rights/RoyaltyScenarioModeler";
 import RightsTransferWizard from "@/components/rights/RightsTransferWizard";
-import { IPRegistrationForm } from "@/components/rights/IPRegistrationForm";
 
 const RightsManagement = () => {
   const navigate = useNavigate();
@@ -67,15 +67,6 @@ const RightsManagement = () => {
       case "overview":
         return (
           <div className="space-y-6">
-            {/* IP Registration Form */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <IPRegistrationForm />
-            </motion.div>
-
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <motion.div 
                 className="lg:col-span-2"
