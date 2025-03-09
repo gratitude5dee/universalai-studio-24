@@ -14,7 +14,7 @@ interface StatsCardProps {
   className?: string;
 }
 
-const StatsCard: React.FC<StatsCardProps> = ({
+export const StatsCard: React.FC<StatsCardProps> = ({
   title,
   value,
   description,
@@ -74,5 +74,3 @@ const StatsCard: React.FC<StatsCardProps> = ({
     </motion.div>
   );
 };
-
-export default StatsCard;

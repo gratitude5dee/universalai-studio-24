@@ -19,7 +19,7 @@ interface EarningsProps {
   period?: string;
 }
 
-const Earnings: React.FC<EarningsProps> = ({
+export const Earnings: React.FC<EarningsProps> = ({
   data,
   total,
   trend,
@@ -120,5 +120,3 @@ const Earnings: React.FC<EarningsProps> = ({
     </motion.div>
   );
 };
-
-export default Earnings;
