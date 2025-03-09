@@ -28,45 +28,38 @@ const TabNavigation: React.FC<TabNavigationProps> = ({ tabs, activeTab, setActiv
         return (
           <div 
             key={tab.id} 
-            className="relative"
+            className="relative flex items-center"
             onMouseEnter={() => setHoveredTab(tab.id)}
             onMouseLeave={() => setHoveredTab(null)}
           >
-            {/* Portal the tooltip to the document body to ensure it's not constrained by parent containers */}
-            <AnimatePresence>
-              {isHovered && (
-                <motion.div
-                  className="absolute left-1/2 bottom-full mb-2 px-3 py-1.5 bg-studio-charcoal/90 text-white text-sm rounded-lg backdrop-blur-md shadow-lg whitespace-nowrap"
-                  initial={{ opacity: 0, y: 5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 5 }}
-                  transition={{ duration: 0.15 }}
-                  style={{ 
-                    transform: 'translate(-50%, -8px)',
-                    pointerEvents: "none",
-                    zIndex: 50000 // Extremely high z-index
-                  }}
-                >
-                  {tab.name}
-                  <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-studio-charcoal/90" />
-                </motion.div>
-              )}
-            </AnimatePresence>
-            
             <motion.button
               onClick={() => setActiveTab(tab.id)}
               className={cn(
-                "relative p-3.5 rounded-xl transition-all duration-300",
+                "relative p-3.5 rounded-xl transition-all duration-300 flex items-center",
                 isActive 
                   ? "bg-studio-accent text-white shadow-md" 
-                  : "bg-white/90 text-studio-charcoal hover:bg-white hover:scale-110"
+                  : "bg-white/90 text-studio-charcoal hover:bg-white hover:scale-105"
               )}
-              whileHover={{ y: -3, scale: 1.05 }}
-              whileTap={{ y: 0, scale: 0.95 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               aria-label={tab.name}
             >
               <TabIcon className="w-5 h-5" />
               
+              <AnimatePresence>
+                {isHovered && (
+                  <motion.span
+                    className="absolute left-[calc(100%+8px)] whitespace-nowrap text-sm"
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -10 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {tab.name}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+
               {isActive && (
                 <motion.span 
                   className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-white rounded-full shadow-[0_0_5px_rgba(255,255,255,0.7)]"
