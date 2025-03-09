@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, useMotionValue, useTransform, useAnimation } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,30 @@ const Landing = () => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const controls = useAnimation();
+  const [isLoading, setIsLoading] = useState(true);
+  const [typedText, setTypedText] = useState("");
+  const fullText = "Transform Ideas Into Reality";
+
+  // ASCII animation effect
+  useEffect(() => {
+    // Simulate loading screen with ASCII animation
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Typing effect implementation
+  useEffect(() => {
+    if (!isLoading && typedText.length < fullText.length) {
+      const timeout = setTimeout(() => {
+        setTypedText(fullText.substring(0, typedText.length + 1));
+      }, 100); // Adjust typing speed here
+      
+      return () => clearTimeout(timeout);
+    }
+  }, [typedText, isLoading, fullText]);
 
   // Handle mouse movement for the entire container (subtle effect)
   useEffect(() => {
@@ -47,8 +71,122 @@ const Landing = () => {
   const rotateX = useTransform(y, [-5, 5], [5, -5]);
   const rotateY = useTransform(x, [-5, 5], [-5, 5]);
 
+  // ASCII Loading Screen Component
+  const AsciiLoadingScreen = () => {
+    const asciiFrames = [
+      `
+.---.                                                   
+|   |.-----.--.--.--.--.-----.----.-----.--.--.-.
+|   ||     |  |  |_   _|  _  |   _|__ --|  |  |  |
+|   ||__|__|_____|__.__|   __|__| |_____|\\___/|__|
+|:::|                  |__|                        
+'---'                                              
+      `,
+      `
+ .---.                                                  
+ |   |.-----.--.--.--.--.-----.----.-----.--.--.-.
+ |   ||     |  |  |_   _|  _  |   _|__ --|  |  |  |
+.|   ||__|__|_____|__.__|   __|__| |_____|\\___/|__|
+.|:::|                  |__|                        
+ '---'                                              
+      `,
+      `
+  .---.                                                 
+  |   |.-----.--.--.--.--.-----.----.-----.--.--.-.
+  |   ||     |  |  |_   _|  _  |   _|__ --|  |  |  |
+ .|   ||__|__|_____|__.__|   __|__| |_____|\\___/|__|
+ .|:::|                  |__|                        
+  '---'                                              
+      `
+    ];
+
+    const [frameIndex, setFrameIndex] = useState(0);
+
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setFrameIndex((prevIndex) => (prevIndex + 1) % asciiFrames.length);
+      }, 300);
+
+      return () => clearInterval(interval);
+    }, []);
+
+    return (
+      <div className="fixed inset-0 bg-[#120825] z-50 flex items-center justify-center text-white">
+        <div className="relative">
+          <pre className="text-xs sm:text-sm md:text-base text-cyan-400 font-mono">
+            {asciiFrames[frameIndex]}
+          </pre>
+          <div className="mt-8 text-center">
+            <div className="inline-block h-2 w-2 rounded-full bg-orange-500 mr-1 animate-ping"></div>
+            <div className="inline-block h-2 w-2 rounded-full bg-orange-500 mr-1 animate-ping animation-delay-200"></div>
+            <div className="inline-block h-2 w-2 rounded-full bg-orange-500 animate-ping animation-delay-400"></div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // ASCII data stream animation
+  const AsciiStream = ({ top, left, delay, duration }: { top: string, left: string, delay: number, duration: number }) => {
+    const characters = "10101010101010101010";
+    const [streamChars, setStreamChars] = useState(characters);
+
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setStreamChars(prev => {
+          const shifted = prev.substring(1) + prev.charAt(0);
+          return shifted;
+        });
+      }, 150);
+      
+      return () => clearInterval(interval);
+    }, []);
+
+    return (
+      <motion.div 
+        className="fixed text-green-500/20 text-xs font-mono pointer-events-none"
+        style={{ top, left }}
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ 
+          opacity: [0, 0.4, 0], 
+          y: [0, 100],
+        }}
+        transition={{
+          repeat: Infinity,
+          duration,
+          delay,
+          ease: "linear"
+        }}
+      >
+        {streamChars.split('').map((char, i) => (
+          <motion.div 
+            key={i}
+            animate={{ opacity: [0.2, 1, 0.2] }}
+            transition={{ duration: 2, repeat: Infinity, delay: i * 0.1 }}
+          >
+            {char}
+          </motion.div>
+        ))}
+      </motion.div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#120825] to-[#1F0443] text-white overflow-hidden relative w-screen max-w-full">
+      {/* ASCII loading screen */}
+      {isLoading && <AsciiLoadingScreen />}
+
+      {/* ASCII data streams */}
+      {!isLoading && (
+        <>
+          <AsciiStream top="10%" left="15%" delay={2} duration={8} />
+          <AsciiStream top="20%" left="85%" delay={3.5} duration={10} />
+          <AsciiStream top="50%" left="8%" delay={1} duration={12} />
+          <AsciiStream top="70%" left="92%" delay={4} duration={9} />
+          <AsciiStream top="35%" left="60%" delay={2.5} duration={11} />
+        </>
+      )}
+
       {/* Noise texture overlay */}
       <div 
         className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none" 
@@ -85,10 +223,11 @@ const Landing = () => {
         ))}
       </div>
 
-      {/* 3D floating elements */}
+      {/* 3D floating elements with enhanced shadows and lighting */}
       <div className="absolute inset-0 overflow-hidden opacity-30 pointer-events-none">
         {[...Array(10)].map((_, i) => {
           const isSquare = Math.random() > 0.5;
+          const depth = Math.random() * 0.5 + 0.5; // Depth factor for parallax (0.5 to 1)
           return (
             <motion.div
               key={`shape-${i}`}
@@ -105,7 +244,10 @@ const Landing = () => {
                     : 'linear-gradient(135deg, rgba(255,215,0,0.15) 0%, rgba(255,176,0,0.05) 100%)',
                 backdropFilter: 'blur(5px)',
                 border: '1px solid rgba(255,255,255,0.1)',
-                boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2), 0 0 8px rgba(45,212,191,0.1)',
+                transformStyle: 'preserve-3d',
+                transform: `translateZ(${i * 10}px)`,
+                zIndex: Math.round(depth * 10),
               }}
               animate={{
                 y: [0, Math.random() * 40 - 20, 0],
@@ -117,6 +259,11 @@ const Landing = () => {
                 duration: Math.random() * 20 + 20,
                 repeat: Infinity,
                 ease: "easeInOut",
+              }}
+              // Enhanced parallax effect based on mouse movement
+              whileHover={{
+                z: 30 * depth,
+                transition: { duration: 0.2 }
               }}
             />
           );
@@ -166,7 +313,9 @@ const Landing = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={controls}
             >
-              Transform Ideas
+              {/* Custom typing effect */}
+              <span>{typedText}</span>
+              <span className="inline-block w-1 h-[1em] bg-teal-400 ml-1 animate-blink"></span>
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-300"> Into Reality</span>
             </motion.h1>
             
@@ -226,7 +375,7 @@ const Landing = () => {
             style={{ perspective: 1000 }}
           >
             <div className="relative w-full max-w-lg mx-auto">
-              {/* 3D tilting main card container */}
+              {/* 3D tilting main card container with enhanced shadows */}
               <motion.div 
                 className="relative"
                 style={{
@@ -235,7 +384,7 @@ const Landing = () => {
                   transformStyle: "preserve-3d",
                 }}
               >
-                {/* Glass card container */}
+                {/* Glass card container with improved lighting effects */}
                 <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 sm:p-6 border border-white/20 shadow-[0_20px_80px_-10px_rgba(45,212,191,0.3)] transform transition-all duration-200 relative overflow-hidden">
                   {/* Inner noise texture */}
                   <div className="absolute inset-0" style={{ 
@@ -244,8 +393,12 @@ const Landing = () => {
                     mixBlendMode: 'overlay'
                   }} />
                   
-                  {/* Platform mockup interface */}
-                  <div className="bg-[#1E1E2E]/70 backdrop-blur-md rounded-xl p-3 sm:p-4 mb-4 sm:mb-5 relative">
+                  {/* Enhanced lighting effect */}
+                  <div className="absolute -top-20 -right-20 w-40 h-40 bg-cyan-500/20 rounded-full blur-3xl"></div>
+                  <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl"></div>
+                  
+                  {/* Platform mockup interface with improved 3D effect */}
+                  <div className="bg-[#1E1E2E]/70 backdrop-blur-md rounded-xl p-3 sm:p-4 mb-4 sm:mb-5 relative" style={{ transformStyle: 'preserve-3d' }}>
                     {/* Inner noise texture */}
                     <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay rounded-xl" style={{ 
                       backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` 
@@ -263,10 +416,10 @@ const Landing = () => {
                     </div>
                     
                     <div className="grid grid-cols-2 gap-2 sm:gap-3">
-                      {/* Each tool card has subtle hover effect */}
+                      {/* Each tool card has enhanced 3D effect */}
                       <motion.div 
-                        className="bg-teal-500/20 backdrop-blur-md rounded-lg p-2 sm:p-3 flex items-center relative z-10 overflow-hidden"
-                        whileHover={{ scale: 1.03, y: -2 }}
+                        className="bg-teal-500/20 backdrop-blur-md rounded-lg p-2 sm:p-3 flex items-center relative z-10 overflow-hidden group"
+                        whileHover={{ scale: 1.03, y: -2, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1), 0 0 10px rgba(45,212,191,0.3)" }}
                         style={{ transformStyle: "preserve-3d" }}
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-teal-400/0 via-teal-400/10 to-teal-400/0 opacity-0 group-hover:opacity-100 transform -translate-x-full group-hover:translate-x-full transition-all duration-700" />
@@ -274,24 +427,24 @@ const Landing = () => {
                         <span className="text-xs sm:text-sm">Design</span>
                       </motion.div>
                       <motion.div 
-                        className="bg-purple-500/20 backdrop-blur-md rounded-lg p-2 sm:p-3 flex items-center relative z-10 overflow-hidden"
-                        whileHover={{ scale: 1.03, y: -2 }}
+                        className="bg-purple-500/20 backdrop-blur-md rounded-lg p-2 sm:p-3 flex items-center relative z-10 overflow-hidden group"
+                        whileHover={{ scale: 1.03, y: -2, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1), 0 0 10px rgba(139,92,246,0.3)" }}
                         style={{ transformStyle: "preserve-3d" }}
                       >
                         <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-purple-400 mr-1.5 sm:mr-2 relative" style={{ transform: "translateZ(20px)" }} />
                         <span className="text-xs sm:text-sm">Library</span>
                       </motion.div>
                       <motion.div 
-                        className="bg-blue-500/20 backdrop-blur-md rounded-lg p-2 sm:p-3 flex items-center relative z-10 overflow-hidden"
-                        whileHover={{ scale: 1.03, y: -2 }}
+                        className="bg-blue-500/20 backdrop-blur-md rounded-lg p-2 sm:p-3 flex items-center relative z-10 overflow-hidden group"
+                        whileHover={{ scale: 1.03, y: -2, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1), 0 0 10px rgba(59,130,246,0.3)" }}
                         style={{ transformStyle: "preserve-3d" }}
                       >
                         <Brain className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400 mr-1.5 sm:mr-2 relative" style={{ transform: "translateZ(20px)" }} />
                         <span className="text-xs sm:text-sm">Research</span>
                       </motion.div>
                       <motion.div 
-                        className="bg-green-500/20 backdrop-blur-md rounded-lg p-2 sm:p-3 flex items-center relative z-10 overflow-hidden"
-                        whileHover={{ scale: 1.03, y: -2 }}
+                        className="bg-green-500/20 backdrop-blur-md rounded-lg p-2 sm:p-3 flex items-center relative z-10 overflow-hidden group"
+                        whileHover={{ scale: 1.03, y: -2, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1), 0 0 10px rgba(34,197,94,0.3)" }}
                         style={{ transformStyle: "preserve-3d" }}
                       >
                         <Headphones className="h-4 w-4 sm:h-5 sm:w-5 text-green-400 mr-1.5 sm:mr-2 relative" style={{ transform: "translateZ(20px)" }} />
@@ -315,7 +468,7 @@ const Landing = () => {
                 </div>
               </motion.div>
               
-              {/* Decorative elements */}
+              {/* Enhanced decorative elements with better lighting */}
               <div className="absolute -top-4 -right-4 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-purple-600 to-pink-500 rounded-full blur-2xl opacity-30 animate-pulse"></div>
               <div className="absolute -bottom-6 -left-6 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-tr from-blue-600 to-teal-400 rounded-full blur-3xl opacity-20"></div>
             </div>
@@ -354,7 +507,7 @@ const Landing = () => {
               <motion.div
                 key={index}
                 className={`bg-gradient-to-br ${feature.color} backdrop-blur-sm p-4 sm:p-6 rounded-xl border border-white/10 relative overflow-hidden group`}
-                whileHover={{ y: -5, scale: 1.02 }}
+                whileHover={{ y: -5, scale: 1.02, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)" }}
                 transition={{ duration: 0.2 }}
               >
                 {/* Noise texture */}

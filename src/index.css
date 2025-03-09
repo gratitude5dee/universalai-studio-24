@@ -3,108 +3,21 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 30 33% 98%;
-    --foreground: 24 10% 10%;
-
-    --card: 30 25% 98%;
-    --card-foreground: 24 10% 10%;
-
-    --popover: 30 25% 98%;
-    --popover-foreground: 24 10% 10%;
-
-    --primary: 24 25% 20%;
-    --primary-foreground: 30 25% 98%;
-
-    --secondary: 30 10% 94%;
-    --secondary-foreground: 24 10% 20%;
-
-    --muted: 30 10% 94%;
-    --muted-foreground: 24 5% 45%;
-
-    --accent: 20 60% 65%;
-    --accent-foreground: 24 10% 10%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 30 15% 90%;
-    --input: 30 15% 90%;
-    --ring: 24 5% 70%;
-
-    --radius: 0.75rem;
-  }
-
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-studio-cream text-studio-charcoal antialiased;
-    font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
-  }
-
-  /* Smooth scrolling */
-  html {
-    scroll-behavior: smooth;
-  }
-
-  /* Custom scrollbar */
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-
-  ::-webkit-scrollbar-track {
-    @apply bg-studio-cream;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    @apply bg-studio-clay/30 rounded-full;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-studio-clay/50;
-  }
-}
-
-@layer components {
-  .glass-card {
-    @apply bg-white/70 backdrop-blur-md border border-white/30 shadow-subtle rounded-2xl;
-  }
-  
-  .glass-card-dark {
-    @apply bg-studio-charcoal/70 backdrop-blur-md border border-white/10 text-white shadow-subtle rounded-2xl;
-  }
-  
-  .subtle-border {
-    @apply border border-studio-sand/50;
-  }
-  
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
 @layer utilities {
-  .animate-delay-100 {
-    animation-delay: 100ms;
-  }
-  
-  .animate-delay-200 {
+  .animation-delay-200 {
     animation-delay: 200ms;
   }
   
-  .animate-delay-300 {
-    animation-delay: 300ms;
-  }
-  
-  .animate-delay-400 {
+  .animation-delay-400 {
     animation-delay: 400ms;
   }
-  
-  .animate-delay-500 {
-    animation-delay: 500ms;
-  }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink 1s infinite;
 }
