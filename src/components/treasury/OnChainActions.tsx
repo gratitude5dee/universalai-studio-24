@@ -30,32 +30,6 @@ const OnChainActions = () => {
           <TabsContent value="transactions">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="bg-white/80 rounded-xl p-5 border border-studio-sand/20">
-                <h3 className="font-medium mb-3">Recent Transactions</h3>
-                <div className="space-y-3">
-                  {[1, 2, 3].map((i) => (
-                    <div key={i} className="flex justify-between items-center p-3 bg-muted/30 rounded-lg">
-                      <div className="flex items-center">
-                        <div className="bg-studio-highlight w-8 h-8 rounded-full flex items-center justify-center mr-3">
-                          <Coins className="w-4 h-4 text-studio-accent" />
-                        </div>
-                        <div>
-                          <p className="text-sm font-medium">Token Transfer</p>
-                          <p className="text-xs text-muted-foreground">2 hours ago</p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-sm font-medium">0.5 ETH</p>
-                        <p className="text-xs text-green-600">Completed</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <Button variant="outline" size="sm" className="w-full mt-4">
-                  View All Transactions
-                </Button>
-              </div>
-              
-              <div className="bg-white/80 rounded-xl p-5 border border-studio-sand/20">
                 <h3 className="font-medium mb-3">Quick Actions</h3>
                 <div className="grid grid-cols-2 gap-3">
                   <Button variant="outline" size="sm" className="justify-start">
@@ -93,6 +67,32 @@ const OnChainActions = () => {
                     </div>
                   </div>
                 </div>
+              </div>
+              
+              <div className="bg-white/80 rounded-xl p-5 border border-studio-sand/20">
+                <h3 className="font-medium mb-3">Recent Transactions</h3>
+                <div className="space-y-3">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="flex justify-between items-center p-3 bg-muted/30 rounded-lg">
+                      <div className="flex items-center">
+                        <div className="bg-studio-highlight w-8 h-8 rounded-full flex items-center justify-center mr-3">
+                          <Coins className="w-4 h-4 text-studio-accent" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium">Token Transfer</p>
+                          <p className="text-xs text-muted-foreground">2 hours ago</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-medium">0.5 ETH</p>
+                        <p className="text-xs text-green-600">Completed</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <Button variant="outline" size="sm" className="w-full mt-4">
+                  View All Transactions
+                </Button>
               </div>
             </div>
           </TabsContent>
