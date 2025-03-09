@@ -4,9 +4,13 @@ import AccountSummary from "./AccountSummary";
 import TransactionHistory from "./TransactionHistory";
 import AccountStats from "./AccountStats";
 import { defaultAccountInfo } from "./types";
+import { useWallet } from "@/context/WalletContext";
+import { toast } from "sonner";
+import { RefreshCw, Ban } from "lucide-react";
 
 const AccountDashboard: React.FC = () => {
   const [isPaused, setIsPaused] = useState(false);
+  const { address } = useWallet();
   
   const togglePause = () => {
     setIsPaused(!isPaused);
@@ -16,10 +20,16 @@ const AccountDashboard: React.FC = () => {
     });
   };
   
+  // Update account info with wallet address
+  const accountInfo = {
+    ...defaultAccountInfo,
+    accountNumber: address ? address.substring(0, 20) + '...' : defaultAccountInfo.accountNumber
+  };
+  
   return (
     <div className="space-y-6">
       <AccountSummary 
-        accountInfo={defaultAccountInfo} 
+        accountInfo={accountInfo} 
         isPaused={isPaused} 
         togglePause={togglePause} 
       />
@@ -28,8 +38,5 @@ const AccountDashboard: React.FC = () => {
     </div>
   );
 };
-
-import { toast } from "sonner";
-import { RefreshCw, Ban } from "lucide-react";
 
 export default AccountDashboard;

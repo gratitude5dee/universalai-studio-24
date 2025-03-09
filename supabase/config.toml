@@ -1,1 +1,8 @@
+
 project_id = "ixkkrousepsiorwlaycp"
+
+[functions.create-wallet]
+verify_jwt = true
+
+[functions.transfer-sol]
+verify_jwt = true

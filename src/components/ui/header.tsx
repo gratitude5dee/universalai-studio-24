@@ -1,51 +1,52 @@
 
 import React from "react";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Bell, Search, Menu } from "lucide-react";
-import Greeting from "./greeting";
-import AvatarWithStatus from "./avatar-with-status";
+import { useAuth } from "@crossmint/client-sdk-react-ui";
+import { WalletInfo } from "./WalletInfo";
+import { Settings } from "./Settings";
 
-const Header = () => {
-  const notifications = 3;
-  
+const Header: React.FC = () => {
+  const location = useLocation();
+  const { user } = useAuth();
+
+  // Get the current page title based on the route
+  const getPageTitle = () => {
+    const path = location.pathname;
+    
+    // Extract the last part of the path
+    const parts = path.split('/').filter(Boolean);
+    if (parts.length === 0) return "Dashboard";
+    
+    const lastPart = parts[parts.length - 1];
+    
+    // Convert kebab-case to Title Case
+    return lastPart
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  };
+
   return (
-    <motion.header 
+    <motion.header
+      className="px-4 py-2 flex items-center justify-between bg-transparent z-10"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="w-full p-4 md:p-8 md:pb-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 z-10"
+      transition={{ duration: 0.3 }}
     >
       <div className="flex items-center">
-        <button className="md:hidden mr-4 text-studio-charcoal">
-          <Menu size={24} />
-        </button>
-        <Greeting />
+        <Link to="/" className="flex items-center mr-4">
+          <div className="text-lg font-semibold tracking-tight">
+            WZRD<span className="text-studio-accent">Studio</span>
+          </div>
+        </Link>
+        
+        <div className="text-lg font-medium">{getPageTitle()}</div>
       </div>
       
-      <div className="flex items-center space-x-4 w-full md:w-auto">
-        <div className="w-full md:w-64 relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-          <input 
-            type="text" 
-            placeholder="Search projects, assets..." 
-            className="w-full bg-white/70 border border-studio-sand/50 rounded-xl pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-studio-accent/30 transition-all"
-          />
-        </div>
-        
-        <div className="relative">
-          <Bell className="h-5 w-5 text-studio-charcoal/70 hover:text-studio-charcoal cursor-pointer transition-colors" />
-          {notifications > 0 && (
-            <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-studio-accent text-[10px] font-medium text-white">
-              {notifications}
-            </span>
-          )}
-        </div>
-        
-        <AvatarWithStatus 
-          src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80"
-          status="online"
-          size="md"
-        />
+      <div className="flex items-center space-x-3">
+        {user && <WalletInfo />}
+        <Settings />
       </div>
     </motion.header>
   );

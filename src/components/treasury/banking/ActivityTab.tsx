@@ -2,13 +2,37 @@
 import React from "react";
 import { BarChart3 } from "lucide-react";
 import TransactionHistory from "./TransactionHistory";
+import { useWallet } from "@/context/WalletContext";
+import { Button } from "@/components/ui/button";
 
 const ActivityTab: React.FC = () => {
+  const { address, balance, isLoading, fetchBalance } = useWallet();
+
   return (
     <div className="glass-card p-6">
       <h3 className="text-lg font-medium mb-4">Banking Activities</h3>
       
-      <div className="mb-6">
+      <div className="mb-6 space-y-4">
+        {/* Wallet Information */}
+        <div className="p-4 bg-white/5 rounded-lg">
+          <div className="flex items-center justify-between mb-2">
+            <h4 className="font-medium">Wallet Information</h4>
+            <Button variant="ghost" size="sm" onClick={() => fetchBalance()}>
+              Refresh
+            </Button>
+          </div>
+          <div className="space-y-2">
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Address:</span>
+              <span className="font-mono text-xs truncate max-w-[200px]">{address || 'No wallet connected'}</span>
+            </div>
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Balance:</span>
+              <span>{isLoading ? 'Loading...' : `${balance.toFixed(8)} SOL`}</span>
+            </div>
+          </div>
+        </div>
+        
         {/* Visualization of transaction activity */}
         <div className="aspect-video bg-studio-sand/10 rounded-xl flex items-center justify-center">
           <div className="text-center text-muted-foreground">
