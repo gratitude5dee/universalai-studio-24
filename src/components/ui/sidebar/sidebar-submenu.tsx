@@ -33,7 +33,7 @@ const SidebarSubmenu: React.FC<SubmenuProps> = ({
       opacity: 1,
       y: 0,
       transition: {
-        delay: 0.05 * i,
+        delay: 0.03 * i,
         duration: 0.2,
       }
     }),
@@ -43,12 +43,17 @@ const SidebarSubmenu: React.FC<SubmenuProps> = ({
   // Submenu that appears on hover when sidebar is collapsed
   if (isCollapsed) {
     return (
-      <div className="absolute left-full top-0 ml-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-        <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-2.5 min-w-48 border border-studio-sand/20">
+      <div className="absolute left-full top-0 ml-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+        <motion.div 
+          className="bg-white/95 backdrop-blur-sm rounded-lg shadow-md p-2 min-w-48 border border-studio-sand/20"
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.2 }}
+        >
           <div className="text-xs font-medium text-studio-accent mb-2 px-2 uppercase tracking-wider">
             {parentName}
           </div>
-          <div className="space-y-1">
+          <div className="space-y-0.5">
             {submenuItems.map((subItem, index) => {
               const basePathMatch = currentPath.startsWith(subItem.path.split("?")[0]);
               const queryMatch = subItem.path.includes(`tab=${currentTab}`);
@@ -81,7 +86,7 @@ const SidebarSubmenu: React.FC<SubmenuProps> = ({
               );
             })}
           </div>
-        </div>
+        </motion.div>
       </div>
     );
   }
@@ -91,9 +96,9 @@ const SidebarSubmenu: React.FC<SubmenuProps> = ({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: "auto", opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
+          initial={{ height: 0, opacity: 0, overflow: 'hidden' }}
+          animate={{ height: "auto", opacity: 1, overflow: 'visible' }}
+          exit={{ height: 0, opacity: 0, overflow: 'hidden' }}
           transition={{ duration: 0.2, ease: "easeInOut" }}
           className="mt-0.5 ml-4 space-y-0.5 overflow-hidden"
         >

@@ -39,7 +39,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ navItems, isCollapsed }
   
   const textVariants = {
     collapsed: { opacity: 0, x: -10 },
-    expanded: { opacity: 1, x: 0, transition: { delay: 0.1, duration: 0.2 } }
+    expanded: { opacity: 1, x: 0, transition: { delay: 0.05, duration: 0.2 } }
   };
 
   // Close all submenus when sidebar is collapsed

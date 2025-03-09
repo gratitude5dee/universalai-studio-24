@@ -30,6 +30,7 @@ const Sidebar: React.FC<SidebarProps> = ({ navItems }) => {
   useEffect(() => {
     const savedState = localStorage.getItem('sidebarCollapsed');
     const savedHiddenState = localStorage.getItem('sidebarHidden');
+    const savedPinnedState = localStorage.getItem('sidebarPinned');
     
     if (savedState) {
       setIsCollapsed(savedState === 'true');
@@ -42,6 +43,13 @@ const Sidebar: React.FC<SidebarProps> = ({ navItems }) => {
       setIsHidden(true);
       localStorage.setItem('sidebarHidden', 'true');
     }
+    
+    if (savedPinnedState) {
+      setPinned(savedPinnedState === 'true');
+      if (savedPinnedState === 'true') {
+        setIsHidden(false);
+      }
+    }
   }, []);
 
   // Hover intent with delay
@@ -50,13 +58,25 @@ const Sidebar: React.FC<SidebarProps> = ({ navItems }) => {
     if (hoverIntent && !pinned) {
       timer = setTimeout(() => {
         setIsHovered(true);
-      }, 150); // 150ms delay before expanding
+      }, 100); // 100ms delay before expanding
     } else if (!hoverIntent && !pinned) {
       timer = setTimeout(() => {
         setIsHovered(false);
       }, 300); // Slightly longer delay before collapsing for better UX
     }
     return () => clearTimeout(timer);
+  }, [hoverIntent, pinned]);
+
+  // Auto-hide when mouse leaves and not pinned
+  useEffect(() => {
+    let hideTimer: ReturnType<typeof setTimeout>;
+    if (!hoverIntent && !pinned) {
+      hideTimer = setTimeout(() => {
+        setIsHidden(true);
+        localStorage.setItem('sidebarHidden', 'true');
+      }, 500); // Delay before hiding
+    }
+    return () => clearTimeout(hideTimer);
   }, [hoverIntent, pinned]);
 
   const toggleSidebar = () => {
@@ -74,12 +94,14 @@ const Sidebar: React.FC<SidebarProps> = ({ navItems }) => {
     localStorage.setItem('sidebarHidden', String(newHiddenState));
     if (newHiddenState) {
       setPinned(false); // Unpin when hiding
+      localStorage.setItem('sidebarPinned', 'false');
     }
   };
 
   const togglePin = () => {
     const newPinState = !pinned;
     setPinned(newPinState);
+    localStorage.setItem('sidebarPinned', String(newPinState));
     
     if (newPinState) {
       // When pinning, ensure sidebar is visible
@@ -97,32 +119,25 @@ const Sidebar: React.FC<SidebarProps> = ({ navItems }) => {
       {/* Hover detection area along the left edge */}
       {isHidden && !pinned && (
         <div 
-          className="fixed left-0 top-0 w-3 h-full z-40 bg-transparent"
-          onMouseEnter={() => setIsHidden(false)}
+          className="fixed left-0 top-0 w-2 h-full z-40 bg-transparent"
+          onMouseEnter={() => {
+            setHoverIntent(true);
+            setIsHidden(false);
+          }}
         />
       )}
       
       <motion.aside 
-        className="fixed left-0 h-full flex flex-col bg-white/90 backdrop-blur-md border-r border-studio-sand/30 shadow-subtle transition-all duration-300 overflow-hidden z-30"
+        className="fixed left-0 top-0 h-screen flex flex-col bg-white/95 backdrop-blur-md border-r border-studio-sand/30 shadow-subtle transition-all duration-300 overflow-hidden z-30"
         initial={false}
         animate={{ 
           width: isCollapsed ? (isHovered || pinned ? '16rem' : '4.5rem') : '16rem',
           x: isHidden && !pinned ? '-100%' : 0,
           opacity: isHidden && !pinned ? 0.8 : 1,
         }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
-        onMouseEnter={() => {
-          setHoverIntent(true);
-          if (isHidden) setIsHidden(false);
-        }}
-        onMouseLeave={() => {
-          setHoverIntent(false);
-          if (!pinned) {
-            setTimeout(() => {
-              setIsHidden(true);
-            }, 500); // Delay before hiding
-          }
-        }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
+        onMouseEnter={() => setHoverIntent(true)}
+        onMouseLeave={() => setHoverIntent(false)}
       >
         <div className="p-5 h-full flex flex-col overflow-hidden">
           <SidebarContent 
@@ -140,7 +155,7 @@ const Sidebar: React.FC<SidebarProps> = ({ navItems }) => {
             className={`absolute right-4 top-5 h-6 w-6 rounded-full transition-all duration-200 ${pinned ? 'bg-studio-accent text-white' : 'bg-transparent text-studio-charcoal hover:bg-studio-sand/30'}`}
             aria-label={pinned ? "Unpin sidebar" : "Pin sidebar"}
           >
-            <Pin className="h-4 w-4" />
+            <Pin className="h-3.5 w-3.5" />
           </Button>
         )}
         
@@ -149,7 +164,7 @@ const Sidebar: React.FC<SidebarProps> = ({ navItems }) => {
           variant="outline" 
           size="icon" 
           onClick={toggleSidebar} 
-          className="absolute -right-3 top-24 transform -translate-y-1/2 h-6 w-6 rounded-full bg-white border-studio-sand/30 shadow-subtle z-10" 
+          className="absolute -right-3 top-24 h-6 w-6 rounded-full bg-white border-studio-sand/30 shadow-subtle z-10" 
           aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
           {isCollapsed ? <ChevronRight className="h-3 w-3" /> : <ChevronLeft className="h-3 w-3" />}
@@ -160,7 +175,7 @@ const Sidebar: React.FC<SidebarProps> = ({ navItems }) => {
           variant="outline" 
           size="icon" 
           onClick={toggleHidden}
-          className="absolute -right-3 top-36 transform -translate-y-1/2 h-6 w-6 rounded-full bg-white border-studio-sand/30 shadow-subtle z-10" 
+          className="absolute -right-3 top-36 h-6 w-6 rounded-full bg-white border-studio-sand/30 shadow-subtle z-10" 
           aria-label={isHidden ? "Show sidebar" : "Hide sidebar"}
         >
           {isHidden ? <ChevronRight className="h-3 w-3" /> : <ChevronLeft className="h-3 w-3" />}

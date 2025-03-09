@@ -10,9 +10,9 @@ interface MainContentProps {
 const MainContent: React.FC<MainContentProps> = ({ children }) => {
   return (
     <motion.div 
-      className="ml-0 min-h-screen flex flex-col w-full bg-studio-cream"
+      className="flex-1 min-h-screen flex flex-col w-full bg-studio-cream"
       layout
-      transition={{ duration: 0.3, ease: "easeOut" }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
     >
       <Header />
       <main className="px-4 pb-8 mt-2 flex-1">

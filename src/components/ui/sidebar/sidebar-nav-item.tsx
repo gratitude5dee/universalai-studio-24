@@ -44,7 +44,7 @@ const SidebarNavItem: React.FC<NavItemProps> = ({
       opacity: 1, 
       x: 0, 
       transition: { 
-        delay: 0.1, 
+        delay: 0.05, 
         duration: 0.2 
       } 
     }
