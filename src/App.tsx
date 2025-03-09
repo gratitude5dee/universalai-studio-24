@@ -16,6 +16,12 @@ import Bridge from "./pages/Bridge";
 import Observability from "./pages/Observability";
 import AgentMarketplace from "./pages/AgentMarketplace";
 import ThreadOfLife from "./pages/ThreadOfLife";
+import WzrdStudio from "./pages/wzrd/WzrdStudio";
+import WzrdLibrary from "./pages/wzrd/WzrdLibrary";
+import WzrdResearch from "./pages/wzrd/WzrdResearch";
+import WzrdPodcasts from "./pages/wzrd/WzrdPodcasts";
+import WzrdInfiniteLibrary from "./pages/wzrd/WzrdInfiniteLibrary";
+import WzrdCompanions from "./pages/wzrd/WzrdCompanions";
 import "./App.css";
 
 function App() {
@@ -36,6 +42,12 @@ function App() {
         <Route path="/observability" element={<Observability />} />
         <Route path="/agent-marketplace" element={<AgentMarketplace />} />
         <Route path="/thread-of-life" element={<ThreadOfLife />} />
+        <Route path="/wzrd/studio" element={<WzrdStudio />} />
+        <Route path="/wzrd/library" element={<WzrdLibrary />} />
+        <Route path="/wzrd/research" element={<WzrdResearch />} />
+        <Route path="/wzrd/podcasts" element={<WzrdPodcasts />} />
+        <Route path="/wzrd/infinite-library" element={<WzrdInfiniteLibrary />} />
+        <Route path="/wzrd/companions" element={<WzrdCompanions />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster />
