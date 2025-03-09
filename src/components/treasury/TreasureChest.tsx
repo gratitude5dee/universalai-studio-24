@@ -95,7 +95,7 @@ const TreasureChest: React.FC = () => {
             <Briefcase className="h-8 w-8 text-studio-accent" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold">Magical Treasury</h2>
+            <h2 className="text-2xl font-bold">Organization Finances</h2>
             <p className="text-muted-foreground">Your enchanted wealth grows stronger</p>
           </div>
         </div>

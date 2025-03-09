@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Coins, Map, Sparkles, Scroll, Gem, Wallet, BarChart3, Clock, DollarSign, PiggyBank } from "lucide-react";
@@ -53,9 +52,8 @@ const TreasureVault = () => {
 
   return (
     <DashboardLayout>
-      <Content title="Magical Treasury" subtitle="Manage your magical treasures and watch your wealth grow through enchanted stewardship">
+      <Content title="Organization Finances" subtitle="Manage your magical treasures and watch your wealth grow through enchanted stewardship">
         <div className="space-y-6">
-          {/* Financial Overview Dashboard */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <StatsCard
               title="Total Treasury"
@@ -95,7 +93,6 @@ const TreasureVault = () => {
             />
           </div>
 
-          {/* Earnings Chart */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
               <Earnings
@@ -170,10 +167,8 @@ const TreasureVault = () => {
             </div>
           </div>
 
-          {/* Main Treasury Chest - Quick Stats */}
           <TreasureChest />
 
-          {/* Tab Navigation */}
           <div className="flex overflow-x-auto pb-2 -mx-1">
             {tabs.map((tab) => (
               <motion.button
@@ -202,7 +197,6 @@ const TreasureVault = () => {
             ))}
           </div>
 
-          {/* Tab Content */}
           <motion.div
             key={activeTab}
             initial={{ opacity: 0, y: 10 }}
