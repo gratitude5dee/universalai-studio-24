@@ -27,7 +27,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ navItems, isCollapsed }
   const searchParams = new URLSearchParams(location.search);
   const currentTab = searchParams.get("tab");
   
-  // Initialize state for each submenu
+  // Initialize state for each submenu with empty object
   const [openSubmenus, setOpenSubmenus] = useState<{ [key: string]: boolean }>({});
 
   const toggleSubmenu = (name: string, e: React.MouseEvent) => {
@@ -38,6 +38,25 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ navItems, isCollapsed }
         [name]: !prev[name]
       }));
     }
+  };
+
+  // Function to check if a path is active
+  const isPathActive = (path: string) => {
+    if (path === "/" && currentPath === "/") return true;
+    if (path !== "/" && path !== "#" && currentPath.startsWith(path)) return true;
+    return false;
+  };
+
+  // Function to check if a submenu has an active item
+  const hasActiveSubmenuItem = (submenuItems?: Array<{path: string}>) => {
+    if (!submenuItems) return false;
+    return submenuItems.some(subItem => {
+      const basePath = subItem.path.split("?")[0];
+      const hasTabParam = subItem.path.includes("?tab=");
+      const matchesTab = subItem.path.includes(`tab=${currentTab}`);
+      
+      return currentPath.startsWith(basePath) && (!hasTabParam || (currentTab && matchesTab));
+    });
   };
 
   return (
@@ -62,19 +81,15 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ navItems, isCollapsed }
           
       <nav className="flex-1 space-y-1">
         {navItems.map(item => {
-          const isActive = (item.path === "/" && currentPath === "/") || 
-                           (item.path !== "/" && item.path !== "#" && currentPath.startsWith(item.path)) ||
-                           (item.hasSubmenu && item.submenuItems?.some(subItem => 
-                             currentPath.startsWith(subItem.path.split("?")[0]) && 
-                             (!subItem.path.includes("?") || subItem.path.includes(currentTab || ""))
-                           ));
+          const isActive = item.path === "/" ? 
+                           currentPath === "/" : 
+                           (item.path !== "#" && isPathActive(item.path)) || 
+                           (item.hasSubmenu && hasActiveSubmenuItem(item.submenuItems));
           
-          const isSubMenuActive = item.hasSubmenu && item.submenuItems?.some(subItem => 
-            currentPath.startsWith(subItem.path.split("?")[0]) && 
-            (!subItem.path.includes("?") || subItem.path.includes(currentTab || ""))
-          );
+          const isSubMenuActive = item.hasSubmenu && hasActiveSubmenuItem(item.submenuItems);
           
-          const isSubmenuOpen = openSubmenus[item.name] || isSubMenuActive;
+          // Determine if submenu should be open based on user toggle or active status
+          const isSubmenuOpen = openSubmenus[item.name] || (isSubMenuActive && openSubmenus[item.name] !== false);
           
           return (
             <div key={item.name} className="relative">
