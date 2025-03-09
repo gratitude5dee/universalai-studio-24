@@ -120,3 +120,5 @@ export const Earnings: React.FC<EarningsProps> = ({
     </motion.div>
   );
 };
+
+export default Earnings;

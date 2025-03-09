@@ -74,3 +74,5 @@ export const StatsCard: React.FC<StatsCardProps> = ({
     </motion.div>
   );
 };
+
+export default StatsCard;
