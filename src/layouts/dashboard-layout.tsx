@@ -1,6 +1,6 @@
 
 import React, { ReactNode } from "react";
-import { LayoutDashboard, Image as ImageIcon, BarChart3, Shield, Wand2, Wallet, Users, Bot, Database, Eye, Globe, ShoppingCart, Landmark, TrendingUp, Droplets } from "lucide-react";
+import { LayoutDashboard, Image as ImageIcon, BarChart3, Shield, Wand2, Wallet, Users, Bot, Database, Eye, Globe, ShoppingCart, Landmark, TrendingUp, Droplets, Building, Tree, Bridge } from "lucide-react";
 import Header from "@/components/ui/header";
 import Ambient from "@/components/ui/ambient";
 import Sidebar from "@/components/ui/sidebar/sidebar";
@@ -64,13 +64,27 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       }
     ]
   }, {
-    name: "IP Portal",
-    path: "/rights",
-    icon: Shield
-  }, {
-    name: "Bridge",
-    path: "/bridge",
-    icon: Wand2
+    name: "Real World Assets",
+    path: "#",
+    icon: Building,
+    hasSubmenu: true,
+    submenuItems: [
+      {
+        name: "IP Portal",
+        path: "/rights",
+        icon: Shield
+      },
+      {
+        name: "Thread of Life",
+        path: "/thread-of-life",
+        icon: Tree
+      },
+      {
+        name: "Bridge",
+        path: "/bridge",
+        icon: Bridge
+      }
+    ]
   }, {
     name: "Treasury",
     path: "#",
