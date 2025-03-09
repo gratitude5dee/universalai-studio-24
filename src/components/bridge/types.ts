@@ -16,7 +16,7 @@ export interface VerificationMethod {
   id: string;
   name: string;
   description: string;
-  icon: React.ComponentType;
+  icon: React.ComponentType<{ className?: string }>;
   securityLevel: "low" | "medium" | "high";
 }
 
