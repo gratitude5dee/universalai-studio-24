@@ -1,6 +1,6 @@
 
 import React, { ReactNode } from 'react';
-import { StoryConfig, StoryProvider } from '@story-protocol/react-sdk';
+import { StoryConfig, StoryProvider, SupportedChainIds } from '@story-protocol/react-sdk';
 
 interface StoryProtocolProviderProps {
   children: ReactNode;
@@ -10,10 +10,10 @@ export const StoryProtocolProvider = ({ children }: StoryProtocolProviderProps) 
   // Setup the configuration for Story Protocol
   const config: StoryConfig = {
     // During development, connect to the Sepolia testnet
-    chainId: 11155111, // Sepolia chain ID
+    chainId: SupportedChainIds.SEPOLIA, // Use the enum value instead of raw number
     // The SDK now uses a different property for RPC configuration
     rpcUrls: {
-      11155111: 'https://sepolia.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
+      [SupportedChainIds.SEPOLIA]: 'https://sepolia.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
     },
   };
 
