@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import confetti from "canvas-confetti";
 import TreasuryOverview from "./TreasuryOverview";
 import SavingsGoals from "./SavingsGoals";
+import DirectoryOfAgents from "./DirectoryOfAgents";
 
 interface SavingsGoal {
   id: string;
@@ -129,6 +130,11 @@ const TreasureChest: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      
+      {/* Directory of Agents - moved to the bottom of the page */}
+      <div className="mt-6 px-6 pb-6">
+        <DirectoryOfAgents />
+      </div>
       
       {/* Decorative sparkles */}
       <div className="absolute top-0 right-0 p-8 pointer-events-none opacity-30">

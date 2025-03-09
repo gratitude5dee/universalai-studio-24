@@ -62,11 +62,6 @@ const TreasuryOverview: React.FC<TreasuryOverviewProps> = ({
           </div>
         </div>
       </div>
-      
-      {/* Directory of Agents - now at the bottom of the page */}
-      <div className="px-6 pb-6">
-        <DirectoryOfAgents />
-      </div>
     </div>
   );
 };
