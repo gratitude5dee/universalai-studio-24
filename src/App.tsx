@@ -37,10 +37,19 @@ window.Buffer = Buffer;
 
 const queryClient = new QueryClient();
 
+// Get Crossmint API key or use a default placeholder if not available
+// This prevents the app from crashing when the key is not set
+const getCrossmintApiKey = () => {
+  const key = import.meta.env.VITE_CROSSMINT_CLIENT_KEY || "";
+  // Return a placeholder key if empty to prevent SDK errors
+  // The placeholder follows the expected format (starts with "ck_") but won't work for actual auth
+  return key || "ck_placeholder_key_for_development";
+};
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <CrossmintProvider apiKey={import.meta.env.VITE_CROSSMINT_CLIENT_KEY || ""}>
+      <CrossmintProvider apiKey={getCrossmintApiKey()}>
         <CrossmintAuthProvider loginMethods={["email", "farcaster"]}>
           <WalletProvider>
             <BrowserRouter>
@@ -65,7 +74,7 @@ function App() {
                     <Route path="/distribution/*" element={<ProtectedRoute><Distribution /></ProtectedRoute>} />
                     
                     {/* WZRD routes */}
-                    <Route path="/wzrd/studio" element={<ProtectedRoute><WzrdStudio /></ProtectedRoute>} />
+                    <Route path="/wzrd/studio" element={<WzrdStudio />} />
                     <Route path="/wzrd/library" element={<ProtectedRoute><WzrdLibrary /></ProtectedRoute>} />
                     <Route path="/wzrd/research" element={<ProtectedRoute><WzrdResearch /></ProtectedRoute>} />
                     <Route path="/wzrd/podcasts" element={<ProtectedRoute><WzrdPodcasts /></ProtectedRoute>} />

@@ -5,6 +5,8 @@ import { Content } from "@/components/ui/content";
 import { Palette } from "lucide-react";
 
 const WzrdStudio = () => {
+  console.log("Rendering WzrdStudio component");
+  
   return (
     <DashboardLayout>
       <Content title="WZRD.tech Studio" subtitle="Create magical digital experiences with our advanced creative tools">
