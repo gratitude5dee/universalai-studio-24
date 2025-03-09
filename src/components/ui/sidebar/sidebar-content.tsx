@@ -90,7 +90,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ navItems, isCollapsed }
   return (
     <>
       <div 
-        className={`mb-8 mt-2 ${isCollapsed ? 'justify-center' : 'px-3'} flex items-center transition-all duration-300`}
+        className={`mb-6 mt-2 ${isCollapsed ? 'justify-center' : 'px-2'} flex items-center transition-all duration-300`}
       >
         <motion.div
           initial={false}
@@ -98,7 +98,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ navItems, isCollapsed }
           variants={logoVariants}
           className="flex items-center"
         >
-          <span className="bg-studio-accent/20 w-8 h-8 rounded-full flex items-center justify-center mr-2 transition-all duration-300">
+          <span className="bg-studio-accent/15 w-8 h-8 rounded-full flex items-center justify-center mr-2 transition-all duration-300">
             <span className="text-studio-accent font-semibold">5</span>
           </span>
 
@@ -107,14 +107,14 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ navItems, isCollapsed }
               className="flex flex-col"
               variants={textVariants}
             >
-              <span className="text-studio-accent leading-tight text-2xl">Universal</span>
-              <span className="text-2xl">Studio</span>
+              <span className="text-studio-accent font-medium leading-tight text-xl">Universal</span>
+              <span className="text-xl text-studio-charcoal">Studio</span>
             </motion.div>
           )}
         </motion.div>
       </div>
           
-      <nav className="flex-1 space-y-1 overflow-hidden hover:overflow-y-auto scrollbar-thin py-2">
+      <nav className="flex-1 space-y-0.5 overflow-y-auto scrollbar-thin py-1 pr-1">
         {navItems.map(item => {
           const isActive = item.path === "/" ? 
                            currentPath === "/" : 
@@ -153,11 +153,11 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ navItems, isCollapsed }
         })}
       </nav>
         
-      <div className="mt-auto mb-4 space-y-1">
+      <div className="mt-auto pt-2 border-t border-studio-sand/20">
         {/* Log Out button */}
         <Link 
           to="/logout" 
-          className={`flex items-center ${isCollapsed ? 'justify-center' : 'px-3'} py-3 text-sm text-muted-foreground hover:bg-studio-sand/30 rounded-xl transition-all duration-200`} 
+          className={`flex items-center ${isCollapsed ? 'justify-center' : 'px-3'} py-2.5 text-sm text-muted-foreground hover:bg-studio-sand/30 rounded-lg transition-all duration-200`} 
           title={isCollapsed ? "Log Out" : ""}
         >
           <LogOut className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-studio-clay`} />
@@ -166,6 +166,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ navItems, isCollapsed }
               initial="collapsed"
               animate="expanded"
               variants={textVariants}
+              className="text-[13px]"
             >
               Log Out
             </motion.span>
