@@ -1,5 +1,5 @@
 
-import React, { ReactNode, useState, useEffect, useCallback } from "react";
+import React, { ReactNode, useState, useEffect, useCallback, useRef } from "react";
 import Header from "../header";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
@@ -13,11 +13,13 @@ const MainContent: React.FC<MainContentProps> = ({ children }) => {
   const location = useLocation();
   const [isPageTransition, setIsPageTransition] = useState(false);
   const [isAnimationComplete, setIsAnimationComplete] = useState(true);
+  const previousPathRef = useRef(location.pathname);
   
-  // Trigger transition when route changes
+  // Trigger transition when route changes, but only if it's a different route
   useEffect(() => {
-    // Only start a new transition if the previous one is complete
-    if (isAnimationComplete) {
+    // Only trigger transition if the path actually changed
+    if (previousPathRef.current !== location.pathname && isAnimationComplete) {
+      previousPathRef.current = location.pathname;
       setIsAnimationComplete(false);
       setIsPageTransition(true);
       console.log("Starting page transition animation");
@@ -26,23 +28,22 @@ const MainContent: React.FC<MainContentProps> = ({ children }) => {
 
   // Handle animation completed
   const handleAnimationComplete = useCallback(() => {
-    // Start fading out the animation
     console.log("Animation complete, setting isPageTransition to false");
     
-    // Important: Set isPageTransition to false immediately
+    // Immediately set isPageTransition to false
     setIsPageTransition(false);
     
     // Allow a small delay before allowing new transitions
     setTimeout(() => {
       setIsAnimationComplete(true);
       console.log("Animation reset, ready for next transition");
-    }, 500); // Increased from 300ms to give more time for animation to complete
+    }, 800); // Increased buffer time to prevent rapid transitions
   }, []);
 
   // Handle animation exit completed
   const handleExitComplete = useCallback(() => {
     console.log("Exit animation completed");
-    // Double-check we've reset the state
+    // Ensure we've reset the transition state
     setIsPageTransition(false);
   }, []);
 

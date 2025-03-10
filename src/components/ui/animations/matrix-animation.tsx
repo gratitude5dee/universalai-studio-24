@@ -84,6 +84,9 @@ const MatrixAnimation: React.FC<MatrixAnimationProps> = ({ onComplete }) => {
   }, []);
   
   useEffect(() => {
+    // Prevent the animation from starting if we've already completed it
+    if (completedRef.current) return;
+    
     // Matrix rain animation
     const chars = '01:.@#$%*+-=';
     const screenWidth = window.innerWidth;
@@ -117,11 +120,13 @@ const MatrixAnimation: React.FC<MatrixAnimationProps> = ({ onComplete }) => {
       setShowAscii(true);
     }, 600);
     
-    // Start exiting after 1.2 seconds (reduced from 1.5)
+    // Start exiting after 1 second (further reduced)
     const exitTimer = setTimeout(() => {
-      setIsExiting(true);
-      console.log("Matrix animation set to exit");
-    }, 1200);
+      if (!completedRef.current) {
+        setIsExiting(true);
+        console.log("Matrix animation set to exit");
+      }
+    }, 1000);
     
     // Complete animation and notify parent after exit animation
     const completeTimer = setTimeout(() => {
@@ -130,7 +135,7 @@ const MatrixAnimation: React.FC<MatrixAnimationProps> = ({ onComplete }) => {
         console.log("Matrix animation calling onComplete");
         onComplete();
       }
-    }, 1500); // 1.2s + 300ms for exit animation (reduced from 1800)
+    }, 1300); // 1s + 300ms for exit animation
     
     return () => {
       clearTimeout(asciiTimer);
@@ -148,7 +153,7 @@ const MatrixAnimation: React.FC<MatrixAnimationProps> = ({ onComplete }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.2 }}
     >
       {/* Matrix rain effect */}
       <div className="absolute inset-0 overflow-hidden">
@@ -163,7 +168,7 @@ const MatrixAnimation: React.FC<MatrixAnimationProps> = ({ onComplete }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }} // Faster fade out
+            transition={{ duration: 0.15 }} // Even faster fade out
           >
             <div className="text-green-400 font-mono leading-none text-xs whitespace-pre overflow-hidden transform scale-[0.25] sm:scale-[0.35] md:scale-[0.4] lg:scale-[0.45]">
               {asciiArt.map((line, index) => (
@@ -172,7 +177,7 @@ const MatrixAnimation: React.FC<MatrixAnimationProps> = ({ onComplete }) => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3, delay: 0.01 * index }}
+                  transition={{ duration: 0.2, delay: 0.01 * index }}
                   className={cn(
                     "whitespace-pre font-mono", 
                     index % 3 === 0 ? "text-green-300" : index % 3 === 1 ? "text-green-400" : "text-green-500"
