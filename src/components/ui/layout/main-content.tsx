@@ -28,18 +28,22 @@ const MainContent: React.FC<MainContentProps> = ({ children }) => {
   const handleAnimationComplete = useCallback(() => {
     // Start fading out the animation
     console.log("Animation complete, setting isPageTransition to false");
+    
+    // Important: Set isPageTransition to false immediately
     setIsPageTransition(false);
     
     // Allow a small delay before allowing new transitions
     setTimeout(() => {
       setIsAnimationComplete(true);
       console.log("Animation reset, ready for next transition");
-    }, 300); // Small buffer after animation ends
+    }, 500); // Increased from 300ms to give more time for animation to complete
   }, []);
 
   // Handle animation exit completed
   const handleExitComplete = useCallback(() => {
     console.log("Exit animation completed");
+    // Double-check we've reset the state
+    setIsPageTransition(false);
   }, []);
 
   return (
@@ -51,7 +55,11 @@ const MainContent: React.FC<MainContentProps> = ({ children }) => {
       <Header />
       
       {/* Matrix ASCII Animation Transition */}
-      <AnimatePresence mode="wait" onExitComplete={handleExitComplete}>
+      <AnimatePresence 
+        mode="wait" 
+        onExitComplete={handleExitComplete}
+        initial={false}
+      >
         {isPageTransition && (
           <MatrixAnimation onComplete={handleAnimationComplete} />
         )}

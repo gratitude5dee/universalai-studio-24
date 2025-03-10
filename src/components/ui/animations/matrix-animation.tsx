@@ -117,11 +117,11 @@ const MatrixAnimation: React.FC<MatrixAnimationProps> = ({ onComplete }) => {
       setShowAscii(true);
     }, 600);
     
-    // Start exiting after 1.5 seconds
+    // Start exiting after 1.2 seconds (reduced from 1.5)
     const exitTimer = setTimeout(() => {
       setIsExiting(true);
       console.log("Matrix animation set to exit");
-    }, 1500);
+    }, 1200);
     
     // Complete animation and notify parent after exit animation
     const completeTimer = setTimeout(() => {
@@ -130,7 +130,7 @@ const MatrixAnimation: React.FC<MatrixAnimationProps> = ({ onComplete }) => {
         console.log("Matrix animation calling onComplete");
         onComplete();
       }
-    }, 1800); // 1.5s + 300ms for exit animation
+    }, 1500); // 1.2s + 300ms for exit animation (reduced from 1800)
     
     return () => {
       clearTimeout(asciiTimer);
@@ -163,7 +163,7 @@ const MatrixAnimation: React.FC<MatrixAnimationProps> = ({ onComplete }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2 }} // Faster fade out
           >
             <div className="text-green-400 font-mono leading-none text-xs whitespace-pre overflow-hidden transform scale-[0.25] sm:scale-[0.35] md:scale-[0.4] lg:scale-[0.45]">
               {asciiArt.map((line, index) => (
@@ -172,7 +172,7 @@ const MatrixAnimation: React.FC<MatrixAnimationProps> = ({ onComplete }) => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 0.5, delay: 0.01 * index }}
+                  transition={{ duration: 0.3, delay: 0.01 * index }}
                   className={cn(
                     "whitespace-pre font-mono", 
                     index % 3 === 0 ? "text-green-300" : index % 3 === 1 ? "text-green-400" : "text-green-500"
