@@ -20,17 +20,20 @@ const MainContent: React.FC<MainContentProps> = ({ children }) => {
     if (isAnimationComplete) {
       setIsAnimationComplete(false);
       setIsPageTransition(true);
+      console.log("Starting page transition animation");
     }
   }, [location.pathname, isAnimationComplete]);
 
   // Handle animation completed
   const handleAnimationComplete = () => {
     // Start fading out the animation
+    console.log("Animation complete, setting isPageTransition to false");
     setIsPageTransition(false);
     
     // Allow a small delay before allowing new transitions
     setTimeout(() => {
       setIsAnimationComplete(true);
+      console.log("Animation reset, ready for next transition");
     }, 300); // Small buffer after animation ends
   };
 
@@ -43,7 +46,7 @@ const MainContent: React.FC<MainContentProps> = ({ children }) => {
       <Header />
       
       {/* Matrix ASCII Animation Transition */}
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait" onExitComplete={() => console.log("Exit animation completed")}>
         {isPageTransition && (
           <motion.div 
             className="fixed inset-0 z-50"
