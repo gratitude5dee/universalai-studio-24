@@ -1,5 +1,5 @@
 
-import React, { ReactNode, useState, useEffect } from "react";
+import React, { ReactNode, useState, useEffect, useCallback } from "react";
 import Header from "../header";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
@@ -25,7 +25,7 @@ const MainContent: React.FC<MainContentProps> = ({ children }) => {
   }, [location.pathname, isAnimationComplete]);
 
   // Handle animation completed
-  const handleAnimationComplete = () => {
+  const handleAnimationComplete = useCallback(() => {
     // Start fading out the animation
     console.log("Animation complete, setting isPageTransition to false");
     setIsPageTransition(false);
@@ -35,7 +35,12 @@ const MainContent: React.FC<MainContentProps> = ({ children }) => {
       setIsAnimationComplete(true);
       console.log("Animation reset, ready for next transition");
     }, 300); // Small buffer after animation ends
-  };
+  }, []);
+
+  // Handle animation exit completed
+  const handleExitComplete = useCallback(() => {
+    console.log("Exit animation completed");
+  }, []);
 
   return (
     <motion.div 
@@ -46,17 +51,9 @@ const MainContent: React.FC<MainContentProps> = ({ children }) => {
       <Header />
       
       {/* Matrix ASCII Animation Transition */}
-      <AnimatePresence mode="wait" onExitComplete={() => console.log("Exit animation completed")}>
+      <AnimatePresence mode="wait" onExitComplete={handleExitComplete}>
         {isPageTransition && (
-          <motion.div 
-            className="fixed inset-0 z-50"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <MatrixAnimation onComplete={handleAnimationComplete} />
-          </motion.div>
+          <MatrixAnimation onComplete={handleAnimationComplete} />
         )}
       </AnimatePresence>
       

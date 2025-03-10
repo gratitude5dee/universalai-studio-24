@@ -28,9 +28,9 @@ const MatrixAnimation: React.FC<MatrixAnimationProps> = ({ onComplete }) => {
                    @%          #@@@@@+                .:.::.:.::.:.:.:.::.:.:.                        :.:.:::.:.:.. :                                     
                   @-             +@@@@@@-              :.:.:.:.:.::.:.:.:.:.::.:.                     .::.:.:.::.:                                        
                  @:                @@@@@@@=           :.:.:.::.::.:.::.:.::.:.:.:.:                .::.:.:.:.:.:.:                                        
-                 @-                 @@@@@@@@-         .:.::.:.:.:.:.:.::.:.:.:.::.:.:.:.:.:.:.:.:.  :.::.:.:.::.:.:.:                                         
-                 @.     @@-          @@@@@@@@@       :.::.:.:.:.:.:.::.:.:.::.:.:.::.::.::.:.:.:.:.:.:.:.:.::.:.::.:..                                        
-                  @:   +@@@*         -@@@@@@@@@      .:.:.:.::.:.::...:.:.:.:.::.:.:.:.:.:.::.:.::.:.::.:.:.:.:.:.                                            
+                 @-                 @@@@@@@@-         .:.::.:.:.:.:.:.::.:.:.:.::.:.:.:.:.:.:.:.:.:.  :.::.:.:.::.:.:.:                                         
+                 @.     @@-          @@@@@@@@@       :.::.:.:.:.:.:.::.:.:.::.:.:.::.::.::.:.:.:.:.:.:.:.:.:.::.:.::.:..                                        
+                  @:   +@@@*         -@@@@@@@@@      .:.:.:.::.:.::...:.:.:.:.::.:.:.:.:.:.::.:.::.:.::.:.:.:.:.:.:.                                            
                    @@:   :@-          @@@@@@@@@@     .::.:.:.:.::.:         :.:.:.:.:.:.:.:.:.::.:.::.:.:.::                                              
                      -*#*-            %@@@@@@@@@%   :: .:.::.: .:.:         .:.::.::.::.::.:.:.:.::.:.:.::                                                
                                       :@@@@@@@@@@   .:.::.:.:.::.:             .:.:.:.:.:.::.::.:.:.:.::                                                  
@@ -120,12 +120,14 @@ const MatrixAnimation: React.FC<MatrixAnimationProps> = ({ onComplete }) => {
     // Start exiting after 1.5 seconds
     const exitTimer = setTimeout(() => {
       setIsExiting(true);
+      console.log("Matrix animation set to exit");
     }, 1500);
     
     // Complete animation and notify parent after exit animation
     const completeTimer = setTimeout(() => {
       if (!completedRef.current) {
         completedRef.current = true;
+        console.log("Matrix animation calling onComplete");
         onComplete();
       }
     }, 1800); // 1.5s + 300ms for exit animation
@@ -143,7 +145,7 @@ const MatrixAnimation: React.FC<MatrixAnimationProps> = ({ onComplete }) => {
   return (
     <motion.div 
       className="fixed inset-0 bg-[#120825] z-50 flex items-center justify-center overflow-hidden"
-      initial={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
