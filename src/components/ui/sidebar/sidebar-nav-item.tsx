@@ -56,15 +56,15 @@ const SidebarNavItem: React.FC<NavItemProps> = ({
         <div className={`
           flex items-center ${isCollapsed ? 'justify-center' : 'px-3'} py-2.5 my-1 rounded-lg text-sm font-medium transition-all duration-200 group
           ${isActive 
-            ? 'text-white bg-studio-accent/90 shadow-md' 
-            : 'text-studio-charcoal hover:bg-studio-sand/30'}
+            ? 'text-white bg-blue-primary/90 shadow-blue-glow' 
+            : 'text-white hover:bg-blue-primary/30'}
         `}>
           <div className={`
             ${isCollapsed ? 'flex justify-center w-full' : 'mr-3'}
-            ${isActive ? 'text-white' : 'text-studio-clay group-hover:text-studio-accent'}
+            ${isActive ? 'text-white' : 'text-blue-lighter group-hover:text-white'}
           `}>
             <item.icon className={`h-5 w-5 transition-all duration-200
-              ${isActive && 'filter drop-shadow(0 0 3px rgba(255, 255, 255, 0.3))'}
+              ${isActive && 'filter drop-shadow(0 0 3px rgba(255, 255, 255, 0.5))'}
             `} />
           </div>
           
@@ -82,7 +82,7 @@ const SidebarNavItem: React.FC<NavItemProps> = ({
           {isActive && (
             <motion.div 
               layoutId="sidebar-indicator" 
-              className={`absolute ${isCollapsed ? 'right-1.5' : 'right-2.5'} w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_5px_rgba(255,255,255,0.5)]`} 
+              className={`absolute ${isCollapsed ? 'right-1.5' : 'right-2.5'} w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_5px_rgba(255,255,255,0.8)]`} 
               initial="initial"
               animate="animate"
               variants={indicatorVariants}
@@ -104,16 +104,16 @@ const SidebarNavItem: React.FC<NavItemProps> = ({
         <div className={`
           flex items-center justify-between ${isCollapsed ? 'justify-center' : 'px-3'} py-2.5 my-1 rounded-lg text-sm font-medium transition-all duration-200 group
           ${isSubMenuActive 
-            ? 'text-white bg-studio-accent/90 shadow-md' 
-            : 'text-studio-charcoal hover:bg-studio-sand/30'}
+            ? 'text-white bg-blue-primary/90 shadow-blue-glow' 
+            : 'text-white hover:bg-blue-primary/30'}
         `}>
           <div className="flex items-center flex-1">
             <div className={`
               ${isCollapsed ? 'flex justify-center w-full' : 'mr-3'}
-              ${isSubMenuActive ? 'text-white' : 'text-studio-clay group-hover:text-studio-accent'}
+              ${isSubMenuActive ? 'text-white' : 'text-blue-lighter group-hover:text-white'}
             `}>
               <item.icon className={`h-5 w-5 transition-all duration-200
-                ${isSubMenuActive && 'filter drop-shadow(0 0 3px rgba(255, 255, 255, 0.3))'}
+                ${isSubMenuActive && 'filter drop-shadow(0 0 3px rgba(255, 255, 255, 0.5))'}
               `} />
             </div>
             
@@ -132,7 +132,7 @@ const SidebarNavItem: React.FC<NavItemProps> = ({
           {!isCollapsed && (
             <ChevronRight 
               className={`h-3.5 w-3.5 transition-transform duration-200 ${submenuOpen ? 'rotate-90' : ''} 
-                ${isSubMenuActive ? 'text-white' : 'text-studio-clay'}
+                ${isSubMenuActive ? 'text-white' : 'text-blue-lighter'}
               `} 
             />
           )}
@@ -140,7 +140,7 @@ const SidebarNavItem: React.FC<NavItemProps> = ({
           {isSubMenuActive && (
             <motion.div 
               layoutId="sidebar-indicator" 
-              className={`absolute ${isCollapsed ? 'right-1.5' : 'right-2.5'} w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_5px_rgba(255,255,255,0.5)]`} 
+              className={`absolute ${isCollapsed ? 'right-1.5' : 'right-2.5'} w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_5px_rgba(255,255,255,0.8)]`} 
               initial="initial"
               animate="animate" 
               variants={indicatorVariants}

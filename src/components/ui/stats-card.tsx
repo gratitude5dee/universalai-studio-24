@@ -27,11 +27,11 @@ export const StatsCard: React.FC<StatsCardProps> = ({
   const getTrendColor = () => {
     switch (trend) {
       case "up":
-        return "text-green-500";
+        return "text-green-400";
       case "down":
-        return "text-red-500";
+        return "text-red-400";
       default:
-        return "text-studio-charcoal/50";
+        return "text-white/50";
     }
   };
 
@@ -46,15 +46,15 @@ export const StatsCard: React.FC<StatsCardProps> = ({
         stiffness: 100 
       }}
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
-      className={`glass-card p-5 h-full ${className}`}
+      className={`bg-card-gradient backdrop-blur-md border border-blue-primary/20 p-5 rounded-xl shadow-card-glow ${className}`}
     >
       <div className="flex justify-between items-start">
         <div>
-          <h3 className="text-sm font-medium text-muted-foreground mb-1">
+          <h3 className="text-sm font-medium text-blue-lightest mb-1">
             {title}
           </h3>
           <div className="flex items-baseline">
-            <p className="text-2xl md:text-3xl font-semibold">{value}</p>
+            <p className="text-2xl md:text-3xl font-semibold text-white">{value}</p>
             {trend && trendValue && (
               <span className={`ml-2 text-xs ${getTrendColor()}`}>
                 {trend === "up" ? "↑" : trend === "down" ? "↓" : "→"} {trendValue}
@@ -62,12 +62,12 @@ export const StatsCard: React.FC<StatsCardProps> = ({
             )}
           </div>
           {description && (
-            <p className="text-xs text-muted-foreground mt-1">{description}</p>
+            <p className="text-xs text-blue-lighter mt-1">{description}</p>
           )}
         </div>
         {Icon && (
-          <div className="bg-studio-accent/10 p-2 rounded-xl">
-            <Icon className="h-5 w-5 text-studio-accent" />
+          <div className="bg-blue-primary/20 p-2 rounded-xl">
+            <Icon className="h-5 w-5 text-blue-lighter" />
           </div>
         )}
       </div>

@@ -11,7 +11,7 @@ interface DashboardLayoutProps {
 
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   return (
-    <div className="min-h-screen flex flex-col bg-studio-cream overflow-hidden">
+    <div className="min-h-screen flex flex-col bg-blue-darker overflow-hidden">
       <Ambient />
       
       <div className="flex flex-1 z-10">

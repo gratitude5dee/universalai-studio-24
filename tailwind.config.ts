@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -32,6 +31,15 @@ export default {
 					charcoal: "#36454F",
 					accent: "#D98F64",
 					highlight: "#F9D7C0"
+				},
+				// Add blue theme colors
+				blue: {
+					darker: "#1e3a8a",
+					dark: "#1e40af",
+					primary: "#3b82f6",
+					light: "#60a5fa",
+					lighter: "#93c5fd",
+					lightest: "#dbeafe",
 				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
@@ -117,6 +125,18 @@ export default {
 				'breathing': {
 					'0%, 100%': { transform: 'scale(1)' },
 					'50%': { transform: 'scale(1.03)' }
+				},
+				'cloud-drift': {
+					'0%, 100%': { transform: 'translateX(0)' },
+					'50%': { transform: 'translateX(5%)' }
+				},
+				'cloud-drift-alt': {
+					'0%, 100%': { transform: 'translateX(0)' },
+					'50%': { transform: 'translateX(-5%)' }
+				},
+				'glow-pulse': {
+					'0%, 100%': { opacity: '0.8' },
+					'50%': { opacity: '0.6' }
 				}
 			},
 			animation: {
@@ -129,12 +149,23 @@ export default {
 				'soft-pulse': 'soft-pulse 3s infinite ease-in-out',
 				'float': 'float 6s infinite ease-in-out',
 				'scale-in': 'scale-in 0.3s ease-out forwards',
-				'breathing': 'breathing 8s infinite ease-in-out'
+				'breathing': 'breathing 8s infinite ease-in-out',
+				'cloud-drift': 'cloud-drift 60s infinite ease-in-out',
+				'cloud-drift-alt': 'cloud-drift-alt 70s infinite ease-in-out',
+				'glow-pulse': 'glow-pulse 8s infinite ease-in-out'
 			},
 			boxShadow: {
 				'subtle': '0 2px 10px rgba(0, 0, 0, 0.05)',
 				'elevation': '0 10px 30px -5px rgba(0, 0, 0, 0.1)',
-				'inner-glow': 'inset 0 0 10px rgba(255, 255, 255, 0.5)'
+				'inner-glow': 'inset 0 0 10px rgba(255, 255, 255, 0.5)',
+				'blue-glow': '0 0 15px rgba(59, 130, 246, 0.5)',
+				'card-glow': '0 4px 20px -2px rgba(30, 64, 175, 0.25)'
+			},
+			backgroundImage: {
+				'blue-gradient': 'linear-gradient(to bottom right, #1e3a8a, #3b82f6)',
+				'blue-card': 'linear-gradient(to bottom right, rgba(96, 165, 250, 0.3), rgba(59, 130, 246, 0.3))',
+				'sidebar-gradient': 'linear-gradient(to bottom, #1e3a8a, #1e40af)',
+				'card-gradient': 'linear-gradient(to bottom right, rgba(96, 165, 250, 0.2), rgba(59, 130, 246, 0.2))'
 			}
 		}
 	},

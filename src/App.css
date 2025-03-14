@@ -15,6 +15,23 @@ body, html {
   height: 100%;
 }
 
+/* Blue theme utility classes */
+.glass-card {
+  @apply bg-card-gradient backdrop-blur-md border border-blue-primary/20 rounded-xl shadow-card-glow;
+}
+
+.blue-glow {
+  @apply shadow-blue-glow;
+}
+
+.blue-text {
+  @apply text-blue-lighter;
+}
+
+.blue-bg {
+  @apply bg-blue-primary;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

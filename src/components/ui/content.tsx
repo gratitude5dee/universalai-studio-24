@@ -19,8 +19,8 @@ export const Content = ({ title, subtitle, children, className = "" }: ContentPr
     >
       {(title || subtitle) && (
         <div className="mb-6">
-          {title && <h1 className="text-2xl md:text-3xl font-semibold text-studio-charcoal">{title}</h1>}
-          {subtitle && <p className="text-studio-clay mt-1">{subtitle}</p>}
+          {title && <h1 className="text-2xl md:text-3xl font-semibold text-white">{title}</h1>}
+          {subtitle && <p className="text-blue-lighter mt-1">{subtitle}</p>}
         </div>
       )}
       {children}

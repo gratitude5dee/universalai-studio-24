@@ -49,10 +49,56 @@ const MainContent: React.FC<MainContentProps> = ({ children }) => {
 
   return (
     <motion.div 
-      className="flex-1 min-h-screen flex flex-col w-full bg-studio-cream bg-[radial-gradient(circle_at_top_right,rgba(217,143,100,0.08),transparent_60%)]"
+      className="flex-1 min-h-screen flex flex-col w-full bg-blue-darker text-white overflow-hidden relative"
       layout
       transition={{ duration: 0.25, ease: "easeOut" }}
     >
+      {/* Animated cloud background */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-blue-gradient opacity-90"></div>
+        
+        {/* Animated cloud elements */}
+        <motion.div 
+          className="absolute top-0 left-[-10%] w-[50%] h-[50%] opacity-20 bg-blue-lighter blur-3xl rounded-full"
+          animate={{
+            x: ["0%", "5%", "0%"],
+            y: ["0%", "3%", "0%"],
+          }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            repeatType: "reverse"
+          }}
+        />
+        
+        <motion.div 
+          className="absolute bottom-0 right-[-5%] w-[40%] h-[40%] opacity-10 bg-blue-light blur-3xl rounded-full"
+          animate={{
+            x: ["0%", "-8%", "0%"],
+            y: ["0%", "-5%", "0%"],
+          }}
+          transition={{
+            duration: 40,
+            repeat: Infinity,
+            repeatType: "reverse"
+          }}
+        />
+        
+        <motion.div 
+          className="absolute top-[30%] right-[10%] w-[30%] h-[30%] opacity-15 bg-blue-primary blur-3xl rounded-full"
+          animate={{
+            x: ["0%", "-10%", "0%"],
+            y: ["0%", "8%", "0%"],
+          }}
+          transition={{
+            duration: 50,
+            repeat: Infinity,
+            repeatType: "reverse"
+          }}
+        />
+      </div>
+      
       <Header />
       
       {/* Matrix ASCII Animation Transition */}
@@ -67,7 +113,7 @@ const MainContent: React.FC<MainContentProps> = ({ children }) => {
       </AnimatePresence>
       
       <motion.main 
-        className="px-4 pb-8 mt-2 flex-1 overflow-hidden"
+        className="px-4 pb-8 mt-2 flex-1 overflow-hidden z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
