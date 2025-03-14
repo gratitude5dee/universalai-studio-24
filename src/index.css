@@ -29,6 +29,27 @@
   .animation-delay-400 {
     animation-delay: 400ms;
   }
+  
+  /* Cloud shader related utilities */
+  .cloud-shadow {
+    filter: drop-shadow(0 5px 15px rgba(59, 130, 246, 0.3));
+  }
+  
+  .cloud-glow {
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
+  }
+  
+  .z-shader {
+    z-index: -1;
+  }
+  
+  .z-shader-overlay {
+    z-index: -1;
+  }
+  
+  .z-content {
+    z-index: 10;
+  }
 }
 
 @keyframes blink {
@@ -38,4 +59,24 @@
 
 .animate-blink {
   animation: blink 1s infinite;
+}
+
+@keyframes cloud-drift {
+  0% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(20px) translateY(-10px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+.animate-cloud-drift {
+  animation: cloud-drift 20s ease-in-out infinite;
+}
+
+@keyframes cloud-drift-alt {
+  0% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(-15px) translateY(10px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+.animate-cloud-drift-alt {
+  animation: cloud-drift-alt 25s ease-in-out infinite;
 }
