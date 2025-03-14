@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AccountSetupWizard from "@/components/treasury/banking/AccountSetupWizard";
@@ -7,6 +6,8 @@ import AccountDashboard from "@/components/treasury/banking/AccountDashboard";
 import BankingControls from "@/components/treasury/banking/BankingControls";
 import ActivityTab from "@/components/treasury/banking/ActivityTab";
 import ApiIntegration from "@/components/treasury/banking/ApiIntegration";
+import { Landmark } from "lucide-react";
+import { toast } from "sonner";
 
 const AgentBanking: React.FC = () => {
   const [hasAccount, setHasAccount] = useState(true);
@@ -80,8 +81,5 @@ const AgentBanking: React.FC = () => {
     </div>
   );
 };
-
-import { Landmark } from "lucide-react";
-import { toast } from "sonner";
 
 export default AgentBanking;

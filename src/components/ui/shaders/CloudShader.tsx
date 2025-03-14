@@ -1,6 +1,7 @@
 
 import React, { useRef, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useWebGLSetup } from '@/hooks/useWebGLSetup';
 
 interface CloudShaderProps {
   className?: string;
@@ -8,11 +9,10 @@ interface CloudShaderProps {
 
 const CloudShader: React.FC<CloudShaderProps> = ({ className = "" }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const requestRef = useRef<number>();
   const startTimeRef = useRef<number>(Date.now());
-
+  
   // Fragment shader source code - creates animated clouds
-  const fragmentShader = useMemo(() => `
+  const fragmentShaderSource = useMemo(() => `
     precision mediump float;
     
     uniform float u_time;
@@ -99,7 +99,7 @@ const CloudShader: React.FC<CloudShaderProps> = ({ className = "" }) => {
   `, []);
 
   // Vertex shader - a simple passthrough shader
-  const vertexShader = useMemo(() => `
+  const vertexShaderSource = useMemo(() => `
     attribute vec2 position;
     
     void main() {
@@ -107,141 +107,13 @@ const CloudShader: React.FC<CloudShaderProps> = ({ className = "" }) => {
     }
   `, []);
 
-  // Initialize WebGL and run the shader
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    // Initialize WebGL context
-    const gl = canvas.getContext('webgl');
-    if (!gl) {
-      console.error('WebGL not supported');
-      return;
-    }
-
-    // Resize canvas to fit the window
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      gl.viewport(0, 0, canvas.width, canvas.height);
-    };
-
-    // Initialize mouse position
-    let mouseX = 0;
-    let mouseY = 0;
-
-    // Update mouse position on move
-    const handleMouseMove = (event: MouseEvent) => {
-      mouseX = event.clientX;
-      mouseY = canvas.height - event.clientY; // Flip Y for WebGL coordinates
-    };
-
-    // Set up event listeners
-    window.addEventListener('resize', resizeCanvas);
-    window.addEventListener('mousemove', handleMouseMove);
-    resizeCanvas();
-
-    // Create shader program
-    const program = gl.createProgram();
-    if (!program) {
-      console.error('Failed to create shader program');
-      return;
-    }
-
-    // Compile shaders
-    const vs = gl.createShader(gl.VERTEX_SHADER);
-    const fs = gl.createShader(gl.FRAGMENT_SHADER);
-    if (!vs || !fs) {
-      console.error('Failed to create shaders');
-      return;
-    }
-
-    gl.shaderSource(vs, vertexShader);
-    gl.shaderSource(fs, fragmentShader);
-    gl.compileShader(vs);
-    gl.compileShader(fs);
-
-    // Check for compilation errors
-    if (!gl.getShaderParameter(vs, gl.COMPILE_STATUS)) {
-      console.error('Vertex shader compilation error:', gl.getShaderInfoLog(vs));
-      return;
-    }
-    if (!gl.getShaderParameter(fs, gl.COMPILE_STATUS)) {
-      console.error('Fragment shader compilation error:', gl.getShaderInfoLog(fs));
-      return;
-    }
-
-    // Link program
-    gl.attachShader(program, vs);
-    gl.attachShader(program, fs);
-    gl.linkProgram(program);
-
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      console.error('Shader program linking error:', gl.getProgramInfoLog(program));
-      return;
-    }
-
-    gl.useProgram(program);
-
-    // Set up a rectangle covering the entire canvas
-    const vertices = new Float32Array([
-      -1.0, -1.0,
-       1.0, -1.0,
-       1.0,  1.0,
-      -1.0,  1.0
-    ]);
-    
-    const indices = new Uint16Array([0, 1, 2, 0, 2, 3]);
-
-    const vertexBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-
-    const indexBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
-
-    // Get attribute and uniform locations
-    const positionAttrib = gl.getAttribLocation(program, 'position');
-    const timeUniform = gl.getUniformLocation(program, 'u_time');
-    const resolutionUniform = gl.getUniformLocation(program, 'u_resolution');
-    const mouseUniform = gl.getUniformLocation(program, 'u_mouse');
-
-    gl.enableVertexAttribArray(positionAttrib);
-    gl.vertexAttribPointer(positionAttrib, 2, gl.FLOAT, false, 0, 0);
-
-    // Animation loop
-    const animate = (timestamp: number) => {
-      // Set uniforms
-      gl.uniform1f(timeUniform, (Date.now() - startTimeRef.current) / 1000.0);
-      gl.uniform2f(resolutionUniform, canvas.width, canvas.height);
-      gl.uniform2f(mouseUniform, mouseX, mouseY);
-      
-      // Clear and draw
-      gl.clearColor(0.0, 0.0, 0.0, 1.0);
-      gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
-      
-      // Request next frame
-      requestRef.current = requestAnimationFrame(animate);
-    };
-    
-    requestRef.current = requestAnimationFrame(animate);
-
-    // Cleanup on component unmount
-    return () => {
-      if (requestRef.current) {
-        cancelAnimationFrame(requestRef.current);
-      }
-      window.removeEventListener('resize', resizeCanvas);
-      window.removeEventListener('mousemove', handleMouseMove);
-      gl.deleteProgram(program);
-      gl.deleteShader(vs);
-      gl.deleteShader(fs);
-      gl.deleteBuffer(vertexBuffer);
-      gl.deleteBuffer(indexBuffer);
-    };
-  }, [fragmentShader, vertexShader]);
+  // Use the custom hook for WebGL setup
+  useWebGLSetup({
+    canvasRef,
+    vertexShaderSource,
+    fragmentShaderSource,
+    startTimeRef
+  });
 
   return (
     <canvas 
