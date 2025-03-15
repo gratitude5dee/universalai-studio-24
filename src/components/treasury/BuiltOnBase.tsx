@@ -1,18 +1,47 @@
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Layers, ExternalLink, Shield, Zap, Globe, Database, ArrowDownRight, ArrowUpRight, CircleDollarSign } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import OnRamp from "@/pages/treasury/OnRamp";
 import OffRamp from "@/pages/treasury/OffRamp";
 import Fund from "@/pages/treasury/Fund";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-const BuiltOnBase = () => {
+interface BuiltOnBaseProps {
+  initialSubtab?: string | null;
+}
+
+const BuiltOnBase: React.FC<BuiltOnBaseProps> = ({ initialSubtab }) => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("overview");
+  
+  // Initialize activeTab from URL parameters
+  useEffect(() => {
+    const subtab = initialSubtab || searchParams.get("subtab");
+    if (subtab) {
+      setActiveTab(subtab);
+    } else {
+      setActiveTab("overview");
+    }
+  }, [initialSubtab, searchParams]);
+
+  // Update URL when tab changes
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    
+    if (value === "overview") {
+      // Remove subtab param for the overview tab
+      navigate("/treasury?tab=base", { replace: true });
+    } else {
+      // Add subtab param for other tabs
+      navigate(`/treasury?tab=base&subtab=${value}`, { replace: true });
+    }
+  };
 
   return (
     <div className="space-y-8">
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+      <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
         <TabsList className="mb-6">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="onramp">On Ramp</TabsTrigger>
@@ -138,7 +167,7 @@ const BuiltOnBase = () => {
               className="bg-gradient-to-br from-green-50 to-blue-50 p-5 rounded-xl border border-green-100 cursor-pointer"
               whileHover={{ scale: 1.02, boxShadow: "0 10px 25px -5px rgba(34, 197, 94, 0.1)" }}
               transition={{ duration: 0.2 }}
-              onClick={() => setActiveTab("onramp")}
+              onClick={() => handleTabChange("onramp")}
             >
               <div className="flex justify-between items-start mb-4">
                 <div className="bg-white p-2 rounded-lg">
@@ -156,7 +185,7 @@ const BuiltOnBase = () => {
               className="bg-gradient-to-br from-purple-50 to-indigo-50 p-5 rounded-xl border border-purple-100 cursor-pointer"
               whileHover={{ scale: 1.02, boxShadow: "0 10px 25px -5px rgba(147, 51, 234, 0.1)" }}
               transition={{ duration: 0.2 }}
-              onClick={() => setActiveTab("offramp")}
+              onClick={() => handleTabChange("offramp")}
             >
               <div className="flex justify-between items-start mb-4">
                 <div className="bg-white p-2 rounded-lg">
@@ -174,7 +203,7 @@ const BuiltOnBase = () => {
               className="bg-gradient-to-br from-yellow-50 to-amber-50 p-5 rounded-xl border border-yellow-100 cursor-pointer"
               whileHover={{ scale: 1.02, boxShadow: "0 10px 25px -5px rgba(234, 179, 8, 0.1)" }}
               transition={{ duration: 0.2 }}
-              onClick={() => setActiveTab("fund")}
+              onClick={() => handleTabChange("fund")}
             >
               <div className="flex justify-between items-start mb-4">
                 <div className="bg-white p-2 rounded-lg">
