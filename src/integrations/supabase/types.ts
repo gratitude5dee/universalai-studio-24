@@ -9,6 +9,48 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      crypto_transactions: {
+        Row: {
+          amount: number
+          asset_symbol: string
+          created_at: string
+          id: string
+          network: string
+          payment_method: string
+          status: string
+          transaction_data: Json | null
+          transaction_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          asset_symbol: string
+          created_at?: string
+          id?: string
+          network: string
+          payment_method: string
+          status?: string
+          transaction_data?: Json | null
+          transaction_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          asset_symbol?: string
+          created_at?: string
+          id?: string
+          network?: string
+          payment_method?: string
+          status?: string
+          transaction_data?: Json | null
+          transaction_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       edges: {
         Row: {
           created_at: string | null
