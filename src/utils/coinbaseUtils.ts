@@ -1,5 +1,5 @@
 
-import { OnrampConfigCountry } from '@coinbase/onchainkit/fund';
+import { OnrampConfigCountry } from '@coinbase/onchainkit';
 import { supabase } from "@/integrations/supabase/client";
 
 // Base URLs for Coinbase services
