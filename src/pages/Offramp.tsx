@@ -15,6 +15,9 @@ function OfframpLoading() {
 
 // Main offramp content component
 function OfframpContent() {
+  const searchParams = useSearchParams();
+  const status = searchParams.get("status");
+
   return (
     <main className="flex-grow">
       {/* Hero section */}
