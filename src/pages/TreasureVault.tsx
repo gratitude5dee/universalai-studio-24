@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Coins, Map, Sparkles, Scroll, BarChart3, Clock, Landmark, TrendingUp, Droplets, Wallet, Home, Building, AreaChart, Activity } from "lucide-react";
+import { Coins, Map, Sparkles, Scroll, BarChart3, Clock, Landmark, TrendingUp, Droplets, Wallet, Home, Building, AreaChart, Activity, Layers } from "lucide-react";
 import DashboardLayout from "@/layouts/dashboard-layout";
 import { Content } from "@/components/ui/content";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -13,6 +13,7 @@ import TradingAgents from "@/components/treasury/TradingAgents";
 import LiquidityAgents from "@/components/treasury/LiquidityAgents";
 import DirectoryOfAgents from "@/components/treasury/DirectoryOfAgents";
 import AgentBanking from "@/components/treasury/AgentBanking";
+import BuiltOnBase from "@/components/treasury/BuiltOnBase";
 
 const TreasureVault = () => {
   const [activeTab, setActiveTab] = useState("collection");
@@ -23,7 +24,7 @@ const TreasureVault = () => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const tab = params.get("tab");
-    if (tab && ["overview", "onchain", "trading", "liquidity", "banking"].includes(tab)) {
+    if (tab && ["overview", "onchain", "trading", "liquidity", "banking", "base"].includes(tab)) {
       setCurrentTab(tab);
     } else {
       setCurrentTab("overview");
@@ -53,7 +54,7 @@ const TreasureVault = () => {
       <Content title="Organization Finances" subtitle="Manage your magical treasures and watch your wealth grow through enchanted stewardship">
         <Tabs value={currentTab} defaultValue="overview" className="w-full" onValueChange={handleTabChange}>
           <div className="flex justify-center w-full">
-            <TabsList className="flex w-full max-w-[480px] mb-6 bg-white/80 backdrop-blur-md border border-studio-sand/30 rounded-xl p-2 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] relative overflow-hidden before:absolute before:inset-0 before:bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1IiBkPSJNMCAwaDMwMHYzMDBIMHoiLz48L3N2Zz4=')] before:opacity-30 justify-center items-center gap-3">
+            <TabsList className="flex w-full max-w-[580px] mb-6 bg-white/80 backdrop-blur-md border border-studio-sand/30 rounded-xl p-2 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] relative overflow-hidden before:absolute before:inset-0 before:bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1IiBkPSJNMCAwaDMwMHYzMDBIMHoiLz48L3N2Zz4=')] before:opacity-30 justify-center items-center gap-3">
               
               <TabsTrigger 
                 value="overview" 
@@ -94,6 +95,14 @@ const TreasureVault = () => {
                 <Droplets size={18} className="relative z-10" />
                 <span className="absolute left-10 whitespace-nowrap text-sm px-2 opacity-0 group-hover:opacity-100 transform translate-x-[-100%] group-hover:translate-x-0 transition-all duration-300 z-0">Liquidity Agents</span>
               </TabsTrigger>
+              
+              <TabsTrigger 
+                value="base" 
+                className="group relative w-10 h-10 p-0 rounded-lg hover:bg-white/30 data-[state=active]:bg-studio-accent data-[state=active]:text-white data-[state=active]:shadow-sm data-[state=active]:backdrop-blur-md transition-all duration-300 z-10 flex items-center justify-center overflow-hidden"
+              >
+                <Layers size={18} className="relative z-10" />
+                <span className="absolute left-10 whitespace-nowrap text-sm px-2 opacity-0 group-hover:opacity-100 transform translate-x-[-100%] group-hover:translate-x-0 transition-all duration-300 z-0">Built on Base</span>
+              </TabsTrigger>
             </TabsList>
           </div>
           
@@ -127,6 +136,10 @@ const TreasureVault = () => {
           
           <TabsContent value="liquidity" className="space-y-6">
             <LiquidityAgents />
+          </TabsContent>
+          
+          <TabsContent value="base" className="space-y-6">
+            <BuiltOnBase />
           </TabsContent>
         </Tabs>
       </Content>

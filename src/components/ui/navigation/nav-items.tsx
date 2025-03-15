@@ -3,7 +3,7 @@ import {
   LayoutDashboard, Zap, Palette, BookOpen, Brain, Headphones, Infinity, UserRound, Users, 
   ImageIcon, BarChart3, Shield, Globe, Bot, Database, ShoppingCart, Eye, Building, 
   Trees, ArrowRightLeft, Share2, Link, Tv, User, Music, Wallet, Landmark, TrendingUp, Droplets, 
-  CreditCard
+  CreditCard, Layers
 } from "lucide-react";
 
 export const navItems = [{
@@ -185,6 +185,11 @@ export const navItems = [{
       name: "Liquidity Agents",
       path: "/treasury?tab=liquidity",
       icon: Droplets
+    },
+    {
+      name: "Built on Base",
+      path: "/treasury?tab=base",
+      icon: Layers
     }
   ]
 }];
