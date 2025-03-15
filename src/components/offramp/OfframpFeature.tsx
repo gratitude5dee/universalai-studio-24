@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useAccount } from "wagmi";
 import { generateOfframpURL } from "@/utils/coinbaseUtils";
@@ -14,7 +13,7 @@ import {
   assetNetworkMap,
   countryNames,
 } from "@/utils/coinbaseApiTypes";
-import { useSearchParams } from "next/navigation";
+import { useLocation, useSearchParams } from "react-router-dom";
 import OfframpNotification from "./OfframpNotification";
 import OfframpInstructionsModal from "./OfframpInstructionsModal";
 
@@ -38,6 +37,11 @@ export default function OfframpFeature() {
   const [showInstructionsModal, setShowInstructionsModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showNotification, setShowNotification] = useState<boolean>(false);
+
+  // Get search params from React Router instead of Next.js
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const status = searchParams.get("status");
 
   // Define supported networks
   const networks = [
@@ -109,10 +113,6 @@ export default function OfframpFeature() {
     { code: "WY", name: "Wyoming" },
     { code: "DC", name: "District of Columbia" },
   ];
-
-  // Check for status in URL
-  const searchParams = useSearchParams();
-  const status = searchParams.get("status");
 
   // Show notification if returning from Coinbase with a status
   useEffect(() => {
@@ -418,11 +418,11 @@ export default function OfframpFeature() {
                         viewBox="0 0 20 20"
                       >
                         <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                      </svg>
-                    </div>
+                    </svg>
                   </div>
                 </div>
-              )}
+              </div>
+            )}
 
               {/* Asset Selection */}
               <div className="mb-6">

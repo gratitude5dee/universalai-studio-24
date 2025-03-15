@@ -1,8 +1,8 @@
 
 import React, { Suspense } from "react";
-import { Header } from "@/components/ui/header";
+import Header from "@/components/ui/header";
 import OfframpFeature from "@/components/offramp/OfframpFeature";
-import { useSearchParams } from "next/navigation";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 // Loading fallback component
 function OfframpLoading() {
@@ -15,7 +15,8 @@ function OfframpLoading() {
 
 // Main offramp content component
 function OfframpContent() {
-  const searchParams = useSearchParams();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
   const status = searchParams.get("status");
 
   return (
