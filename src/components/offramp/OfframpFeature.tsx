@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useAccount } from "wagmi";
 import { generateOfframpURL } from "@/utils/coinbaseUtils";
@@ -417,229 +418,230 @@ export default function OfframpFeature() {
                         viewBox="0 0 20 20"
                       >
                         <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Asset Selection */}
+              <div className="mb-6">
+                <label className="block text-gray-700 mb-2 font-medium">
+                  Asset
+                </label>
+                <div className="relative">
+                  <select
+                    value={selectedAsset}
+                    onChange={(e) => handleAssetChange(e.target.value)}
+                    className="block w-full bg-white border border-gray-300 rounded-lg py-3 px-4 pr-8 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
+                  >
+                    {availableAssets.map((asset) => (
+                      <option key={asset.code} value={asset.code}>
+                        {asset.name} ({asset.code})
+                      </option>
+                    ))}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg
+                      className="fill-current h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                     </svg>
                   </div>
                 </div>
               </div>
-            )}
 
-            {/* Asset Selection */}
-            <div className="mb-6">
-              <label className="block text-gray-700 mb-2 font-medium">
-                Asset
-              </label>
-              <div className="relative">
-                <select
-                  value={selectedAsset}
-                  onChange={(e) => handleAssetChange(e.target.value)}
-                  className="block w-full bg-white border border-gray-300 rounded-lg py-3 px-4 pr-8 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
-                >
-                  {availableAssets.map((asset) => (
-                    <option key={asset.code} value={asset.code}>
-                      {asset.name} ({asset.code})
-                    </option>
-                  ))}
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <svg
-                    className="fill-current h-4 w-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
+              {/* Network Selection */}
+              <div className="mb-6">
+                <label className="block text-gray-700 mb-2 font-medium">
+                  Network
+                </label>
+                <div className="relative">
+                  <select
+                    value={selectedNetwork}
+                    onChange={(e) => setSelectedNetwork(e.target.value)}
+                    className="block w-full bg-white border border-gray-300 rounded-lg py-3 px-4 pr-8 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
                   >
-                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                  </svg>
+                    {/* Filter networks based on selected asset */}
+                    {networks
+                      .filter(
+                        (network) =>
+                          !assetNetworkMap[selectedAsset] ||
+                          assetNetworkMap[selectedAsset].includes(network.id)
+                      )
+                      .map((network) => (
+                        <option key={network.id} value={network.id}>
+                          {network.name}
+                        </option>
+                      ))}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg
+                      className="fill-current h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </div>
+                </div>
+                {assetNetworkMap[selectedAsset] && (
+                  <p className="text-sm text-gray-500 mt-2">
+                    {selectedAsset} is available on{" "}
+                    {assetNetworkMap[selectedAsset].length} network
+                    {assetNetworkMap[selectedAsset].length > 1 ? "s" : ""}
+                  </p>
+                )}
+              </div>
+
+              {/* Amount Input */}
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-2 font-medium">
+                  Amount
+                </label>
+                <div className="flex space-x-2 mb-2">
+                  <button
+                    className="px-4 py-2 bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-lg text-gray-800"
+                    onClick={() => setAmount("10")}
+                  >
+                    $10
+                  </button>
+                  <button
+                    className="px-4 py-2 bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-lg text-gray-800"
+                    onClick={() => setAmount("25")}
+                  >
+                    $25
+                  </button>
+                  <button
+                    className="px-4 py-2 bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-lg text-gray-800"
+                    onClick={() => setAmount("50")}
+                  >
+                    $50
+                  </button>
+                </div>
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                    $
+                  </span>
+                  <input
+                    type="text"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    className="block w-full bg-white border border-gray-300 rounded-lg py-3 pl-8 pr-4 text-gray-800"
+                  />
                 </div>
               </div>
-            </div>
 
-            {/* Network Selection */}
-            <div className="mb-6">
-              <label className="block text-gray-700 mb-2 font-medium">
-                Network
-              </label>
-              <div className="relative">
-                <select
-                  value={selectedNetwork}
-                  onChange={(e) => setSelectedNetwork(e.target.value)}
-                  className="block w-full bg-white border border-gray-300 rounded-lg py-3 px-4 pr-8 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
-                >
-                  {/* Filter networks based on selected asset */}
-                  {networks
-                    .filter(
-                      (network) =>
-                        !assetNetworkMap[selectedAsset] ||
-                        assetNetworkMap[selectedAsset].includes(network.id)
-                    )
-                    .map((network) => (
-                      <option key={network.id} value={network.id}>
-                        {network.name}
+              {/* Cashout Method */}
+              <div className="mb-6">
+                <label className="block text-gray-700 mb-2 font-medium">
+                  Cashout Method
+                </label>
+                <div className="relative">
+                  <select
+                    value={selectedCashoutMethod}
+                    onChange={(e) => setSelectedCashoutMethod(e.target.value)}
+                    className="block w-full bg-white border border-gray-300 rounded-lg py-3 px-4 pr-8 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
+                  >
+                    {cashoutMethods.map((method) => (
+                      <option key={method.id} value={method.id}>
+                        {method.name}
                       </option>
                     ))}
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <svg
-                    className="fill-current h-4 w-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                  </svg>
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg
+                      className="fill-current h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </div>
                 </div>
               </div>
-              {assetNetworkMap[selectedAsset] && (
-                <p className="text-sm text-gray-500 mt-2">
-                  {selectedAsset} is available on{" "}
-                  {assetNetworkMap[selectedAsset].length} network
-                  {assetNetworkMap[selectedAsset].length > 1 ? "s" : ""}
-                </p>
-              )}
-            </div>
 
-            {/* Amount Input */}
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2 font-medium">
-                Amount
-              </label>
-              <div className="flex space-x-2 mb-2">
-                <button
-                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-lg text-gray-800"
-                  onClick={() => setAmount("10")}
-                >
-                  $10
-                </button>
-                <button
-                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-lg text-gray-800"
-                  onClick={() => setAmount("25")}
-                >
-                  $25
-                </button>
-                <button
-                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-lg text-gray-800"
-                  onClick={() => setAmount("50")}
-                >
-                  $50
-                </button>
-              </div>
-              <div className="relative">
-                <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
-                  $
-                </span>
-                <input
-                  type="text"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  className="block w-full bg-white border border-gray-300 rounded-lg py-3 pl-8 pr-4 text-gray-800"
-                />
-              </div>
-            </div>
-
-            {/* Cashout Method */}
-            <div className="mb-6">
-              <label className="block text-gray-700 mb-2 font-medium">
-                Cashout Method
-              </label>
-              <div className="relative">
-                <select
-                  value={selectedCashoutMethod}
-                  onChange={(e) => setSelectedCashoutMethod(e.target.value)}
-                  className="block w-full bg-white border border-gray-300 rounded-lg py-3 px-4 pr-8 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
-                >
-                  {cashoutMethods.map((method) => (
-                    <option key={method.id} value={method.id}>
-                      {method.name}
-                    </option>
-                  ))}
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <svg
-                    className="fill-current h-4 w-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                  </svg>
-                </div>
-              </div>
-            </div>
-
-            {/* Action Button */}
-            <button
-              onClick={handleOfframp}
-              disabled={isLoading || !isConnected}
-              className={`w-full py-3 px-4 rounded-lg font-medium ${
-                isLoading || !isConnected
-                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                  : "bg-purple-600 hover:bg-purple-700 text-white"
-              }`}
-            >
-              {isLoading ? "Loading..." : "Sell Crypto"}
-            </button>
-
-            {/* Error Message */}
-            {errorMessage && (
-              <div className="mt-4 p-3 bg-red-100 text-red-700 rounded-lg border border-red-200">
-                {errorMessage}
-              </div>
-            )}
-          </div>
-
-          {/* Preview Box */}
-          <div className="bg-white p-8 rounded-xl shadow-md border border-gray-200">
-            <h3 className="text-xl font-bold mb-6 text-gray-800">Preview</h3>
-
-            <div className="space-y-4">
-              <div className="bg-gray-100 p-4 rounded-lg border border-gray-200">
-                <p className="text-sm text-gray-500 mb-1">You'll receive</p>
-                <p className="text-2xl font-bold text-gray-800">
-                  ${parseFloat(amount || "0").toFixed(2)}
-                </p>
-              </div>
-
-              <div className="bg-gray-100 p-4 rounded-lg border border-gray-200">
-                <p className="text-sm text-gray-500 mb-1">Selling</p>
-                <p className="font-medium text-gray-800">
-                  {getSelectedAssetName()} ({selectedAsset})
-                </p>
-                <p className="text-sm text-gray-500">
-                  on {getSelectedNetworkName()}
-                </p>
-              </div>
-
-              <div className="bg-gray-100 p-4 rounded-lg border border-gray-200">
-                <p className="text-sm text-gray-500 mb-1">Cashout Method</p>
-                <p className="font-medium text-gray-800">
-                  {cashoutMethods.find(
-                    (m) => m.id === selectedCashoutMethod
-                  )?.name || selectedCashoutMethod}
-                </p>
-              </div>
-
-              {isConnected && address && (
-                <div className="bg-gray-100 p-4 rounded-lg border border-gray-200">
-                  <p className="text-sm text-gray-500 mb-1">
-                    Connected Wallet
-                  </p>
-                  <p className="font-medium text-gray-800">
-                    {address
-                      ? `${address.substring(0, 6)}...${address.substring(
-                          address.length - 4
-                        )}`
-                      : "Not connected"}
-                  </p>
-                </div>
-              )}
-
+              {/* Action Button */}
               <button
                 onClick={handleOfframp}
                 disabled={isLoading || !isConnected}
-                className={`w-full py-3 px-4 rounded-lg font-medium mt-6 ${
+                className={`w-full py-3 px-4 rounded-lg font-medium ${
                   isLoading || !isConnected
                     ? "bg-gray-200 text-gray-400 cursor-not-allowed"
                     : "bg-purple-600 hover:bg-purple-700 text-white"
                 }`}
               >
-                {isLoading ? "Loading..." : "Sell Now"}
+                {isLoading ? "Loading..." : "Sell Crypto"}
               </button>
+
+              {/* Error Message */}
+              {errorMessage && (
+                <div className="mt-4 p-3 bg-red-100 text-red-700 rounded-lg border border-red-200">
+                  {errorMessage}
+                </div>
+              )}
+            </div>
+
+            {/* Preview Box */}
+            <div className="bg-white p-8 rounded-xl shadow-md border border-gray-200">
+              <h3 className="text-xl font-bold mb-6 text-gray-800">Preview</h3>
+
+              <div className="space-y-4">
+                <div className="bg-gray-100 p-4 rounded-lg border border-gray-200">
+                  <p className="text-sm text-gray-500 mb-1">You'll receive</p>
+                  <p className="text-2xl font-bold text-gray-800">
+                    ${parseFloat(amount || "0").toFixed(2)}
+                  </p>
+                </div>
+
+                <div className="bg-gray-100 p-4 rounded-lg border border-gray-200">
+                  <p className="text-sm text-gray-500 mb-1">Selling</p>
+                  <p className="font-medium text-gray-800">
+                    {getSelectedAssetName()} ({selectedAsset})
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    on {getSelectedNetworkName()}
+                  </p>
+                </div>
+
+                <div className="bg-gray-100 p-4 rounded-lg border border-gray-200">
+                  <p className="text-sm text-gray-500 mb-1">Cashout Method</p>
+                  <p className="font-medium text-gray-800">
+                    {cashoutMethods.find(
+                      (m) => m.id === selectedCashoutMethod
+                    )?.name || selectedCashoutMethod}
+                  </p>
+                </div>
+
+                {isConnected && address && (
+                  <div className="bg-gray-100 p-4 rounded-lg border border-gray-200">
+                    <p className="text-sm text-gray-500 mb-1">
+                      Connected Wallet
+                    </p>
+                    <p className="font-medium text-gray-800">
+                      {address
+                        ? `${address.substring(0, 6)}...${address.substring(
+                            address.length - 4
+                          )}`
+                        : "Not connected"}
+                    </p>
+                  </div>
+                )}
+
+                <button
+                  onClick={handleOfframp}
+                  disabled={isLoading || !isConnected}
+                  className={`w-full py-3 px-4 rounded-lg font-medium mt-6 ${
+                    isLoading || !isConnected
+                      ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                      : "bg-purple-600 hover:bg-purple-700 text-white"
+                  }`}
+                >
+                  {isLoading ? "Loading..." : "Sell Now"}
+                </button>
+              </div>
             </div>
           </div>
         </div>
