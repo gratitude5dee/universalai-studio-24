@@ -1,6 +1,6 @@
 
 import React from "react";
-import { ArrowDownRight, Bank, DollarSign } from "lucide-react";
+import { ArrowDownRight, Building, DollarSign } from "lucide-react";
 import { motion } from "framer-motion";
 
 const OffRamp = () => {
@@ -27,7 +27,7 @@ const OffRamp = () => {
           >
             <div className="flex justify-between items-start mb-4">
               <div className="bg-white p-2 rounded-lg">
-                <Bank className="h-5 w-5 text-purple-600" />
+                <Building className="h-5 w-5 text-purple-600" />
               </div>
               <div className="text-xs text-purple-600 font-medium">Convenient</div>
             </div>
