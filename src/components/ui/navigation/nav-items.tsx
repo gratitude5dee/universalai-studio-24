@@ -3,7 +3,7 @@ import {
   LayoutDashboard, Zap, Palette, BookOpen, Brain, Headphones, Infinity, UserRound, Users, 
   ImageIcon, BarChart3, Shield, Globe, Bot, Database, ShoppingCart, Eye, Building, 
   Trees, ArrowRightLeft, Share2, Link, Tv, User, Music, Wallet, Landmark, TrendingUp, Droplets, 
-  CreditCard, Layers
+  CreditCard, Layers, ArrowUpRight, ArrowDownRight, CircleDollarSign
 } from "lucide-react";
 
 export const navItems = [{
@@ -189,7 +189,30 @@ export const navItems = [{
     {
       name: "Built on Base",
       path: "/treasury?tab=base",
-      icon: Layers
+      icon: Layers,
+      hasSubmenu: true,
+      submenuItems: [
+        {
+          name: "Overview",
+          path: "/treasury?tab=base",
+          icon: Layers
+        },
+        {
+          name: "On Ramp",
+          path: "/treasury?tab=base&subtab=onramp",
+          icon: ArrowUpRight
+        },
+        {
+          name: "Off Ramp",
+          path: "/treasury?tab=base&subtab=offramp",
+          icon: ArrowDownRight
+        },
+        {
+          name: "Fund",
+          path: "/treasury?tab=base&subtab=fund",
+          icon: CircleDollarSign
+        }
+      ]
     }
   ]
 }];

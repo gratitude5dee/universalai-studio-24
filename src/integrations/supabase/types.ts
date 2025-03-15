@@ -103,6 +103,45 @@ export type Database = {
           },
         ]
       }
+      fund_transactions: {
+        Row: {
+          amount: number
+          asset_symbol: string
+          created_at: string
+          id: string
+          payment_method: string
+          status: string
+          transaction_id: string
+          transaction_type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          asset_symbol: string
+          created_at?: string
+          id?: string
+          payment_method: string
+          status?: string
+          transaction_id: string
+          transaction_type?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          asset_symbol?: string
+          created_at?: string
+          id?: string
+          payment_method?: string
+          status?: string
+          transaction_id?: string
+          transaction_type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       keyframes: {
         Row: {
           created_at: string | null

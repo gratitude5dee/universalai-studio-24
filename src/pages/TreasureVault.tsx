@@ -20,14 +20,23 @@ const TreasureVault = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [currentTab, setCurrentTab] = useState("overview");
+  const [currentSubtab, setCurrentSubtab] = useState("");
   
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const tab = params.get("tab");
+    const subtab = params.get("subtab");
+    
     if (tab && ["overview", "onchain", "trading", "liquidity", "banking", "base"].includes(tab)) {
       setCurrentTab(tab);
     } else {
       setCurrentTab("overview");
+    }
+    
+    if (subtab) {
+      setCurrentSubtab(subtab);
+    } else {
+      setCurrentSubtab("");
     }
   }, [location.search]);
   
@@ -35,6 +44,12 @@ const TreasureVault = () => {
     setCurrentTab(value);
     const params = new URLSearchParams(location.search);
     params.set("tab", value);
+    
+    // Clear subtab when changing main tab
+    if (value !== "base") {
+      params.delete("subtab");
+    }
+    
     navigate(`${location.pathname}?${params.toString()}`, { replace: true });
   };
 
