@@ -30,8 +30,8 @@ export const useAgeVerification = () => {
     return new SelfAppBuilder({
       appName: "WZRD Studio",
       scope: "wzrd-age-verification",
-      // Use Supabase Function endpoint with proper URL construction
-      endpoint: `${process.env.VITE_SUPABASE_URL}/functions/v1/verify-age`,
+      // Use Supabase Function endpoint
+      endpoint: `${supabase.functions.url}/verify-age`,
       userId: verificationUserId,
       disclosures: {
         date_of_birth: true,
