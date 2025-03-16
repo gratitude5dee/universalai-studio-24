@@ -1,7 +1,6 @@
 
 import React from 'react';
 import SelfQRcodeWrapper, { SelfApp } from '@selfxyz/qrcode';
-import { QrCode } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface QRCodeDisplayProps {
@@ -27,6 +26,11 @@ export const QRCodeDisplay = ({ selfApp, onSuccess }: QRCodeDisplayProps) => {
       </div>
       <div className="text-sm text-foreground/70 text-center max-w-[250px] mb-4">
         Scan this QR code with the Self app to verify your age securely and privately
+      </div>
+      <div className="text-xs text-foreground/50 text-center">
+        <a href="https://selfwallet.xyz/download" target="_blank" rel="noopener noreferrer" className="underline">
+          Don't have the Self app? Download here
+        </a>
       </div>
     </motion.div>
   );

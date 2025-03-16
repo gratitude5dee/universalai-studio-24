@@ -3,6 +3,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { SelfAppBuilder } from '@selfxyz/qrcode';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'sonner';
+import { supabase } from "@/integrations/supabase/client";
 
 // Action types for verification
 export type VerificationAction = 'guest' | 'login' | 'feature' | null;
@@ -29,8 +30,8 @@ export const useAgeVerification = () => {
     return new SelfAppBuilder({
       appName: "WZRD Studio",
       scope: "wzrd-age-verification",
-      // Use your backend verification endpoint
-      endpoint: "/api/verify-age", // Replace with your actual endpoint
+      // Use Supabase Function endpoint
+      endpoint: `${supabase.functions.url}/verify-age`,
       userId: verificationUserId,
       disclosures: {
         date_of_birth: true,
