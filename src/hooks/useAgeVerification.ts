@@ -27,11 +27,14 @@ export const useAgeVerification = () => {
     const verificationUserId = userId || uuidv4();
     console.log("Creating new SelfApp instance with userId:", verificationUserId);
     
+    // Use environment variable or construct the URL properly
+    const functionUrl = `${import.meta.env.VITE_SUPABASE_URL || ''}/functions/v1/verify-age`;
+    
     return new SelfAppBuilder({
       appName: "WZRD Studio",
       scope: "wzrd-age-verification",
-      // Use Supabase Function endpoint
-      endpoint: `${supabase.functions.url}/verify-age`,
+      // Use properly constructed function URL
+      endpoint: functionUrl,
       userId: verificationUserId,
       disclosures: {
         date_of_birth: true,

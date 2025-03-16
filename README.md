@@ -18,6 +18,26 @@ We've implemented a privacy-preserving age verification system using Self Protoc
 - **Cross-Chain Compatibility**: Verification works across multiple blockchains
 - **Developer-Friendly API**: Easy integration for Web3 applications
 
+### 🏗️ Built on Base
+
+WZRD Studio is proudly built on Base, leveraging its robust infrastructure for:
+
+- **Performance**: Lightning-fast transaction speeds with minimal gas fees
+- **Security**: Enterprise-grade security with the reliability of the Coinbase ecosystem
+- **Developer Tools**: Rich toolkit for rapid, streamlined development
+- **Ethereum Compatibility**: Full compatibility with Ethereum's developer ecosystem
+- **Scalability**: Designed for mass adoption with optimized L2 scaling
+
+### 🔄 Universal Crossmint On-Chain Actions
+
+Our integration with Crossmint enables seamless cross-chain operations:
+
+- **One-Click Cross-Chain NFT Minting**: Create NFTs across multiple blockchains simultaneously
+- **Gasless Transactions**: Users can interact without needing native tokens for gas
+- **Email/Social Login**: Web2 user experience with Web3 functionality
+- **Chain-Agnostic Actions**: Execute the same on-chain actions regardless of blockchain
+- **Credit Card Payment Gateway**: Allow users to purchase NFTs with traditional payment methods
+
 ### 🤖 Fully Autonomous Agent DAO
 
 - **Governance-Powered Agents**: AI agents that execute decisions based on token holder votes
@@ -52,17 +72,20 @@ WZRD Studio is built on a modular architecture that combines:
 
 1. **Frontend**: React + Tailwind CSS with shadcn/ui for a clean, intuitive UX
 2. **Backend**: Supabase for database and serverless functions
-3. **Blockchain Integration**: OnchainKit for easy cross-chain compatibility
-4. **Identity Layer**: Self Protocol for zero-knowledge proofs
-5. **AI Layer**: Integration with state-of-the-art generative AI models
+3. **Blockchain Integration**: OnchainKit and Crossmint for easy cross-chain compatibility
+4. **Base Integration**: Leveraging Base for optimized L2 performance and Coinbase ecosystem
+5. **Identity Layer**: Self Protocol for zero-knowledge proofs
+6. **AI Layer**: Integration with state-of-the-art generative AI models
 
 ## 🔍 How It Works
 
-1. **Age Verification**: Users verify their age through our Self Protocol integration, generating zero-knowledge proofs without revealing sensitive information
-2. **Agent Creation**: Create and deploy AI agents with specific capabilities across multiple blockchains
-3. **Community Governance**: Token holders vote on agent behaviors and features
-4. **Bounty System**: Complete tasks and earn rewards for contributing to the ecosystem
-5. **Asset Management**: Create, manage, and trade tokenized assets across chains
+1. **Base Blockchain Operations**: Core smart contracts and tokenization built on Base for optimal performance
+2. **Age Verification**: Users verify their age through our Self Protocol integration, generating zero-knowledge proofs without revealing sensitive information
+3. **Crossmint Integration**: Seamless cross-chain interactions through Crossmint's Universal Actions API
+4. **Agent Creation**: Create and deploy AI agents with specific capabilities across multiple blockchains
+5. **Community Governance**: Token holders vote on agent behaviors and features
+6. **Bounty System**: Complete tasks and earn rewards for contributing to the ecosystem
+7. **Asset Management**: Create, manage, and trade tokenized assets across chains
 
 ## 🛠️ Use Cases
 
@@ -73,6 +96,57 @@ WZRD Studio is built on a modular architecture that combines:
 - **RWA Tokenization**: Convert physical assets to digital tokens with verified ownership
 
 ## 📊 Technical Implementation
+
+### Base Integration
+
+```typescript
+// Example of deploying an agent on Base
+import { BaseProvider } from '@coinbase/onchainkit';
+
+const deployAgentOnBase = async (agentConfig) => {
+  const baseProvider = new BaseProvider(process.env.BASE_RPC_URL);
+  
+  // Deploy agent to Base L2
+  const baseDeployment = await baseContract.connect(baseProvider).deployAgent(
+    agentConfig.name,
+    agentConfig.purpose,
+    agentConfig.capabilities
+  );
+  
+  return {
+    chain: 'base',
+    deploymentId: baseDeployment.id,
+    transactionHash: baseDeployment.txHash
+  };
+};
+```
+
+### Crossmint Universal Actions
+
+```typescript
+// Example of using Crossmint for cross-chain NFT minting
+import { Crossmint } from '@crossmint/client-sdk-react-ui';
+
+const mintAcrossChains = async (metadata, targetChains) => {
+  // Configure Crossmint to work with multiple chains
+  const crossmintClient = new Crossmint.CrossmintAPIClient({
+    apiKey: process.env.CROSSMINT_API_KEY,
+  });
+  
+  // Mint the same NFT across multiple chains
+  const mintResults = await Promise.all(
+    targetChains.map(chain => 
+      crossmintClient.mintNFT({
+        chain: chain,
+        metadata: metadata,
+        recipient: userWalletAddress,
+      })
+    )
+  );
+  
+  return mintResults;
+};
+```
 
 ### Zero-Knowledge Age Verification Circuit
 
@@ -91,26 +165,6 @@ const verifyAge = async (proof: Proof, publicSignals: PublicSignals) => {
   }
   
   return { verified: false };
-};
-```
-
-### Cross-Chain Integration
-
-```typescript
-// Example of our cross-chain functionality
-const deployAgent = async (agentConfig, blockchains: string[]) => {
-  // Deploy the same agent across multiple blockchains
-  const deployments = await Promise.all(
-    blockchains.map(async (chain) => {
-      const provider = getProviderForChain(chain);
-      return deployAgentToChain(agentConfig, provider);
-    })
-  );
-  
-  return {
-    deploymentIds: deployments.map(d => d.id),
-    transactionHashes: deployments.map(d => d.txHash)
-  };
 };
 ```
 
@@ -142,6 +196,8 @@ Our team combines expertise in blockchain development, AI research, and user exp
 
 ## 🙏 Acknowledgements
 
+- Base for providing a high-performance L2 blockchain infrastructure
+- Crossmint for enabling universal cross-chain transactions
 - Self Protocol for secure identity verification
 - Coinbase Developer Platform for cross-chain integration tools
 - ETHSF Hackathon organizers and mentors
