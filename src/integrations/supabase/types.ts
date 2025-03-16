@@ -276,25 +276,34 @@ export type Database = {
           avatar_url: string | null
           created_at: string
           id: string
+          last_wallet_connection: string | null
           updated_at: string
           username: string | null
           wallet_address: string | null
+          wallet_auth_token: string | null
+          wallet_type: string | null
         }
         Insert: {
           avatar_url?: string | null
           created_at?: string
           id: string
+          last_wallet_connection?: string | null
           updated_at?: string
           username?: string | null
           wallet_address?: string | null
+          wallet_auth_token?: string | null
+          wallet_type?: string | null
         }
         Update: {
           avatar_url?: string | null
           created_at?: string
           id?: string
+          last_wallet_connection?: string | null
           updated_at?: string
           username?: string | null
           wallet_address?: string | null
+          wallet_auth_token?: string | null
+          wallet_type?: string | null
         }
         Relationships: []
       }
@@ -516,6 +525,84 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      wallet_sessions: {
+        Row: {
+          created_at: string
+          expires_at: string | null
+          id: string
+          is_active: boolean | null
+          nonce: string | null
+          signature: string | null
+          user_id: string
+          wallet_address: string
+          wallet_type: string | null
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          nonce?: string | null
+          signature?: string | null
+          user_id: string
+          wallet_address: string
+          wallet_type?: string | null
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          nonce?: string | null
+          signature?: string | null
+          user_id?: string
+          wallet_address?: string
+          wallet_type?: string | null
+        }
+        Relationships: []
+      }
+      wallet_transactions: {
+        Row: {
+          amount: number
+          asset_symbol: string
+          created_at: string
+          id: string
+          metadata: Json | null
+          status: string
+          transaction_hash: string | null
+          transaction_type: string
+          updated_at: string
+          user_id: string
+          wallet_address: string
+        }
+        Insert: {
+          amount: number
+          asset_symbol: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          status?: string
+          transaction_hash?: string | null
+          transaction_type: string
+          updated_at?: string
+          user_id: string
+          wallet_address: string
+        }
+        Update: {
+          amount?: number
+          asset_symbol?: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          status?: string
+          transaction_hash?: string | null
+          transaction_type?: string
+          updated_at?: string
+          user_id?: string
+          wallet_address?: string
+        }
+        Relationships: []
       }
       workflows: {
         Row: {

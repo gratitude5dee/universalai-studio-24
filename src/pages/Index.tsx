@@ -1,13 +1,20 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@crossmint/client-sdk-react-ui";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { AgeVerificationModal } from "@/components/verification/AgeVerificationModal";
+import { useAgeVerification } from "@/hooks/useAgeVerification";
 
 export default function Index() {
   const navigate = useNavigate();
   const { user, login } = useAuth();
+  const [showVerificationModal, setShowVerificationModal] = useState(false);
+  const [pendingAction, setPendingAction] = useState<'login' | 'guest' | null>(null);
+  
+  // Initialize the age verification hook
+  const { isVerified } = useAgeVerification();
 
   React.useEffect(() => {
     if (user) {
@@ -17,16 +24,67 @@ export default function Index() {
 
   const handleLogin = async () => {
     try {
-      // Check if login function exists (it will be undefined if Crossmint isn't properly configured)
-      if (login) {
-        await login();
+      // Check if age verification is required
+      if (isVerified()) {
+        // User already verified, proceed directly
+        if (login) {
+          await login();
+        } else {
+          navigate("/home");
+        }
       } else {
-        // If Crossmint is not available, just navigate to home
-        navigate("/home");
+        // User needs to verify age first
+        setPendingAction('login');
+        setShowVerificationModal(true);
       }
     } catch (error) {
       console.error("Login error:", error);
     }
+  };
+
+  const handleGuestEntry = () => {
+    // Check if age verification is required
+    if (isVerified()) {
+      // User already verified, proceed directly
+      navigate("/wzrd/studio");
+    } else {
+      // User needs to verify age first
+      setPendingAction('guest');
+      setShowVerificationModal(true);
+    }
+  };
+
+  const handleVerificationSuccess = () => {
+    // Proceed with the pending action after successful verification
+    if (pendingAction === 'login') {
+      if (login) {
+        login();
+      } else {
+        navigate("/home");
+      }
+    } else if (pendingAction === 'guest') {
+      navigate("/wzrd/studio");
+    }
+    
+    // Reset pending action
+    setPendingAction(null);
+  };
+  
+  const handleVerifyLater = () => {
+    // Proceed without verification
+    if (pendingAction === 'login') {
+      if (login) {
+        login();
+      } else {
+        navigate("/home");
+      }
+    } else if (pendingAction === 'guest') {
+      navigate("/wzrd/studio");
+    }
+    
+    // Reset pending action and close modal
+    setPendingAction(null);
+    setShowVerificationModal(false);
   };
 
   return (
@@ -61,7 +119,7 @@ export default function Index() {
           
           <Button 
             className="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20"
-            onClick={() => navigate("/wzrd/studio")}
+            onClick={handleGuestEntry}
           >
             Enter as Guest
           </Button>
@@ -71,6 +129,14 @@ export default function Index() {
           <p>By signing in, you agree to our Terms of Service and Privacy Policy</p>
         </div>
       </div>
+
+      {/* Age Verification Modal */}
+      <AgeVerificationModal
+        open={showVerificationModal}
+        onOpenChange={setShowVerificationModal}
+        onVerificationSuccess={handleVerificationSuccess}
+        onVerifyLater={handleVerifyLater}
+      />
     </motion.div>
   );
 }
